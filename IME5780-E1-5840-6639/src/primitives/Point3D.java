@@ -26,13 +26,13 @@ public class Point3D {
                 Objects.equals(_y, point3D._y) &&
                 Objects.equals(_z, point3D._z);
     }
-
+/*
     @Override
     public String toString() {
         return "("+_x+","+_y+","+_z+")";
     }
 
-    /********************** not definition ***************************/
+    /*
 
     public Vector subtract(Point3D point){
         return null;
