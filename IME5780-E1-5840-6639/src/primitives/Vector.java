@@ -2,6 +2,7 @@ package primitives;
 
 public class Vector {
     Point3D point;
+    public  final static Vector ZERO = new Vector(new Point3D(new Coordinate(0.0),new Coordinate(0.0),new Coordinate(0.0)));
     /*****************************constructors*****************************/
     public Vector(Coordinate _x, Coordinate _y, Coordinate _z) {
         if (_x._coord==0 & _y._coord==0 & _z._coord==0)

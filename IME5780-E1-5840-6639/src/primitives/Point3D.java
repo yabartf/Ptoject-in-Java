@@ -26,34 +26,35 @@ public class Point3D {
                 Objects.equals(_y, point3D._y) &&
                 Objects.equals(_z, point3D._z);
     }
-/*
+
     @Override
     public String toString() {
         return "("+_x+","+_y+","+_z+")";
     }
 
-    /*
+
 
     public Vector subtract(Point3D point){
-        return null;
+        return new Vector(this._x._coord-point._x._coord,this._y._coord-point._y._coord,this._z._coord-point._z._coord);
     }
 
     public Point3D add(Vector vec){
-        return null;
+        Point3D temp = vec.point;
+        return new Point3D(_x._coord + temp._x._coord,_y._coord + temp._y._coord,_z._coord + temp._z._coord);
     }
 
 
     /*****************************geters*****************************/
     public Coordinate get_x() {
-        return _x;
+        return new Coordinate( _x);
     }
 
     public Coordinate get_y() {
-        return _y;
+        return new Coordinate(_y);
     }
 
     public Coordinate get_z() {
-        return _z;
+        return new Coordinate(_z);
     }
     /*****************************constructors*****************************/
     public Point3D(Coordinate _x, Coordinate _y, Coordinate _z) {
