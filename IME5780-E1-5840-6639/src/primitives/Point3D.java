@@ -8,6 +8,11 @@ public class Point3D {
     Coordinate _z;
     static final Point3D ZERO = new Point3D(0,0,0);
 
+    /**
+     * distance methods
+     * @param othr
+     * @return
+     */
     public double distanceSquared(Point3D othr){
         return (othr._x._coord-this._x._coord)*(othr._x._coord-this._x._coord)+(othr._y._coord-this._y._coord)*(othr._y._coord-this._y._coord)
         +(othr._z._coord-this._z._coord)*(othr._z._coord-this._z._coord);
@@ -16,6 +21,7 @@ public class Point3D {
     public double distance(Point3D other){
         return Math.sqrt(distanceSquared(other));
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -28,12 +34,21 @@ public class Point3D {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(_x, _y, _z);
+    }
+
+    @Override
     public String toString() {
         return "("+_x+","+_y+","+_z+")";
     }
 
 
-
+    /**
+     * Mathematical operations
+     * @param point
+     * @return
+     */
     public Vector subtract(Point3D point){
         return new Vector(this._x._coord-point._x._coord,this._y._coord-point._y._coord,this._z._coord-point._z._coord);
     }
@@ -45,6 +60,7 @@ public class Point3D {
 
 
     /*****************************geters*****************************/
+
     public Coordinate get_x() {
         return new Coordinate( _x);
     }
@@ -56,7 +72,9 @@ public class Point3D {
     public Coordinate get_z() {
         return new Coordinate(_z);
     }
+
     /*****************************constructors*****************************/
+
     public Point3D(Coordinate _x, Coordinate _y, Coordinate _z) {
         this._x = _x;
         this._y = _y;
