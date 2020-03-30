@@ -1,5 +1,8 @@
 package primitives;
 
+
+import java.util.Objects;
+
 public class Vector {
     Point3D point;
 
@@ -60,6 +63,14 @@ public class Vector {
     public double dotProduct(Vector other){
         return this.point._x._coord * other.point._x._coord + this.point._y._coord * other.point._y._coord +
                 this.point._z._coord * other.point._z._coord;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vector vector = (Vector) o;
+        return Objects.equals(point, vector.point);
     }
 
     /**
