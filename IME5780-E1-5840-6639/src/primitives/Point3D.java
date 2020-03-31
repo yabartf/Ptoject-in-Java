@@ -14,8 +14,9 @@ public class Point3D {
      * @return
      */
     public double distanceSquared(Point3D othr){
-        return (othr._x._coord-this._x._coord)*(othr._x._coord-this._x._coord)+(othr._y._coord-this._y._coord)*(othr._y._coord-this._y._coord)
-        +(othr._z._coord-this._z._coord)*(othr._z._coord-this._z._coord);
+        return (othr._x._coord-this._x._coord)*(othr._x._coord-this._x._coord) +
+                (othr._y._coord-this._y._coord)*(othr._y._coord-this._y._coord) +
+                (othr._z._coord-this._z._coord)*(othr._z._coord-this._z._coord);
     }
 
     public double distance(Point3D other){
@@ -50,7 +51,7 @@ public class Point3D {
      * @return
      */
     public Vector subtract(Point3D point){
-        return new Vector(this._x._coord-point._x._coord,this._y._coord-point._y._coord,this._z._coord-point._z._coord);
+        return new Vector(this._x._coord - point._x._coord,this._y._coord - point._y._coord,this._z._coord - point._z._coord);
     }
 
     public Point3D add(Vector vec){

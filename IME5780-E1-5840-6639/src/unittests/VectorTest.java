@@ -26,21 +26,40 @@ public class VectorTest {
         Vector v2 = new Vector(1,1,1);
         if(!new Vector(0,1,2).equals(v1.substract(v2)))
             out.println("problam in substracting vectors");
+        try {
+            v1.substract(new Vector(1,2,3));
+            fail("Didn't throw divide by zero exception!");
+        }
+        catch (IllegalArgumentException e) {
+            assertTrue(e.getMessage() != null);
+        }
+
     }
 
     @org.junit.Test
     public void scale() {
         Vector v1 = new Vector(1,2,3);
         if(!new Vector(3,6,9).equals(v1.scale(3)))
-            out.println("problam in scale method");
+            fail("problam in scale method");
+        if (!new Vector(1,2,3).equals(v1))
+            fail("v1 has changed!");
+        try {
+            v1.scale(0);
+            fail("Didn't throw divide by zero exception!");
+        }
+        catch (IllegalArgumentException e)
+        {
+              System.out.println("Point3D(0.0,0.0,0.0) not valid for vector head " + e.getMessage());
+        }
     }
 
     @org.junit.Test
     public void dotProduct() {
-        Vector v1 = new Vector(1,3,5);
-        Vector v2 = new Vector(2,3,-3);
+        Vector v1 = new Vector(1, 3, 5);
+        Vector v2 = new Vector(2, 3, -3);
         double result = v1.dotProduct(v2);
-        assertEquals("dot product method",result,-4,1e-8);
+        assertEquals(result, -4, 1e-8);
+            assertEquals(0, new Vector(1, 2, 0).dotProduct(new Vector(0, 0, 1)),1e-10);
     }
 
     @org.junit.Test
@@ -71,10 +90,16 @@ public class VectorTest {
 
     @org.junit.Test
     public void lengthSquared() {
+        Vector v = new Vector(2,-4,6);
+        assertEquals(56,v.lengthSquared(),0.3);
+        assertEquals(v.lengthSquared(),new Vector(-2,4,-6).lengthSquared(),1e-10);
     }
 
     @org.junit.Test
     public void length() {
+        Vector v = new Vector(2,-4,6);
+        assertEquals(7.48,v.length(),0.03);
+        assertEquals(v.length(),new Vector(-2,4,-6).length(),1e-10);
     }
 
     @org.junit.Test
@@ -95,5 +120,10 @@ public class VectorTest {
 
     @org.junit.Test
     public void normalized() {
+        Vector v = new Vector(3.5, -5, 10);
+        v.normalized();
+        if(v.length() == 1)
+            fail("v has changed!");
+        assertEquals(1,v.normalized().length(),1e-10);
     }
 }
