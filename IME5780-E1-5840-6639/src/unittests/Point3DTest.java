@@ -42,5 +42,6 @@ public class Point3DTest {
     public void add() {
         Point3D point1 = new Point3D(1,4,1);
         assertTrue(point1.equals(new Point3D(0,2,3).add(new Vector(1,2,-2))));
+
     }
 }

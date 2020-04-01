@@ -18,6 +18,14 @@ public class VectorTest {
 
         v2 = v2.add(v1);
         assertEquals(new Vector(-1.0, -1.0, -2.0),v2);
+        try {
+            new Vector(1,1,1).add(new Vector(-1,-1,-1));
+            fail("Didn't throw divide by zero exception!");
+        }
+        catch (IllegalArgumentException e) {
+            assertTrue(e.getMessage() != null);
+        }
+
     }
 
     @org.junit.Test
