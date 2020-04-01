@@ -9,7 +9,7 @@ public class Tube extends RadialGeometry implements Geometry{
 
     /***************constructor***************/
 
-    Tube(Ray leg,double rad){
+    public Tube(Ray leg,double rad){
         super(rad);
         legate=leg;
     }

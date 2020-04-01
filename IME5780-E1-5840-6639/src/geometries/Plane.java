@@ -11,10 +11,10 @@ public class Plane implements Geometry {
     /***************getters***************/
 
     public Vector getNormal(Point3D point){
-        return normal;
+        return normal.normalized();
     }
     public Vector getNormal(){
-        return normal;
+        return normal.normalized();
     }
 
     public Plane(Vector normal, Point3D point) {

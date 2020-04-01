@@ -5,7 +5,7 @@ public class Sphere extends RadialGeometry implements Geometry{
     Point3D center;
     /***************constructor***************/
 
-    Sphere(Point3D c,double radius){
+    public Sphere(Point3D c,double radius){
         super(radius);
         this.center=c;
     }

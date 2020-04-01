@@ -6,11 +6,11 @@ public class Ray {
 
     /******************constructors*****************/
 
-    Ray(Vector v,Point3D p){
+    public Ray(Vector v,Point3D p){
         point = p;
         direction = v.normalize();
     }
-    Ray(Ray other){
+    public Ray(Ray other){
         this.direction = other.direction;
         this.point = other.point;
     }

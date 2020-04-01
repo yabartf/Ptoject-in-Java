@@ -52,6 +52,7 @@ public class Polygon implements Geometry {
         // because of Zero Vector if they are in the same point
         Vector edge1 = vertices[0].subtract(vertices[vertices.length - 1]);
         Vector edge2 = vertices[1].subtract(vertices[0]);
+        Vector edge3=vertices[vertices.length-1].subtract(vertices[vertices.length-2]);
 
         // Cross Product of any subsequent edges will throw an IllegalArgumentException
         // because of Zero Vector if they connect three vertices that lay in the same
@@ -63,6 +64,8 @@ public class Polygon implements Geometry {
         // the
         // polygon is convex ("kamur" in Hebrew).
         boolean positive = edge1.crossProduct(edge2).dotProduct(n) > 0;
+        if (positive != (edge3.crossProduct(edge1).dotProduct(n) > 0))
+            throw new IllegalArgumentException("All vertices must be ordered and the polygon must be convex");
         for (int i = 2; i < vertices.length; ++i) {
             // Test that the point is in the same plane as calculated originally
             if (!isZero(vertices[i].subtract(vertices[0]).dotProduct(n)))
