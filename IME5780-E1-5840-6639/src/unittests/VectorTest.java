@@ -1,7 +1,6 @@
 package unittests;
 import primitives.Vector;
 
-import static java.lang.System.out;
 import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -10,6 +9,8 @@ public class VectorTest {
 
     @org.junit.Test
     public void add() {
+        // ============ Equivalence Partitions Tests ==============
+
         Vector v1 = new Vector(1.0, 1.0, 1.0);
         Vector v2 = new Vector(-1.0, -1.0, -1.5);
 
@@ -18,6 +19,9 @@ public class VectorTest {
 
         v2 = v2.add(v1);
         assertEquals(new Vector(-1.0, -1.0, -2.0),v2);
+
+        // =============== Boundary Values Tests ==================
+
         try {
             new Vector(1,1,1).add(new Vector(-1,-1,-1));
             fail("Didn't throw divide by zero exception!");
@@ -32,8 +36,11 @@ public class VectorTest {
     public void substract() {
         Vector v1 = new Vector(1,2,3);
         Vector v2 = new Vector(1,1,1);
-        if(!new Vector(0,1,2).equals(v1.substract(v2)))
-            out.println("problam in substracting vectors");
+
+        assertTrue(new Vector(0,1,2).equals(v1.substract(v2)));
+
+        // =============== Boundary Values Tests ==================
+
         try {
             v1.substract(new Vector(1,2,3));
             fail("Didn't throw divide by zero exception!");
@@ -47,8 +54,9 @@ public class VectorTest {
     @org.junit.Test
     public void scale() {
         Vector v1 = new Vector(1,2,3);
-        if(!new Vector(3,6,9).equals(v1.scale(3)))
-            fail("problam in scale method");
+        // TC01: simple test
+        assertTrue(new Vector(3,6,9).equals(v1.scale(3)));
+        // TC02: check if the     
         if (!new Vector(1,2,3).equals(v1))
             fail("v1 has changed!");
         try {
