@@ -9,6 +9,8 @@ public abstract class RadialGeometry {
     }
 
     public RadialGeometry(double _radius) {
+        if(_radius<0)
+            throw new IllegalArgumentException("radius cant be less then 0");
         this._radius = _radius;
     }
 

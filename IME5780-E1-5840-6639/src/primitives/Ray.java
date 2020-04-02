@@ -14,4 +14,12 @@ public class Ray {
         this.direction = other.direction;
         this.point = other.point;
     }
+
+    public Vector getDirection() {
+        return direction;
+    }
+
+    public Point3D getPoint() {
+        return point;
+    }
 }
