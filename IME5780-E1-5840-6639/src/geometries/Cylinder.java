@@ -2,7 +2,10 @@ package geometries;
 
 
 import primitives.Point3D;
+import primitives.Ray;
 import primitives.Vector;
+
+import java.util.List;
 
 public class Cylinder extends RadialGeometry implements Geometry {
     double height;
@@ -26,5 +29,10 @@ public class Cylinder extends RadialGeometry implements Geometry {
 
     public double getHeight() {
         return height;
+    }
+
+    @Override
+    public List<Point3D> findIntsersections(Ray ray) {
+        return null;
     }
 }

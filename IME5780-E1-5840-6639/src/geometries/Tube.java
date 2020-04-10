@@ -2,6 +2,8 @@ package geometries;
 
 import primitives.*;
 
+import java.util.List;
+
 
 public class Tube extends RadialGeometry implements Geometry{
     Ray legate;
@@ -31,5 +33,10 @@ public class Tube extends RadialGeometry implements Geometry{
 
     public Ray getLegate() {
         return legate;
+    }
+
+    @Override
+    public List<Point3D> findIntsersections(Ray ray) {
+        return null;
     }
 }

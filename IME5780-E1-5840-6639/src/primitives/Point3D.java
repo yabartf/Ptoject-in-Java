@@ -62,17 +62,11 @@ public class Point3D {
 
     /*****************************geters*****************************/
 
-    public Coordinate get_x() {
-        return new Coordinate( _x);
-    }
+    public double get_x() { return  _x.get(); }
 
-    public Coordinate get_y() {
-        return new Coordinate(_y);
-    }
+    public double get_y() {return _y.get(); }
 
-    public Coordinate get_z() {
-        return new Coordinate(_z);
-    }
+    public double get_z(){return _z.get(); }
 
     /*****************************constructors*****************************/
 

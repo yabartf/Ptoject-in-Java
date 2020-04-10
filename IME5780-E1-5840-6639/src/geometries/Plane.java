@@ -1,7 +1,10 @@
 package geometries;
 
 import primitives.Point3D;
+import primitives.Ray;
 import primitives.Vector;
+
+import java.util.List;
 
 
 public class Plane implements Geometry {
@@ -31,4 +34,8 @@ public class Plane implements Geometry {
         pointInPlane = x;
     }
 
+    @Override
+    public List<Point3D> findIntsersections(Ray ray) {
+        return null;
+    }
 }
