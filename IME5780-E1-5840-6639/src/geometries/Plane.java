@@ -20,12 +20,12 @@ public class Plane implements Geometry {
         return normal.normalized();
     }
 
+    /***************constructors***************/
+
     public Plane(Vector normal, Point3D point) {
         this.normal = normal;
         this.pointInPlane = point;
     }
-
-    /***************constructors***************/
 
     public Plane(Point3D x,Point3D y,Point3D z) {
         Vector one = x.subtract(y);
