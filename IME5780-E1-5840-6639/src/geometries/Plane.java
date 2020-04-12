@@ -4,6 +4,7 @@ import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -25,6 +26,10 @@ public class Plane implements Geometry {
         this.pointInPlane = point;
     }
 
+    public Point3D getPointInPlane() {
+        return pointInPlane;
+    }
+
     /***************constructors***************/
 
     public Plane(Point3D x,Point3D y,Point3D z) {
@@ -36,6 +41,18 @@ public class Plane implements Geometry {
 
     @Override
     public List<Point3D> findIntsersections(Ray ray) {
+        List<Point3D> intsersections=new ArrayList<Point3D>();
+        if (ray.getPoint()==this.pointInPlane)
+            return null;
+        double isParallel=ray.getDirection().dotProduct(normal);
+        if(isParallel==0)
+            return null;
+        double t=(this.normal.dotProduct(this.pointInPlane.subtract(ray.getPoint())))/(this.normal.dotProduct(ray.getDirection()));
+
+        if(t>0) {
+            intsersections.add(ray.getPoint().add(ray.getDirection().scale(t)));
+            return intsersections;
+        }
         return null;
     }
 }
