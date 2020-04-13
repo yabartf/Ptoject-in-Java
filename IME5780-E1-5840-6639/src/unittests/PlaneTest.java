@@ -1,8 +1,10 @@
 package unittests;
 
-import geometries.*;
+import geometries.Plane;
 import org.junit.Test;
-import primitives.*;
+import primitives.Point3D;
+import primitives.Ray;
+import primitives.Vector;
 
 import java.util.List;
 

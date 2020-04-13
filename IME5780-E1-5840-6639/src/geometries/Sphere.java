@@ -30,8 +30,8 @@ public class Sphere extends RadialGeometry implements Geometry{
     }
 
     @Override
-    public List<Point3D> findIntsersections(Ray ray) {
-        List<Point3D> intsersections=new ArrayList<Point3D>();
+    public List <Point3D> findIntsersections(Ray ray) {
+        List <Point3D> intsersections=new ArrayList<Point3D>();
         try {
             Vector u = center.subtract(ray.getPoint());
             double tm = ray.getDirection().dotProduct(u);
