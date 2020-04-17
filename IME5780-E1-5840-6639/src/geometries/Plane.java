@@ -41,7 +41,6 @@ public class Plane implements Geometry {
 
     @Override
     public List<Point3D> findIntsersections(Ray ray) {
-        List<Point3D> intsersections=new ArrayList<Point3D>();
         if (ray.getPoint()==this.pointInPlane)
             return null;
         double isParallel=ray.getDirection().dotProduct(normal);
@@ -50,8 +49,7 @@ public class Plane implements Geometry {
         double t=(this.normal.dotProduct(this.pointInPlane.subtract(ray.getPoint())))/(this.normal.dotProduct(ray.getDirection()));
 
         if(t>0) {
-            intsersections.add(ray.getPoint().add(ray.getDirection().scale(t)));
-            return intsersections;
+            return List.of(ray.getPoint().add(ray.getDirection().scale(t)));
         }
         return null;
     }

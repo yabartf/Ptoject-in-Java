@@ -31,7 +31,6 @@ public class Sphere extends RadialGeometry implements Geometry{
 
     @Override
     public List <Point3D> findIntsersections(Ray ray) {
-        List <Point3D> intsersections=new ArrayList<Point3D>();
         try {
             Vector u = center.subtract(ray.getPoint());
             double tm = ray.getDirection().dotProduct(u);
@@ -42,14 +41,15 @@ public class Sphere extends RadialGeometry implements Geometry{
             double t1 = Util.alignZero(tm + th), t2 = Util.alignZero(tm - th);
             if (t1<=0&t2<=0)
                 return null;
-            if (t1 > 0)
-                intsersections.add(ray.getPoint().add(ray.getDirection().scale(t1)));
-            if (t2 > 0)
-                intsersections.add(ray.getPoint().add(ray.getDirection().scale(t2)));
+            if (t1 > 0&t2<=0)
+               return List.of(ray.getPoint().add(ray.getDirection().scale(t1)));
+            if (t2 > 0&t1<=0)
+                return List.of(ray.getPoint().add(ray.getDirection().scale(t2)));
+            return List.of(ray.getPoint().add(ray.getDirection().scale(t1)),ray.getPoint().add(ray.getDirection().scale(t2)));
         }
         catch (IllegalArgumentException e){
-            intsersections.add(ray.getPoint().add(ray.getDirection().scale(_radius)));
+         return List.of(ray.getPoint().add(ray.getDirection().scale(_radius)));
         }
-        return intsersections;
+
     }
 }
