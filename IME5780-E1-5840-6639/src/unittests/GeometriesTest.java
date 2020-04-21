@@ -30,7 +30,7 @@ class GeometriesTest {
         Geometries geometries = new Geometries();
         assertNull(geometries.findIntsersections(ray));
 
-        // TC:02 all..
+        // TC:02 all...
         geometries.add(triangle,sphere,plane);
         assertEquals(geometries.findIntsersections(ray).size(),3);
 
