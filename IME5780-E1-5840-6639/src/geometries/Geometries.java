@@ -26,6 +26,12 @@ public class Geometries implements Intersectable {
 
     @Override
     public List<Point3D> findIntsersections(Ray ray) {
+        List<Point3D> answer = new ArrayList<>();
+        for (var shape: intersectables) {
+            answer.addAll(shape.findIntsersections(ray));
+        }
+        if(answer.size() > 0)
+            return answer;
         return null;
     }
 }
