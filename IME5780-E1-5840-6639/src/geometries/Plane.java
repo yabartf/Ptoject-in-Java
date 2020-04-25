@@ -49,7 +49,7 @@ public class Plane implements Geometry {
         double t=(this.normal.dotProduct(this.pointInPlane.subtract(ray.getPoint())))/(this.normal.dotProduct(ray.getDirection()));
 
         if(t>0) {
-            return List.of(ray.getPoint().add(ray.getDirection().scale(t)));
+            return List.of(ray.getTargetPoint(t));
         }
         return null;
     }

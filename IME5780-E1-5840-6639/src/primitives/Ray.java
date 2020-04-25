@@ -1,5 +1,7 @@
 package primitives;
 
+import static primitives.Util.isZero;
+
 public class Ray {
     Point3D point;
     Vector direction;
@@ -13,6 +15,10 @@ public class Ray {
     public Ray(Ray other){
         this.direction = other.direction;
         this.point = other.point;
+    }
+
+    public Point3D getTargetPoint(double length) {
+        return isZero(length ) ? point : point.add(direction.scale(length));
     }
 
     public Vector getDirection() {

@@ -26,7 +26,7 @@ public class Tube extends RadialGeometry implements Geometry{
     public Vector getNormal(Point3D point) {
 
         double t=legate.getDirection().dotProduct(point.subtract(legate.getPoint()));
-        Point3D o=legate.getPoint().add(legate.getDirection().scale(t));
+        Point3D o=legate.getTargetPoint(t);
         Vector n=point.subtract(o).normalized();
         return n;
     }

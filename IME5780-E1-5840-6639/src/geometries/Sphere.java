@@ -42,13 +42,13 @@ public class Sphere extends RadialGeometry implements Geometry{
             if (t1<=0&t2<=0)
                 return null;
             if (t1 > 0&t2<=0)
-               return List.of(ray.getPoint().add(ray.getDirection().scale(t1)));
+               return List.of(ray.getTargetPoint(t1));
             if (t2 > 0&t1<=0)
-                return List.of(ray.getPoint().add(ray.getDirection().scale(t2)));
-            return List.of(ray.getPoint().add(ray.getDirection().scale(t1)),ray.getPoint().add(ray.getDirection().scale(t2)));
+                return List.of(ray.getTargetPoint(t2));
+            return List.of((ray.getTargetPoint(t1)),ray.getTargetPoint(t2));
         }
         catch (IllegalArgumentException e){
-         return List.of(ray.getPoint().add(ray.getDirection().scale(_radius)));
+         return List.of(ray.getTargetPoint(_radius));
         }
 
     }
