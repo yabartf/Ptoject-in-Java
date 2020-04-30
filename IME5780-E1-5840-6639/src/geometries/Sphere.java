@@ -35,15 +35,15 @@ public class Sphere extends RadialGeometry implements Geometry{
             Vector u = center.subtract(ray.getPoint());
             double tm = ray.getDirection().dotProduct(u);
             double d = Math.sqrt(u.lengthSquared() - tm * tm);
-            if (d > _radius |Util.isZero(d-_radius) )
+            if (d > _radius ||Util.isZero(d-_radius) )
                 return null;
             double th = Math.sqrt(_radius * _radius - d * d);
             double t1 = Util.alignZero(tm + th), t2 = Util.alignZero(tm - th);
-            if (t1<=0&t2<=0)
+            if (t2 <= 0 && t1 <= 0)
                 return null;
-            if (t1 > 0&t2<=0)
+            if (t1 > 0&&t2<=0)
                return List.of(ray.getTargetPoint(t1));
-            if (t2 > 0&t1<=0)
+            if (t2 > 0&&t1<=0)
                 return List.of(ray.getTargetPoint(t2));
             return List.of((ray.getTargetPoint(t1)),ray.getTargetPoint(t2));
         }

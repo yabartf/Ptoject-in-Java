@@ -6,7 +6,7 @@ public class Point3D {
     Coordinate _x;
     Coordinate _y;
     Coordinate _z;
-    static final Point3D ZERO = new Point3D(0,0,0);
+    public static final Point3D ZERO = new Point3D(0,0,0);
 
     /**
      * distance methods
@@ -29,9 +29,9 @@ public class Point3D {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Point3D point3D = (Point3D) o;
-        return Objects.equals(_x, point3D._x) &&
-                Objects.equals(_y, point3D._y) &&
-                Objects.equals(_z, point3D._z);
+        return Util.isZero(_x.get()-point3D._x.get()) &&
+                Util.isZero(_y.get()- point3D._y.get()) &&
+                Util.isZero(_z.get()- point3D._z.get());
     }
 
     @Override

@@ -28,4 +28,12 @@ public class Ray {
     public Point3D getPoint() {
         return point;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Ray other=(Ray)obj;
+        return (this.point.equals(other.getPoint())&&this.direction.equals(other.direction));
+    }
 }
