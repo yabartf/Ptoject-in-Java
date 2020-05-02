@@ -20,10 +20,10 @@ class GeometriesTest {
 
     @org.junit.jupiter.api.Test
     void findIntsersections() {
-        Ray ray = new Ray(new Vector(0,2,2), new Point3D(2,0,0));
-        Triangle triangle = new Triangle(new Point3D(3,0,0), new Point3D(0.51,0.78,0),new Point3D(2,1.07,1.07));
-        Sphere sphere = new Sphere(new Point3D(2.1,0.47,0.47),0.3);
-        Plane plane = new Plane(new Vector(-1.01,-3.83,0.37), new Point3D(2,1.66,1.66));
+        Ray ray = new Ray(new Vector(1,0,0.25), new Point3D(2,0,0));
+        Triangle triangle = new Triangle(new Point3D(6,-2,0), new Point3D(6,2,0),new Point3D(6,0,3));
+        Sphere sphere = new Sphere(new Point3D(3.5,0.5,0),1);
+        Plane plane = new Plane(new Point3D(7,-2,0),new Point3D(7,2,0),new Point3D(7,0,3));
 
         // =============== Boundary Values Tests ==================
         // TC:01 empty list
@@ -32,20 +32,20 @@ class GeometriesTest {
 
         // TC:02 all...
         geometries.add(triangle,sphere,plane);
-        assertEquals(geometries.findIntsersections(ray).size(),3,"02");
+        assertEquals(4,geometries.findIntsersections(ray).size(),"2 intersetions(2 in sphere)");
 
         // TC:03 list size = 1
-        ray = new Ray(new Vector(0.1,0.68,0),new Point3D(0.65,1.31,0));
-        assertEquals(geometries.findIntsersections(ray).size(),1,"03");
+        ray = new Ray(new Vector(1,0,0.25), new Point3D(6.5,0,0.25));
+        assertEquals(geometries.findIntsersections(ray).size(),1,"1 intersection(only plane)");
 
         // TC:04 list size = 0
-        ray = new Ray(new Vector(1,1,1),new Point3D( -3,-3,-4));
-        assertEquals(geometries.findIntsersections(ray).size(),0,"04");
+        ray = new Ray(new Vector(-1,0,0.25), new Point3D(2,0,0));
+        assertNull(geometries.findIntsersections(ray),"not null");
 
         // ============ Equivalence Partitions Tests ==============
         // TC:05 list size = 2
-        ray = new Ray(new Vector(0.24,0.25,0.5), new Point3D(2.16,1.35,0));
-        assertEquals(geometries.findIntsersections(ray).size(),2,"05");
+        ray = new Ray(new Vector(1,0,0.25), new Point3D(5,0,0));
+        assertEquals(geometries.findIntsersections(ray).size(),2,"2 intersetions");
 
     }
 }

@@ -17,7 +17,7 @@ public class CameraTest {
         }catch (IllegalArgumentException e) { }
         try {
            Camera cam= new Camera(new Point3D(0,0,0),new Vector(1,0,0),new Vector(0,1,0));
-           assertEquals("fail to make the right vector",new Vector(0,0,1),cam.getVright());
+           assertEquals("fail to make the right vector",new Vector(0,0,-1),cam.getVright());
         }catch (IllegalArgumentException e){
             fail("fail to vonstarct a correct camera");
         }

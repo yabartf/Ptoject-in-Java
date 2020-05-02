@@ -69,8 +69,8 @@ public class Vector {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Vector vector = (Vector) o;
-        return Objects.equals(point, vector.point);
+        Vector other = (Vector) o;
+        return point.equals(other.point);
     }
 
     /**

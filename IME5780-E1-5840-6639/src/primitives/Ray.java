@@ -34,6 +34,6 @@ public class Ray {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         Ray other=(Ray)obj;
-        return (this.point.equals(other.getPoint())&&this.direction.equals(other.direction));
+        return (this.point.equals(other.point)&&this.direction.equals(other.direction));
     }
 }
