@@ -8,8 +8,15 @@ import primitives.Vector;
 import java.util.List;
 
 public class Cylinder extends RadialGeometry implements Geometry {
+    // the height of the clynder
     double height;
 
+    /***
+     * \
+     * @param radius the radius of the clyinder go to the super class radial gemetry
+     * @param hei the hight of the cylinder
+     * @throws IllegalArgumentException if hight is less the 0
+     */
     Cylinder(double radius,double hei){
     super(radius);
     if (hei<0)
@@ -32,7 +39,7 @@ public class Cylinder extends RadialGeometry implements Geometry {
     }
 
     @Override
-    public List<Point3D> findIntsersections(Ray ray) {
+    public List<Point3D> findIntersections(Ray ray) {
         return null;
     }
 }

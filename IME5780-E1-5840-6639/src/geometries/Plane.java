@@ -47,7 +47,7 @@ public class Plane implements Geometry {
      */
 
     @Override
-    public List<Point3D> findIntsersections(Ray ray) {
+    public List<Point3D> findIntersections(Ray ray) {
         if (ray.getPoint()==this.pointInPlane)
             return null;
         double isParallel=ray.getDirection().dotProduct(normal);

@@ -4,7 +4,6 @@ import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
 
-import java.util.Iterator;
 import java.util.List;
 
 import static primitives.Util.isZero;
@@ -26,9 +25,9 @@ public class Triangle extends Polygon implements Geometry{
      * @return list of Intsersections
      */
 
-    public List<Point3D> findIntsersections(Ray ray) {
+    public List<Point3D> findIntersections(Ray ray) {
 
-        List<Point3D> intersections = _plane.findIntsersections(ray);
+        List<Point3D> intersections = _plane.findIntersections(ray);
         if (intersections == null)
             return null;
 
