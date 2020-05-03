@@ -29,6 +29,12 @@ public class Sphere extends RadialGeometry implements Geometry{
         return center;
     }
 
+    /**
+     * find Intsersections
+     * @param ray
+     * @return list of Intsersections
+     */
+
     @Override
     public List <Point3D> findIntsersections(Ray ray) {
         if (ray.getPoint().equals(this.center))

@@ -39,6 +39,13 @@ public class Plane implements Geometry {
         pointInPlane = x;
     }
 
+
+    /**
+     * find Intsersections
+     * @param ray
+     * @return list of Intsersections
+     */
+
     @Override
     public List<Point3D> findIntsersections(Ray ray) {
         if (ray.getPoint()==this.pointInPlane)

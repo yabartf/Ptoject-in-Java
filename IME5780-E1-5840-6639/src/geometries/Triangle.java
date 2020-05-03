@@ -17,9 +17,14 @@ public class Triangle extends Polygon implements Geometry{
         super(p1,p2,p3);
     }
 
-    public Vector getNormal(Point3D p){
+    public Vector getNormal(Point3D p) {
         return super.getNormal(p);
     }
+    /**
+     * find Intsersections
+     * @param ray
+     * @return list of Intsersections
+     */
 
     public List<Point3D> findIntsersections(Ray ray) {
 
@@ -43,4 +48,4 @@ public class Triangle extends Polygon implements Geometry{
 
         return ((s1 > 0 && s2 > 0 && s3 > 0) || (s1 < 0 && s2 < 0 && s3 < 0)) ? intersections : null;
     }
-    }
+}

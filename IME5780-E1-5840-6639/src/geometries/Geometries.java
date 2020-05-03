@@ -24,6 +24,13 @@ public class Geometries implements Intersectable {
             this.intersectables.addAll(Arrays.asList(_geometries));
     }
 
+
+    /**
+     * find Intsersections
+     * @param ray
+     * @return list of Intsersections from all shapes
+     */
+
     @Override
     public List<Point3D> findIntsersections(Ray ray) {
         List<Point3D> answer = new ArrayList<>();

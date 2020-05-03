@@ -30,15 +30,15 @@ public class Camera {
      */
     public Ray constructRayThroughPixel (int nX, int nY, int j, int i, double screenDistance,
                                          double screenWidth, double screenHeight){
-        Point3D center=location.add(this.Vto.scale(screenDistance));
-        double ratioY=screenHeight/nY;
-        double ratioX=screenWidth/nX;
-        double yi=(i-nY/2d)*ratioY+ratioY/2;
-        double xj=(j-nX/2d)*ratioX+ratioX/2;
-        Point3D p_i_j=center;
-        if(xj!=0)p_i_j=p_i_j.add(Vright.scale(xj));
-        if(yi!=0)p_i_j=p_i_j.add(Vup.scale(-yi));
-        Ray ray= new Ray(p_i_j.subtract(location),location);
+        Point3D center = location.add(this.Vto.scale(screenDistance));
+        double ratioY = screenHeight / nY;
+        double ratioX = screenWidth / nX;
+        double yi = (i-nY/2d) * ratioY + ratioY / 2;
+        double xj = (j-nX/2d) * ratioX + ratioX / 2;
+        Point3D p_i_j = center;
+        if(xj!=0)p_i_j = p_i_j.add(Vright.scale(xj));
+        if(yi!=0)p_i_j = p_i_j.add(Vup.scale(-yi));
+        Ray ray= new Ray(p_i_j.subtract(location), location);
         return ray;
     }
 
