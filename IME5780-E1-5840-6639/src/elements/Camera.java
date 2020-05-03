@@ -19,30 +19,29 @@ public class Camera {
 
     /***
      *
-     * @param nX
-     * @param nY
-     * @param j
-     * @param i
-     * @param screenDistance
-     * @param screenWidth
-     * @param screenHeight
-     * @return
+     * @param nX number of width pixels
+     * @param nY number of height pixels
+     * @param j the index that the ray go through
+     * @param i the index that the ray go through
+     * @param screenDistance the distance of the screen from the camera
+     * @param screenWidth the width of the screen
+     * @param screenHeight the hight of the screen
+     * @return the ray prom the camera through the wanted pixel
      */
     public Ray constructRayThroughPixel (int nX, int nY, int j, int i, double screenDistance,
                                          double screenWidth, double screenHeight){
-        Point3D center=location.add(this.Vto.scale(screenDistance));
-        double ratioY=screenHeight/nY;
-        double ratioX=screenWidth/nX;
-        double yi=(i-nY/2d)*ratioY+ratioY/2;
+        Point3D center=location.add(this.Vto.scale(screenDistance));//the center is the point that towads the camera
+        double ratioY=screenHeight/nY;//size of each pixel
+        double ratioX=screenWidth/nX;//size of each pixel
+        double yi=(i-nY/2d)*ratioY+ratioY/2;//the distance of the center of the pixle from the center of the screen
         double xj=(j-nX/2d)*ratioX+ratioX/2;
         Point3D p_i_j=center;
-        if(xj!=0)p_i_j=p_i_j.add(Vright.scale(xj));
+        if(xj!=0)p_i_j=p_i_j.add(Vright.scale(xj));//set yhe point in the center of the wanted pixel
         if(yi!=0)p_i_j=p_i_j.add(Vup.scale(-yi));
-        Ray ray= new Ray(p_i_j.subtract(location),location);
-        return ray;
+        return new Ray(p_i_j.subtract(location),location);
     }
 
-
+/**************getters******************/
     public Vector getVright() {
         return Vright;
     }

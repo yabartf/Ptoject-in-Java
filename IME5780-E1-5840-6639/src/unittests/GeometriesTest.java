@@ -28,24 +28,24 @@ class GeometriesTest {
         // =============== Boundary Values Tests ==================
         // TC:01 empty list
         Geometries geometries = new Geometries();
-        assertNull(geometries.findIntsersections(ray),"not null");
+        assertNull(geometries.findIntersections(ray),"not null");
 
         // TC:02 all...
         geometries.add(triangle,sphere,plane);
-        assertEquals(4,geometries.findIntsersections(ray).size(),"2 intersetions(2 in sphere)");
+        assertEquals(4,geometries.findIntersections(ray).size(),"2 intersetions(2 in sphere)");
 
         // TC:03 list size = 1
         ray = new Ray(new Vector(1,0,0.25), new Point3D(6.5,0,0.25));
-        assertEquals(geometries.findIntsersections(ray).size(),1,"1 intersection(only plane)");
+        assertEquals(geometries.findIntersections(ray).size(),1,"1 intersection(only plane)");
 
         // TC:04 list size = 0
         ray = new Ray(new Vector(-1,0,0.25), new Point3D(2,0,0));
-        assertNull(geometries.findIntsersections(ray),"not null");
+        assertNull(geometries.findIntersections(ray),"not null");
 
         // ============ Equivalence Partitions Tests ==============
         // TC:05 list size = 2
         ray = new Ray(new Vector(1,0,0.25), new Point3D(5,0,0));
-        assertEquals(geometries.findIntsersections(ray).size(),2,"2 intersetions");
+        assertEquals(geometries.findIntersections(ray).size(),2,"2 intersetions");
 
     }
 }

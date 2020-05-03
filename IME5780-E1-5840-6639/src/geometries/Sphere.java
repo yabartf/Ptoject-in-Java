@@ -30,7 +30,7 @@ public class Sphere extends RadialGeometry implements Geometry{
     }
 
     @Override
-    public List <Point3D> findIntsersections(Ray ray) {
+    public List <Point3D> findIntersections(Ray ray) {
         if (ray.getPoint().equals(this.center))
             return List.of(ray.getTargetPoint(_radius));
         Vector u = center.subtract(ray.getPoint());
