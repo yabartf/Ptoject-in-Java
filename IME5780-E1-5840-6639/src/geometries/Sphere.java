@@ -32,7 +32,7 @@ public class Sphere extends RadialGeometry implements Geometry{
     /**
      * find Intsersections
      * @param ray
-     * @return list of Intsersections
+     * @return list of Intsersections.
      */
 
     @Override
