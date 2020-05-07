@@ -4,6 +4,8 @@ import elements.*;
 import geometries.*;
 import primitives.*;
 
+import java.util.ArrayList;
+
 public class Scene {
     String _name;
     Color _background;
@@ -13,46 +15,48 @@ public class Scene {
     double _distance;
 
     public Scene(String _name) {
+
         this._name = _name;
+        _geometries=new Geometries();
     }
 
-    public String get_name() {
+    public String getName() {
         return _name;
     }
 
-    public Color get_background() {
-        return _background;
+    public java.awt.Color getBackground() {
+        return _background.getColor();
     }
 
-    public AmbientLight get_ambientLight() {
+    public AmbientLight getAmbientLight() {
         return _ambientLight;
     }
 
-    public Geometries get_geometries() {
+    public Geometries getGeometries() {
         return _geometries;
     }
 
-    public Camera get_camera() {
+    public Camera getCamera() {
         return _camera;
     }
 
-    public double get_distance() {
+    public double getDistance() {
         return _distance;
     }
 
-    public void set_background(Color _background) {
+    public void setBackground(Color _background) {
         this._background = _background;
     }
 
-    public void set_ambientLight(AmbientLight _ambientLight) {
+    public void setAmbientLight(AmbientLight _ambientLight) {
         this._ambientLight = _ambientLight;
     }
 
-    public void set_camera(Camera _camera) {
+    public void setCamera(Camera _camera) {
         this._camera = _camera;
     }
 
-    public void set_distance(double _distance) {
+    public void setDistance(double _distance) {
         this._distance = _distance;
     }
 

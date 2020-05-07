@@ -53,4 +53,6 @@ public class Camera {
     public Vector getVto() {
         return Vto;
     }
+
+    public Point3D getLocation() { return location; }
 }
