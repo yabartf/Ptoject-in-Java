@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Plane implements Geometry {
+public class Plane extends Geometry {
     Vector normal;
     Point3D pointInPlane;
 

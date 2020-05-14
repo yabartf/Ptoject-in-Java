@@ -4,7 +4,7 @@ import primitives.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Sphere extends RadialGeometry implements Geometry{
+public class Sphere extends RadialGeometry {
     Point3D center;
     /***************constructor***************/
 

@@ -5,7 +5,7 @@ import primitives.*;
 import java.util.List;
 
 
-public class Tube extends RadialGeometry implements Geometry{
+public class Tube extends RadialGeometry {
     Ray legate;
 
     /***************constructor***************/
