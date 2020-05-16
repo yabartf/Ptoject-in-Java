@@ -5,7 +5,7 @@ import primitives.*;
 import java.util.List;
 
 
-public class Tube extends RadialGeometry implements Geometry{
+public class Tube extends RadialGeometry{
     Ray legate;
 
     /***************constructor***************/
@@ -36,7 +36,7 @@ public class Tube extends RadialGeometry implements Geometry{
     }
 
     @Override
-    public List<Point3D> findIntersections(Ray ray) {
+    public List<GeoPoint> findIntersections(Ray ray) {
         return null;
     }
 }

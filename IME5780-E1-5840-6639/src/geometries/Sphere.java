@@ -4,7 +4,7 @@ import primitives.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Sphere extends RadialGeometry implements Geometry{
+public class Sphere extends RadialGeometry{
     Point3D center;
     /***************constructor***************/
 
@@ -36,9 +36,9 @@ public class Sphere extends RadialGeometry implements Geometry{
      */
 
     @Override
-    public List <Point3D> findIntersections(Ray ray) {
+    public List <GeoPoint> findIntersections(Ray ray) {
         if (ray.getPoint().equals(this.center))
-            return List.of(ray.getTargetPoint(_radius));
+            return List.of(new GeoPoint(this,ray.getTargetPoint(_radius)));
         Vector u = center.subtract(ray.getPoint());
         double tm = ray.getDirection().dotProduct(u);
         double d = Math.sqrt(u.lengthSquared() - tm * tm);
@@ -49,9 +49,9 @@ public class Sphere extends RadialGeometry implements Geometry{
         if (t2 <= 0 && t1 <= 0)
             return null;
         if (t1 > 0&&t2<=0)
-            return List.of(ray.getTargetPoint(t1));
+            return List.of(new GeoPoint(this,(ray.getTargetPoint(t1))));
         if (t2 > 0&&t1<=0)
-            return List.of(ray.getTargetPoint(t2));
-        return List.of((ray.getTargetPoint(t1)),ray.getTargetPoint(t2));
+            return List.of(new GeoPoint(this,(ray.getTargetPoint(t2))));
+        return List.of(new GeoPoint(this,ray.getTargetPoint(t1)),new GeoPoint(this,ray.getTargetPoint(t2)));
     }
 }

@@ -129,7 +129,7 @@ public class VectorTest {
             v.normalize();
             fail("Didn't throw divide by zero exception!");
         } catch (IllegalArgumentException ex) {
-          //  assertEquals("Point3D(0.0,0.0,0.0) not valid for vector head", ex.getMessage());
+            assertEquals("zero vector", ex.getMessage());
         }
         assertTrue(true);
     }

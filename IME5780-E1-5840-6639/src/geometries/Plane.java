@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Plane implements Geometry {
+public class Plane extends Geometry {
     Vector normal;
     Point3D pointInPlane;
 
@@ -47,7 +47,7 @@ public class Plane implements Geometry {
      */
 
     @Override
-    public List<Point3D> findIntersections(Ray ray) {
+    public List<GeoPoint> findIntersections(Ray ray) {
         if (ray.getPoint()==this.pointInPlane)
             return null;
         double isParallel=ray.getDirection().dotProduct(normal);
@@ -56,7 +56,7 @@ public class Plane implements Geometry {
         double t=(this.normal.dotProduct(this.pointInPlane.subtract(ray.getPoint())))/(this.normal.dotProduct(ray.getDirection()));
 
         if(t>0) {
-            return List.of(ray.getTargetPoint(t));
+            return List.of(new GeoPoint(this,ray.getTargetPoint(t)));
         }
         return null;
     }

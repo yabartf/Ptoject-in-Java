@@ -1,6 +1,7 @@
 package renderer;
 import elements.*;
 import geometries.Intersectable;
+import geometries.Intersectable.GeoPoint;
 import primitives.Color;
 import primitives.Ray;
 import scene.*;
@@ -28,7 +29,7 @@ public class Render {
         for (int i = 0; i <nY ; i++) {
             for (int j = 0; j <nX ; j++) {
                 Ray ray=camera.constructRayThroughPixel(nX,nY,j,i,distance,width,height);
-                List<Point3D> intersectionPoints = geometries.findIntersections(ray);
+                List<GeoPoint> intersectionPoints = geometries.findIntersections(ray);
                 if (intersectionPoints ==null)
                 imageWriter.writePixel(j, i, background);
                 else {
@@ -44,15 +45,15 @@ public class Render {
      private Color calcColor(Point3D p){
         return scene.getAmbientLight().getIntensity();
     }
-    public Point3D getClosestPoint(List<Point3D> points){
+    public Point3D getClosestPoint(List<GeoPoint> points){
         Point3D closesPoint=null;
         Point3D cameraLocation=scene.getCamera().getLocation();
         double closesDistance=Double.MAX_VALUE;
         for (var point:points) {
-            double distance=point.distance(cameraLocation);
+            double distance=point.point.distance(cameraLocation);
             if (distance<closesDistance){
                 closesDistance=distance;
-                closesPoint=point;
+                closesPoint=point.point;
             }
         }
         return closesPoint;
