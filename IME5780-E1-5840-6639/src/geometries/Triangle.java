@@ -1,8 +1,6 @@
 package geometries;
 
-import primitives.Point3D;
-import primitives.Ray;
-import primitives.Vector;
+import primitives.*;
 
 import java.util.List;
 
@@ -14,6 +12,9 @@ public class Triangle extends Polygon{
 
     public Triangle(Point3D p1,Point3D p2,Point3D p3) {
         super(p1,p2,p3);
+    }
+    public Triangle(Color objColor,Point3D p1,Point3D p2,Point3D p3){
+        super(objColor,p1,p2,p3);
     }
 
     public Vector getNormal(Point3D p) {

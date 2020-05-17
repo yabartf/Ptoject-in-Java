@@ -12,6 +12,10 @@ public class Sphere extends RadialGeometry{
         super(radius);
         this.center=c;
     }
+    public Sphere(Color objColor,Point3D c,double radius){
+        this(c, radius);
+        _emmission=objColor;
+    }
 
     /***************getters***************/
 

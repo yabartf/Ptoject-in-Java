@@ -77,6 +77,10 @@ public class Polygon extends Geometry {
                 throw new IllegalArgumentException("All vertices must be ordered and the polygon must be convex");
         }
     }
+    public Polygon(Color objColor,Point3D... vertices){
+        this(vertices);
+        _emmission=objColor;
+    }
 
     @Override
     public Vector getNormal(Point3D point) {

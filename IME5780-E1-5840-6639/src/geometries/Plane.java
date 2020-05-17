@@ -1,5 +1,6 @@
 package geometries;
 
+import primitives.Color;
 import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
@@ -20,18 +21,23 @@ public class Plane extends Geometry {
     public Vector getNormal(){
         return normal.normalized();
     }
-
-    public Plane(Vector normal, Point3D point) {
-        this.normal = normal;
-        this.pointInPlane = point;
-    }
-
     public Point3D getPointInPlane() {
         return pointInPlane;
     }
 
-    /***************constructors***************/
 
+
+
+    /***************constructors***************/
+    public Plane(Vector normal, Point3D point) {
+        this.normal = normal;
+        this.pointInPlane = point;
+    }
+    public Plane(Color objectColor,Vector normal, Point3D point) {
+        this(normal,point);
+        _emmission=objectColor;
+
+    }
     public Plane(Point3D x,Point3D y,Point3D z) {
         Vector one = x.subtract(y);
         Vector two = x.subtract(z);
@@ -39,6 +45,10 @@ public class Plane extends Geometry {
         pointInPlane = x;
     }
 
+    public Plane(Color objColor,Point3D x,Point3D y,Point3D z){
+        this(x,y,z);
+        _emmission=objColor;
+    }
 
     /**
      * find Intsersections
