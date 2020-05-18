@@ -70,5 +70,4 @@ public class Render {
     public void writeToImage(){
         imageWriter.writeToImage();
     }
-
 }
