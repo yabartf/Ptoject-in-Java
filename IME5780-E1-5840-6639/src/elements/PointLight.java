@@ -6,7 +6,7 @@ import primitives.Vector;
 
 public class PointLight extends Light implements LightSource {
     protected Point3D _pL;
-    private double _kc,_kl,_kq;
+    protected double _kc,_kl,_kq;
 
     public PointLight(Color emmision,Point3D pos,double kc,double kl,double kq){
         super(emmision);
@@ -24,7 +24,8 @@ public class PointLight extends Light implements LightSource {
     public Vector getL(Point3D p){
         try {
             return p.subtract(_pL);
-        }catch (IllegalArgumentException e){
+        }
+        catch (IllegalArgumentException e){
             return null;
         }
     }

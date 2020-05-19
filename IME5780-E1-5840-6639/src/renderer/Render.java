@@ -18,6 +18,7 @@ public class Render {
     }
 
     public void renderImage(){
+
         Camera camera=scene.getCamera();
         Intersectable geometries=scene.getGeometries();
         java.awt.Color background=scene.getBackground();
@@ -30,10 +31,10 @@ public class Render {
             for (int j = 0; j <nX ; j++) {
                 Ray ray=camera.constructRayThroughPixel(nX,nY,j,i,distance,width,height);
                 List<GeoPoint> intersectionPoints = geometries.findIntersections(ray);
-                if (intersectionPoints ==null)
+                if (intersectionPoints == null)
                 imageWriter.writePixel(j, i, background);
                 else {
-                    Point3D closestPoint = getClosestPoint(intersectionPoints);
+                    GeoPoint closestPoint = getClosestPoint(intersectionPoints);
                     imageWriter.writePixel(j, i, calcColor(closestPoint).getColor());
                 }
             }
@@ -42,18 +43,18 @@ public class Render {
     }
 
 
-     private Color calcColor(Point3D p){
+     private Color calcColor(GeoPoint p){
         return scene.getAmbientLight().getIntensity();
     }
-    public Point3D getClosestPoint(List<GeoPoint> geopoints){
-        Point3D closesPoint=null;
+    public GeoPoint getClosestPoint(List<GeoPoint> geoPointsList){
+        GeoPoint closesPoint=null;
         Point3D cameraLocation=scene.getCamera().getLocation();
         double closesDistance=Double.MAX_VALUE;
-        for (var geopoint:geopoints) {
-            double distance=geopoint.point.distance(cameraLocation);
-            if (distance<closesDistance){
-                closesDistance=distance;
-                closesPoint=geopoint.point;
+        for (var geoPoint:geoPointsList) {
+            double distance=geoPoint.point.distance(cameraLocation);
+            if (distance < closesDistance){
+                closesDistance = distance;
+                closesPoint = geoPoint;
             }
         }
         return closesPoint;
@@ -68,8 +69,5 @@ public class Render {
             }
         }
     }
-    public void writeToImage(){
-        imageWriter.writeToImage();
-    }
-
+    public void writeToImage(){imageWriter.writeToImage();}
 }
