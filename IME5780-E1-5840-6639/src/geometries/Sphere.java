@@ -6,6 +6,12 @@ import java.util.List;
 
 public class Sphere extends RadialGeometry{
     Point3D center;
+
+    public Sphere(double _radius, Point3D center, Material material, Color emmision) {
+        super(emmision, material, _radius);
+        this.center = center;
+    }
+
     /***************constructor***************/
 
     public Sphere(Point3D c,double radius){

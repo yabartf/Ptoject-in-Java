@@ -5,6 +5,8 @@ import geometries.*;
 import primitives.*;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Scene {
     String _name;
@@ -13,6 +15,15 @@ public class Scene {
     Geometries _geometries;
     Camera _camera;
     double _distance;
+    List <LightSource> _lights = new LinkedList<LightSource>();
+
+    public List<LightSource> get_lights() {
+        return _lights;
+    }
+
+    public  void addLights(LightSource... lights){
+        _lights.addAll(List.of(lights));
+    }
 
     public Scene(String _name) {
 

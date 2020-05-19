@@ -4,6 +4,7 @@ import geometries.Intersectable;
 import geometries.Intersectable.GeoPoint;
 import primitives.Color;
 import primitives.Ray;
+import primitives.Vector;
 import scene.*;
 import primitives.Point3D;
 
@@ -43,9 +44,28 @@ public class Render {
     }
 
 
-     private Color calcColor(GeoPoint p){
-        return p.geometry.get_emmission();
+    private Color calcColor(GeoPoint intersection) {
+        Color color = scene.getAmbientLight().getIntensity();
+        color = color.add(intersection.geometry.get_emmission());
+        Vector v = intersection.point.subtract(scene.getCamera().getLocation()).normalize();
+        Vector n = intersection.geometry.getNormal(intersection.point);
+        int nShininess = intersection.geometry.get_matirial().getnShininess();
+        double kd = intersection.geometry.get_matirial().getKd();
+        double ks = intersection.geometry.get_matirial().getKs();
+        for (LightSource lightSource : scene.get_lights()) {
+            Vector l = lightSource.getL(intersection.point);
+            double n1 = n.dotProduct(l);
+            double n2 = n.dotProduct(v);
+            if (n1 > 0 && n2 > 0 || n1 < 0 && n2 < 0) {
+                Color lightIntensity = lightSource.getIntensity(intersection.point);
+                color = color.add(calcDiffusive(kd, l, n, lightIntensity),
+                        calcSpecular(ks, l, n, v, nShininess, lightIntensity));
+            }
+
+        }
     }
+
+
     public GeoPoint getClosestPoint(List<GeoPoint> geoPointsList){
         GeoPoint closesPoint=null;
         Point3D cameraLocation=scene.getCamera().getLocation();
