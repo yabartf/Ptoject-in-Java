@@ -23,7 +23,7 @@ public class RenderTests {
     @Test
     public void basicRenderTwoColorTest() {
         Scene scene = new Scene("Test scene");
-        scene.setCamera(new Camera(Point3D.ZERO, new Vector(0, 0, 1), new Vector(0, -1, 0)));
+        scene.setCamera(new Camera(Point3D.ZERO,  new Vector(0, -1, 0),new Vector(0, 0, 1)));
         scene.setDistance(100);
         scene.setBackground(new Color(75, 127, 90));
         scene.setAmbientLight(new AmbientLight(new Color(255, 191, 191), 1));
@@ -47,17 +47,17 @@ public class RenderTests {
     @Test
     public void basicRenderMultiColorTest() {
         Scene scene = new Scene("Test scene");
-        scene.setCamera(new Camera(Point3D.ZERO, new Vector(0, 0, 1), new Vector(0, -1, 0)));
+        scene.setCamera(new Camera(Point3D.ZERO,  new Vector(0, -1, 0),new Vector(0, 0, 1)));
         scene.setDistance(100);
         scene.setBackground(Color.BLACK);
         scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.2));
 
-        scene.addGeometries(new Sphere(new Point3D(0, 0, 100),50));
+        scene.addGeometries(new Sphere(new Color(java.awt.Color.WHITE), new Point3D(0, 0, 100),50));
 
         scene.addGeometries(
                 new Triangle(new Color(java.awt.Color.BLUE),
                         new Point3D(100, 0, 100), new Point3D(0, 100, 100), new Point3D(100, 100, 100)),      // lower right
-                new Triangle(
+                new Triangle(new Color(java.awt.Color.YELLOW),
                         new Point3D(100, 0, 100), new Point3D(0, -100, 100), new Point3D(100, -100, 100)),    // upper right
                 new Triangle(new Color(java.awt.Color.RED),
                         new Point3D(-100, 0, 100), new Point3D(0, 100, 100), new Point3D(-100, 100, 100)),    // lower left

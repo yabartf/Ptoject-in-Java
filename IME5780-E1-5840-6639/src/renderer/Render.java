@@ -44,7 +44,7 @@ public class Render {
 
 
      private Color calcColor(GeoPoint p){
-        return scene.getAmbientLight().getIntensity();
+        return p.geometry.get_emmission();
     }
     public GeoPoint getClosestPoint(List<GeoPoint> geoPointsList){
         GeoPoint closesPoint=null;
