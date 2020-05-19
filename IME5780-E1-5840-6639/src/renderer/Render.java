@@ -17,6 +17,7 @@ public class Render {
     }
 
     public void renderImage(){
+
         Camera camera=scene.getCamera();
         Intersectable geometries=scene.getGeometries();
         java.awt.Color background=scene.getBackground();
