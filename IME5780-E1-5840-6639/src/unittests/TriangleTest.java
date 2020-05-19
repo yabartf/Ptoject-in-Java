@@ -5,6 +5,7 @@ import org.junit.Test;
 import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
+import geometries.Intersectable.GeoPoint;
 
 import java.util.List;
 
@@ -37,8 +38,8 @@ public class TriangleTest {
         Vector vector=new Vector(1,1,1);
         // ============ Equivalence Partitions Tests ==============
         // TC01: Ray is inside triangle
-        List<Point3D> result=triangleTest.findIntersections(new Ray(vector,new Point3D(-0.5,-0.5,-1)));
-        assertEquals("Ray crosses triangle",p,result.get(0));
+        List<GeoPoint> result=triangleTest.findIntersections(new Ray(vector,new Point3D(-0.5,-0.5,-1)));
+        assertEquals("Ray crosses triangle",new GeoPoint(triangleTest,p),result.get(0));
         //TC02 נקודה בחוץ בזווית בין הצלעות
         result=triangleTest.findIntersections(new Ray(vector,new Point3D(-5,-2,-1)));
         assertEquals("ray doesn't crosses the triangle",null,result);

@@ -1,5 +1,8 @@
 package unittests;
 
+import geometries.Geometries;
+import geometries.Intersectable;
+import geometries.Intersectable.GeoPoint;
 import geometries.Plane;
 import org.junit.Test;
 import primitives.Point3D;
@@ -29,9 +32,9 @@ public class PlaneTest {
         // ============ Equivalence Partitions Tests ==============
 
         Plane plane=new Plane(new Point3D(1,0,0),new Point3D(0,1,0),new Point3D(1,1,0));
-        List<Point3D> resolt=plane.findIntersections(new Ray(new Vector(1,1,1),new Point3D(0,-1,-2)));
+        List<GeoPoint> resolt=plane.findIntersections(new Ray(new Vector(1,1,1),new Point3D(0,-1,-2)));
         assertEquals("ray crosses the plane",1,resolt.size());
-        assertEquals("ray crosses the plane",new Point3D(2,1,0),resolt.get(0));
+        assertEquals("ray crosses the plane",new Point3D(2,1,0),resolt.get(0).point);
         //TC02
         //need to check if not perallel
         resolt=plane.findIntersections(new Ray(new Vector(1,2,0),new Point3D(1,-1,1)));
@@ -47,7 +50,7 @@ public class PlaneTest {
         //TC05 ray is orthogonal to the plane p0 is before the plane
         resolt=plane.findIntersections(new Ray(new Vector(0,0,1),new Point3D(1,2,-2)));
         assertEquals("ray crosses the plane",1,resolt.size());
-        assertEquals("ray crosses the plane",new Point3D(1,2,0),resolt.get(0));
+        assertEquals("ray crosses the plane",new Point3D(1,2,0),resolt.get(0).point);
         //TC06 ray is orthogonal to the plane p0 is in the plane
         resolt=plane.findIntersections(new Ray(new Vector(1,2,0),new Point3D(0,0,1)));
         assertEquals("ray doesn't crosses the plane",null,resolt);

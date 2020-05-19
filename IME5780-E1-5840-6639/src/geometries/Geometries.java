@@ -5,6 +5,7 @@ import primitives.Ray;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Geometries implements Intersectable {  
@@ -39,8 +40,8 @@ public class Geometries implements Intersectable {
      * @return the list of intersection
      */
     @Override
-    public List<Point3D> findIntersections(Ray ray) {
-        List<Point3D> answer = new ArrayList<>();
+    public List<GeoPoint> findIntersections(Ray ray) {
+        List<GeoPoint> answer = new LinkedList<>();
         for (var shape: intersectables) {
             if(shape.findIntersections(ray)!=null)
                   answer.addAll(shape.findIntersections(ray));

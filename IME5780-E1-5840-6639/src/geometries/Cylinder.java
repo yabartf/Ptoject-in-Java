@@ -7,7 +7,7 @@ import primitives.Vector;
 
 import java.util.List;
 
-public class Cylinder extends RadialGeometry  {
+public class Cylinder extends RadialGeometry{
     // the height of the clynder
     double height;
 
@@ -39,7 +39,7 @@ public class Cylinder extends RadialGeometry  {
     }
 
     @Override
-    public List<Point3D> findIntersections(Ray ray) {
+    public List<GeoPoint> findIntersections(Ray ray) {
         return null;
     }
 }
