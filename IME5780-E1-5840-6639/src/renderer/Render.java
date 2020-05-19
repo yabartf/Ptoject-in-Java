@@ -45,15 +45,15 @@ public class Render {
      private Color calcColor(Point3D p){
         return scene.getAmbientLight().getIntensity();
     }
-    public Point3D getClosestPoint(List<GeoPoint> points){
+    public Point3D getClosestPoint(List<GeoPoint> geopoints){
         Point3D closesPoint=null;
         Point3D cameraLocation=scene.getCamera().getLocation();
         double closesDistance=Double.MAX_VALUE;
-        for (var point:points) {
-            double distance=point.point.distance(cameraLocation);
+        for (var geopoint:geopoints) {
+            double distance=geopoint.point.distance(cameraLocation);
             if (distance<closesDistance){
                 closesDistance=distance;
-                closesPoint=point.point;
+                closesPoint=geopoint.point;
             }
         }
         return closesPoint;

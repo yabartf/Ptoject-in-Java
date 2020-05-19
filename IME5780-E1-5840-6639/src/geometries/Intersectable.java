@@ -32,7 +32,7 @@ public interface Intersectable {
 
         private boolean triangeEquals(Triangle triangle, Triangle other) {
             for (int i = 0; i < triangle._vertices.size(); i++) {
-                if (!triangle._vertices.get(i).equals(other._vertices.get(i)))
+                if (!triangle._vertices.contains(other._vertices.get(i)))
                     return false;
             }
             return true;
