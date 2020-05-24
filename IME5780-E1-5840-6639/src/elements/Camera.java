@@ -8,6 +8,12 @@ public class Camera {
     Vector Vup;
     Vector Vright;
 
+    /**
+     * constructor
+     * @param location
+     * @param up
+     * @param to
+     */
     public Camera(Point3D location,Vector up,Vector to) {
         if (up.dotProduct(to)!=0)
             throw new IllegalArgumentException("vectors are not vartical");
@@ -41,7 +47,7 @@ public class Camera {
         return new Ray(p_i_j.subtract(location),location);
     }
 
-/**************getters******************/
+            /**************getters******************/
     public Vector getVright() {
         return Vright;
     }

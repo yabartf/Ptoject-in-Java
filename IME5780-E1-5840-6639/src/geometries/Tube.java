@@ -9,7 +9,11 @@ public class Tube extends RadialGeometry{
     Ray legate;
 
     /***************constructor***************/
-
+    /**
+     * constructor
+     * @param leg
+     * @param rad
+     */
     public Tube(Ray leg,double rad){
         super(rad);
         legate=leg;

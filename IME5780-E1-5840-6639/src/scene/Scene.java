@@ -17,18 +17,30 @@ public class Scene {
     double _distance;
     List <LightSource> _lights = new LinkedList<LightSource>();
 
-    public List<LightSource> get_lights() {
-        return _lights;
-    }
 
+
+    /**
+     * add lights
+     * @param lights
+     */
     public  void addLights(LightSource... lights){
         _lights.addAll(List.of(lights));
     }
 
+    /**
+     * writeToImage
+     * @param _name
+     */
     public Scene(String _name) {
 
         this._name = _name;
         _geometries=new Geometries();
+    }
+
+    /******************getters******************/
+
+    public List<LightSource> get_lights() {
+        return _lights;
     }
 
     public String getName() {
@@ -55,6 +67,8 @@ public class Scene {
         return _distance;
     }
 
+        /************************setters******************/
+
     public void setBackground(Color _background) {
         this._background = _background;
     }
@@ -71,6 +85,10 @@ public class Scene {
         this._distance = _distance;
     }
 
+    /**
+     * add geometries
+     * @param geometries
+     */
     public void addGeometries(Intersectable ...geometries){
         _geometries.add(geometries);
     }

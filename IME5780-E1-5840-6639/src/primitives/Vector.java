@@ -7,23 +7,44 @@ public class Vector {
     Point3D point;
 
     /*****************************constructors*****************************/
+    /**
+     * constructor
+     * @param _x
+     * @param _y
+     * @param _z
+     */
     public Vector(Coordinate _x, Coordinate _y, Coordinate _z) {
         if (_x._coord==0 & _y._coord==0 & _z._coord==0)
             throw new IllegalArgumentException("zero vector");
         point = new Point3D(_x,_y,_z);
     }
+
+    /**
+     * constructor
+     * @param _x
+     * @param _y
+     * @param _z
+     */
     public Vector(double _x, double _y, double _z) {
         if (_x==0 & _y==0 & _z==0)
             throw new IllegalArgumentException("zero vector");
         point = new Point3D(_x,_y,_z);
     }
 
+    /**
+     * constructor
+     * @param other
+     */
     public Vector(Point3D other) {
         if (other.equals(Point3D.ZERO))
             throw new IllegalArgumentException("zero vector");
         point = new Point3D(other);
     }
 
+    /**
+     * constructor
+     * @param other
+     */
     public Vector(Vector other) {
         point = new Point3D(other.point);
     }

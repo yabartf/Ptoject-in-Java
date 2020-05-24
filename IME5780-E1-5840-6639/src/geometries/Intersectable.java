@@ -30,6 +30,12 @@ public interface Intersectable {
 
         }
 
+        /**
+         * private case off triangle in equals
+         * @param triangle
+         * @param other
+         * @return
+         */
         private boolean triangeEquals(Triangle triangle, Triangle other) {
             for (int i = 0; i < triangle._vertices.size(); i++) {
                 if (!triangle._vertices.contains(other._vertices.get(i)))
@@ -38,10 +44,22 @@ public interface Intersectable {
             return true;
         }
 
+        /**
+         * private case off sphere in equals
+         * @param sphere
+         * @param other
+         * @return
+         */
         private boolean sphereEquals(Sphere sphere, Sphere other) {
             return sphere._radius == other._radius && sphere.center.equals(other.center);
         }
 
+        /**
+         * private case off plane in equals
+         * @param plane
+         * @param other
+         * @return
+         */
         private boolean planeEquals(Plane plane, Plane other) {
             return plane.normal.equals(other.normal) && plane.pointInPlane.equals(other.pointInPlane);
         }

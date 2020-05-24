@@ -26,22 +26,47 @@ public class Plane extends Geometry {
 
 
     /***************constructors***************/
+    /**
+     * constructor
+     * @param normal
+     * @param point
+     */
     public Plane(Vector normal, Point3D point) {
         this.normal = normal;
         this.pointInPlane = point;
     }
 
+    /**
+     * constructor
+     * @param _emmission
+     * @param _matirial
+     * @param normal
+     * @param pointInPlane
+     */
     public Plane(Color _emmission, Material _matirial, Vector normal, Point3D pointInPlane) {
         super(_emmission, _matirial);
         this.normal = normal;
         this.pointInPlane = pointInPlane;
     }
 
+    /**
+     * constructor
+     * @param objectColor
+     * @param normal
+     * @param point
+     */
     public Plane(Color objectColor, Vector normal, Point3D point) {
         this(normal,point);
         _emmission=objectColor;
 
     }
+
+    /**
+     * constructor
+     * @param x
+     * @param y
+     * @param z
+     */
     public Plane(Point3D x,Point3D y,Point3D z) {
         Vector one = x.subtract(y);
         Vector two = x.subtract(z);
@@ -49,6 +74,13 @@ public class Plane extends Geometry {
         pointInPlane = x;
     }
 
+    /**
+     * constructor
+     * @param objColor
+     * @param x
+     * @param y
+     * @param z
+     */
     public Plane(Color objColor,Point3D x,Point3D y,Point3D z){
         this(x,y,z);
         _emmission=objColor;

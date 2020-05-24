@@ -13,11 +13,20 @@ import java.util.List;
 public class Render {
     ImageWriter imageWriter;
     Scene scene;
+
+    /**
+     * constructor
+     * @param _imageWriter
+     * @param _scene
+     */
     public Render(ImageWriter _imageWriter, Scene _scene){
         this.imageWriter=_imageWriter;
         this.scene=_scene;
     }
 
+    /**
+     * renderImage
+     */
     public void renderImage(){
 
         Camera camera=scene.getCamera();
@@ -43,7 +52,11 @@ public class Render {
 
     }
 
-
+    /**
+     * calc color
+     * @param intersection
+     * @return
+     */
     private Color calcColor(GeoPoint intersection) {
         Color color = scene.getAmbientLight().getIntensity();
         color = color.add(intersection.geometry.get_emmission());
@@ -65,6 +78,11 @@ public class Render {
         }
     }
 
+    /**
+     * calc closest point
+     * @param geoPointsList
+     * @return
+     */
 
     public GeoPoint getClosestPoint(List<GeoPoint> geoPointsList){
         GeoPoint closesPoint=null;
@@ -79,6 +97,12 @@ public class Render {
         }
         return closesPoint;
     }
+
+    /**
+     * print grid
+     * @param interval
+     * @param color
+     */
     public void printGrid(int interval, java.awt.Color color){
         int nX=imageWriter.getNx();
         int nY=imageWriter.getNy();
@@ -89,5 +113,9 @@ public class Render {
             }
         }
     }
+
+    /**
+     * write to image
+     */
     public void writeToImage(){imageWriter.writeToImage();}
 }

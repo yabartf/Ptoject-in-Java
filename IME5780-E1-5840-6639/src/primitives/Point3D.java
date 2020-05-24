@@ -19,6 +19,11 @@ public class Point3D {
                 (othr._z._coord-this._z._coord)*(othr._z._coord-this._z._coord);
     }
 
+    /**
+     * calc distance
+     * @param other
+     * @return
+     */
     public double distance(Point3D other){
         return Math.sqrt(distanceSquared(other));
     }
@@ -54,6 +59,11 @@ public class Point3D {
         return new Vector(this._x._coord - point._x._coord,this._y._coord - point._y._coord,this._z._coord - point._z._coord);
     }
 
+    /**
+     * add vector
+     * @param vec
+     * @return
+     */
     public Point3D add(Vector vec){
         Point3D temp = vec.point;
         return new Point3D(_x._coord + temp._x._coord,_y._coord + temp._y._coord,_z._coord + temp._z._coord);
@@ -69,18 +79,34 @@ public class Point3D {
     public double get_z(){return _z.get(); }
 
     /*****************************constructors*****************************/
-
+    /**
+     * constructor
+     * @param _x
+     * @param _y
+     * @param _z
+     */
     public Point3D(Coordinate _x, Coordinate _y, Coordinate _z) {
         this._x = _x;
         this._y = _y;
         this._z = _z;
     }
+
+    /**
+     * constructor
+     * @param _x
+     * @param _y
+     * @param _z
+     */
     public Point3D(double _x, double _y, double _z) {
         this._x = new Coordinate(_x);
         this._y = new Coordinate(_y);
         this._z = new Coordinate(_z);
     }
 
+    /**
+     * copy constructor
+     * @param other
+     */
     public Point3D(Point3D other) {
         this._x = other._x;
         this._y = other._y;

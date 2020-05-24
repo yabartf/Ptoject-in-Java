@@ -13,14 +13,32 @@ public class Triangle extends Polygon{
     }
 
     /***************constructor***************/
-
+    /**
+     * constructor
+     * @param p1
+     * @param p2
+     * @param p3
+     */
     public Triangle(Point3D p1,Point3D p2,Point3D p3) {
         super(p1,p2,p3);
     }
+
+    /**
+     * constructor
+     * @param objColor
+     * @param p1
+     * @param p2
+     * @param p3
+     */
     public Triangle(Color objColor,Point3D p1,Point3D p2,Point3D p3){
         super(objColor,p1,p2,p3);
     }
 
+    /**
+     * getter
+     * @param p
+     * @return
+     */
     public Vector getNormal(Point3D p) {
         return super.getNormal(p);
     }
