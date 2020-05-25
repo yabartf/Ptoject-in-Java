@@ -14,16 +14,15 @@ public class SpotLight extends PointLight {
      * @param emmision
      * @param position
      * @param direction
-     * @param narrowBeam
      * @param Kc
      * @param Kl
      * @param Kq
      */
-    public SpotLight(Color emmision, Point3D position, Vector direction, double narrowBeam, double Kc, double Kl, double Kq){
+    public SpotLight(Color emmision, Point3D position, Vector direction, double Kc, double Kl, double Kq){
         super(emmision,position,Kc,Kl,Kq);
         this._direction = direction;
-        this._narrowBeam = narrowBeam;
     }
+
         /****************getters****************/
     @Override
     public Color getIntensity(Point3D p) {

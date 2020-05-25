@@ -42,7 +42,7 @@ public class Render {
                 Ray ray=camera.constructRayThroughPixel(nX,nY,j,i,distance,width,height);
                 List<GeoPoint> intersectionPoints = geometries.findIntersections(ray);
                 if (intersectionPoints == null)
-                imageWriter.writePixel(j, i, background);
+                    imageWriter.writePixel(j, i, background);
                 else {
                     GeoPoint closestPoint = getClosestPoint(intersectionPoints);
                     imageWriter.writePixel(j, i, calcColor(closestPoint).getColor());
@@ -69,15 +69,24 @@ public class Render {
             Vector l = lightSource.getL(intersection.point);
             double n1 = n.dotProduct(l);
             double n2 = n.dotProduct(v);
-            if (n1 > 0 && n2 > 0 || n1 < 0 && n2 < 0) {
+            if ((n1 > 0 && n2 > 0) || (n1 < 0 && n2 < 0)) {
                 Color lightIntensity = lightSource.getIntensity(intersection.point);
                 color = color.add(calcDiffusive(kd, l, n, lightIntensity),
                         calcSpecular(ks, l, n, v, nShininess, lightIntensity));
             }
 
         }
+        return color;
     }
 
+    private Color calcDiffusive(double kd,Vector l,Vector n,Color lightIntensity){
+        return lightIntensity.scale(kd*Math.abs(l.dotProduct(n)));
+    }
+
+    private Color calcSpecular(double ks,Vector l,Vector n,Vector v,int nShininess,Color lightIntensity){
+        Vector r=l.substract(n.scale(2).scale(l.dotProduct(n)));
+        return lightIntensity.scale(ks*Math.pow(Math.max(0,-1*v.dotProduct(r)),nShininess));
+    }
     /**
      * calc closest point
      * @param geoPointsList
