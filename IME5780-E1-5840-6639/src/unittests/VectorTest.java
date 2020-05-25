@@ -26,9 +26,7 @@ public class VectorTest {
             new Vector(1,1,1).add(new Vector(-1,-1,-1));
             fail("Didn't throw divide by zero exception!");
         }
-        catch (IllegalArgumentException e) {
-            assertTrue(e.getMessage() != null);
-        }
+        catch (IllegalArgumentException e) { }
 
     }
 
@@ -37,7 +35,7 @@ public class VectorTest {
         Vector v1 = new Vector(1,2,3);
         Vector v2 = new Vector(1,1,1);
 
-        assertTrue(new Vector(0,1,2).equals(v1.substract(v2)));
+        assertEquals(new Vector(0,1,2),(v1.substract(v2)));
 
         // =============== Boundary Values Tests ==================
 
@@ -45,9 +43,7 @@ public class VectorTest {
             v1.substract(new Vector(1,2,3));
             fail("Didn't throw divide by zero exception!");
         }
-        catch (IllegalArgumentException e) {
-            assertTrue(e.getMessage() != null);
-        }
+        catch (IllegalArgumentException e) { }
 
     }
 
@@ -63,10 +59,7 @@ public class VectorTest {
             v1.scale(0);
             fail("Didn't throw divide by zero exception!");
         }
-        catch (IllegalArgumentException e)
-        {
-              System.out.println("Point3D(0.0,0.0,0.0) not valid for vector head " + e.getMessage());
-        }
+        catch (IllegalArgumentException e) { }
     }
 
     @org.junit.Test
@@ -75,7 +68,7 @@ public class VectorTest {
         Vector v2 = new Vector(2, 3, -3);
         double result = v1.dotProduct(v2);
         assertEquals(result, -4, 1e-8);
-            assertEquals(0, new Vector(1, 2, 0).dotProduct(new Vector(0, 0, 1)),1e-10);
+        assertEquals(0, new Vector(1, 2, 0).dotProduct(new Vector(0, 0, 1)),1e-10);
     }
 
     @org.junit.Test
@@ -89,17 +82,11 @@ public class VectorTest {
 
         Vector v4 = v2.crossProduct(v1);
 
-        System.out.println(v3.toString());
-        System.out.println(v4.toString());
-
         try {
             v3.add(v4);
             fail("Vector (0,0,0) not valid");
         }
-        catch  (IllegalArgumentException e)
-        {
-            assertTrue(e.getMessage()!= null);
-        }
+        catch  (IllegalArgumentException e) { }
 //        assertTrue(v3.length() >84);
         assertEquals(84,v3.length(),0.659);
     }
