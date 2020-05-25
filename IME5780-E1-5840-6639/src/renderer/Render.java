@@ -10,6 +10,8 @@ import primitives.Point3D;
 
 import java.util.List;
 
+import static primitives.Util.alignZero;
+
 public class Render {
     ImageWriter imageWriter;
     Scene scene;
@@ -71,15 +73,15 @@ public class Render {
             double n2 = n.dotProduct(v);
             if ((n1 > 0 && n2 > 0) || (n1 < 0 && n2 < 0)) {
                 Color lightIntensity = lightSource.getIntensity(intersection.point);
-                color = color.add(calcDiffusive(kd, l, n, lightIntensity),
+                color = color.add(calcDiffusive(kd, alignZero(n.dotProduct(l)),lightIntensity),
                         calcSpecular(ks, l, n, v, nShininess, lightIntensity));
             }
         }
         return color;
     }
 
-    private Color calcDiffusive(double kd,Vector l,Vector n,Color lightIntensity){
-        return lightIntensity.scale(kd*Math.abs(l.dotProduct(n)));
+    private Color calcDiffusive(double kd, double nl, Color ip) {
+        return ip.scale(Math.abs(nl) * kd);
     }
 
     private Color calcSpecular(double ks,Vector l,Vector n,Vector v,int nShininess,Color lightIntensity){
