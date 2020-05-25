@@ -74,7 +74,6 @@ public class Render {
                 color = color.add(calcDiffusive(kd, l, n, lightIntensity),
                         calcSpecular(ks, l, n, v, nShininess, lightIntensity));
             }
-
         }
         return color;
     }

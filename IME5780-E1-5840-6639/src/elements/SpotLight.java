@@ -1,8 +1,7 @@
 package elements;
 
-import primitives.Color;
-import primitives.Point3D;
-import primitives.Vector;
+import primitives.*;
+
 
 
 public class SpotLight extends PointLight {
@@ -26,11 +25,13 @@ public class SpotLight extends PointLight {
         /****************getters****************/
     @Override
     public Color getIntensity(Point3D p) {
-        return super.getIntensity(p).scale(Math.max(0,_direction.dotProduct(p.subtract(this._pL).normalized())));
+        Vector l=getL(p);
+        if(l==null)
+            l=_direction;
+        double cos=Util.alignZero(l.dotProduct(_direction));
+        return super.getIntensity(p).scale(Math.max(0,cos));
+
+
     }
 
-    @Override
-    public Vector getL(Point3D p) {
-        return _direction;
-    }
 }
