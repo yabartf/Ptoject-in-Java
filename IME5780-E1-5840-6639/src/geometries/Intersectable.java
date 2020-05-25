@@ -19,12 +19,13 @@ public interface Intersectable {
         public boolean equals(Object obj) {
             if (this == obj) return true;
             if (obj == null || getClass() != obj.getClass()) return false;
-            if (obj.getClass() == Triangle.class)
-                return triangeEquals((Triangle) this.geometry, (Triangle) obj);
-            if (obj.getClass() == Sphere.class)
-                return sphereEquals((Sphere) this.geometry, (Sphere) obj);
-            if (obj.getClass() == Plane.class)
-                return planeEquals((Plane) this.geometry, (Plane) obj);
+            GeoPoint geoPoint=(GeoPoint)obj;
+            if (geoPoint.geometry.getClass() == Triangle.class)
+                return triangeEquals((Triangle) this.geometry, (Triangle) geoPoint.geometry);
+            if (geoPoint.geometry.getClass() == Sphere.class)
+                return sphereEquals((Sphere) this.geometry, (Sphere) geoPoint.geometry);
+            if (geoPoint.geometry.getClass() == Plane.class)
+                return planeEquals((Plane) this.geometry, (Plane) geoPoint.geometry);
             return false;
 
 
