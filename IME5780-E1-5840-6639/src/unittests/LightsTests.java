@@ -204,7 +204,8 @@ public class LightsTests {
         scene.setAmbientLight(new AmbientLight(Color.BLACK, 0));
 
         scene.addGeometries(
-                new Sphere(50,new Point3D(0, 0, 50),new Material(0.5, 0.5, 100),new Color(java.awt.Color.YELLOW)));
+                new Sphere(50,new Point3D(-50, -50, 50),new Material(0.5, 0.5, 100),new Color(java.awt.Color.YELLOW)),
+                new Sphere(50,new Point3D(30, 30, 80),new Material(0.5, 0.5, 100),new Color(java.awt.Color.BLACK)));
 
         scene.addLights(new SpotLight(new Color(0, 300, 0), new Point3D(0, 50, -50),
                 new Vector(1, -1, 2), 1, 0.00001, 0.00000001),
