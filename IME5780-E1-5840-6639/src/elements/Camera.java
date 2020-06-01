@@ -11,10 +11,10 @@ public class Camera {
     /**
      * constructor
      * @param location
-     * @param up
      * @param to
+     * @param up
      */
-    public Camera(Point3D location,Vector up,Vector to) {
+    public Camera(Point3D location, Vector to, Vector up) {
         if (up.dotProduct(to)!=0)
             throw new IllegalArgumentException("vectors are not vartical");
         Vup=up.normalized();

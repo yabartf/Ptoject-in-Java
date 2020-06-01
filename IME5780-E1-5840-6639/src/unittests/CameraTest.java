@@ -12,11 +12,11 @@ public class CameraTest {
     @Test
     public void testConstractor() {
         try {
-            new Camera(new Point3D(0,0,0),new Vector(1,1,0),new Vector(1,2,0));
+            new Camera(new Point3D(0,0,0), new Vector(1,2,0), new Vector(1,1,0));
             fail("Constructed a camera with not vartical vectors");
         }catch (IllegalArgumentException e) { }
         try {
-           Camera cam= new Camera(new Point3D(0,0,0),new Vector(1,0,0),new Vector(0,1,0));
+           Camera cam= new Camera(new Point3D(0,0,0), new Vector(0,1,0), new Vector(1,0,0));
            assertEquals("fail to make the right vector",new Vector(0,0,-1),cam.getVright());
         }catch (IllegalArgumentException e){
             fail("fail to vonstarct a correct camera");
@@ -25,7 +25,7 @@ public class CameraTest {
 
     @Test
     public void testConstructRayThroughPixel() {
-        Camera camera = new Camera(Point3D.ZERO, new Vector(0, -1, 0), new Vector(0, 0, 1));
+        Camera camera = new Camera(Point3D.ZERO, new Vector(0, 0, 1), new Vector(0, -1, 0));
 
         // ============ Equivalence Partitions Tests ==============
         // TC01: 3X3 Corner (0,0)

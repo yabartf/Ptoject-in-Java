@@ -5,7 +5,11 @@ import primitives.*;
 import java.util.List;
 
 public interface Intersectable {
-    List<GeoPoint> findIntersections(Ray ray);
+    default List<GeoPoint> findIntersections(Ray ray) {
+        return findIntersections(ray, Double.POSITIVE_INFINITY);
+    }
+    List<GeoPoint> findIntersections(Ray ray, double max);
+
     public static class GeoPoint {
         public Geometry geometry;
         public Point3D point;

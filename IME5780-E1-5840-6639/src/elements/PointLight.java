@@ -30,7 +30,7 @@ public class PointLight extends Light implements LightSource {
      * @return
      */
     public Color getIntensity(Point3D p){
-        double distSqure=_pL.distanceSquared(p);
+        double distSqure = _pL.distanceSquared(p);
         double dist=Math.sqrt(distSqure);
         return _intensity.reduce(_kc+_kl*dist+_kq*distSqure);
     }
@@ -41,5 +41,10 @@ public class PointLight extends Light implements LightSource {
         catch (IllegalArgumentException e){
             return null;
         }
+    }
+
+    @Override
+    public double getDistance(Point3D point) {
+        return this._pL.distance(point);
     }
 }

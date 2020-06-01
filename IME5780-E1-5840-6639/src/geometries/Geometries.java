@@ -40,11 +40,11 @@ public class Geometries implements Intersectable {
      * @return the list of intersection
      */
     @Override
-    public List<GeoPoint> findIntersections(Ray ray) {
+    public List<GeoPoint> findIntersections(Ray ray, double max) {
         List<GeoPoint> answer = new LinkedList<>();
         for (var shape: intersectables) {
-            if(shape.findIntersections(ray)!=null)
-                  answer.addAll(shape.findIntersections(ray));
+            if(shape.findIntersections(ray,max)!=null)
+                  answer.addAll(shape.findIntersections(ray,max));
         }
         //return the list only if there are intersections
         if(answer.size() > 0)
@@ -52,4 +52,6 @@ public class Geometries implements Intersectable {
         //if there are no intersection return null
         return null;
     }
+
+
 }

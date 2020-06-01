@@ -1,7 +1,7 @@
 package geometries;
 
 import primitives.*;
-import java.util.ArrayList;
+
 import java.util.List;
 
 public class Sphere extends RadialGeometry{
@@ -10,12 +10,12 @@ public class Sphere extends RadialGeometry{
     /***************constructor***************/
     /**
      * constructor
+     * @param emmision
+     * @param material
      * @param _radius
      * @param center
-     * @param material
-     * @param emmision
      */
-    public Sphere(double _radius, Point3D center, Material material, Color emmision) {
+    public Sphere(Color emmision, Material material, double _radius, Point3D center) {
         super(emmision, material, _radius);
         this.center = center;
     }
@@ -64,7 +64,7 @@ public class Sphere extends RadialGeometry{
      */
 
     @Override
-    public List <GeoPoint> findIntersections(Ray ray) {
+    public List <GeoPoint> findIntersections(Ray ray, double max) {
         if (ray.getPoint().equals(this.center))
             return List.of(new GeoPoint(this,ray.getTargetPoint(_radius)));
         Vector u = center.subtract(ray.getPoint());
@@ -74,12 +74,14 @@ public class Sphere extends RadialGeometry{
             return null;
         double th = Math.sqrt(_radius * _radius - d * d);
         double t1 = Util.alignZero(tm + th), t2 = Util.alignZero(tm - th);
-        if (t2 <= 0 && t1 <= 0)
-            return null;
-        if (t1 > 0&&t2<=0)
+        //if (t2 <= 0 && t1 <= 0)
+           // return null;
+        if (Util.alignZero(t1-max)<=0&&t1 > 0&&t2<=0)
             return List.of(new GeoPoint(this,(ray.getTargetPoint(t1))));
-        if (t2 > 0&&t1<=0)
+        if (Util.alignZero(t2-max)<=0&&t2 > 0&&t1<=0)
             return List.of(new GeoPoint(this,(ray.getTargetPoint(t2))));
-        return List.of(new GeoPoint(this,ray.getTargetPoint(t1)),new GeoPoint(this,ray.getTargetPoint(t2)));
+        if(Util.alignZero(t1-max)<=0&&t1>0&&Util.alignZero(t2-max)<=0&&t2>0)
+            return List.of(new GeoPoint(this,ray.getTargetPoint(t1)),new GeoPoint(this,ray.getTargetPoint(t2)));
+        return null;
     }
 }
