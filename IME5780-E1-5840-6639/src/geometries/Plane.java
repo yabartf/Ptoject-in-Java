@@ -92,16 +92,18 @@ public class Plane extends Geometry {
      * @return list of Intsersections
      */
 
+
+
     @Override
-    public List<GeoPoint> findIntersections(Ray ray) {
-        if (ray.getPoint()==this.pointInPlane)
+    public List<GeoPoint> findIntersections(Ray ray, double max) {
+        if (ray.getPoint().equals(this.pointInPlane))
             return null;
         double isParallel=ray.getDirection().dotProduct(normal);
-        if(isParallel==0)
+        if(Util.alignZero(isParallel)==0)
             return null;
         double t=(this.normal.dotProduct(this.pointInPlane.subtract(ray.getPoint())))/(this.normal.dotProduct(ray.getDirection()));
 
-        if(t>0) {
+        if(Util.alignZero(t-max)<=0&&t>0) {
             return List.of(new GeoPoint(this,ray.getTargetPoint(t)));
         }
         return null;

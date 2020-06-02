@@ -22,7 +22,12 @@ public class SpotLight extends PointLight {
         this._direction = direction.normalized();
     }
 
-        /****************getters****************/
+    @Override
+    public double getDistance(Point3D point) {
+        return this._pL.distance(point);
+    }
+
+    /****************getters****************/
     @Override
     public Color getIntensity(Point3D p) {
         Vector l=getL(p);

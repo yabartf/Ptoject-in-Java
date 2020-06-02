@@ -47,10 +47,12 @@ public class Triangle extends Polygon{
      * @param ray
      * @return list of Intsersections
      */
+    public List<GeoPoint> findIntersections(Ray ray){
+        return this.findIntersections(ray,Double.POSITIVE_INFINITY);
+    }
+    public List<GeoPoint> findIntersections(Ray ray,double max) {
 
-    public List<GeoPoint> findIntersections(Ray ray) {
-
-        List<GeoPoint> intersections = _plane.findIntersections(ray);
+        List<GeoPoint> intersections = _plane.findIntersections(ray, max);
         if (intersections == null)
             return null;
 
