@@ -5,6 +5,7 @@ import static primitives.Util.isZero;
 public class Ray {
     Point3D point;
     Vector direction;
+    private static final double DELTA = 0.1;
 
     /******************constructors*****************/
     /**
@@ -17,6 +18,10 @@ public class Ray {
         direction = v.normalize();
     }
 
+    public Ray(Vector l,Vector n,Point3D point){
+        this.point=point.add(n.scale(n.dotProduct(l) > 0 ? DELTA : -DELTA));
+        this.direction=l;
+    }
     /**
      * copy constructor
      * @param other
