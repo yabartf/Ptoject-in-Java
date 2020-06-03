@@ -55,7 +55,7 @@ public class ShadowTests {
         scene.addGeometries(new Sphere(new Color(java.awt.Color.BLUE), new Material(0.5, 0.5, 30), //
                         60, new Point3D(0, 0, 200)), //
                 new Triangle(new Color(java.awt.Color.BLUE), new Material(0.5, 0.5, 30), //
-                        new Point3D(-70, 40, 0), new Point3D(-40, 70, 0), new Point3D(-68, 68, 4)));
+                        new Point3D(-65, 35, 0), new Point3D(-35, 65, 0), new Point3D(-63, 63, 4)));
 
         scene.addLights(new SpotLight(new Color(400, 240, 0), //
                 new Point3D(-100, 100, -200), new Vector(1, -1, 3), 1, 1E-5, 1.5E-7));
