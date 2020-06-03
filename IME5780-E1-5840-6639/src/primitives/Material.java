@@ -17,7 +17,7 @@ public class Material {
        this(kd,ks,nShininess,0,0);
     }
 
-    public Material(double kd, double ks, double kt, double kr, int nShininess) {
+    public Material(double kd, double ks, int nShininess, double kt, double kr) {
         Kd = kd;
         Ks = ks;
         Kt = kt;

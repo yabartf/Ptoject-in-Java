@@ -19,13 +19,13 @@ import scene.Scene;
  * @author dzilb
  *
  */
-/*
+
 public class ReflectionRefractionTests {
 
     /**
      * Produce a picture of a sphere lighted by a spot light
      */
-    /*
+
     @Test
     public void twoSpheres() {
         Scene scene = new Scene("Test scene");
@@ -52,7 +52,7 @@ public class ReflectionRefractionTests {
     /**
      * Produce a picture of a sphere lighted by a spot light
      */
-    /*
+
     @Test
     public void twoSpheresOnMirrors() {
         Scene scene = new Scene("Test scene");
@@ -83,7 +83,7 @@ public class ReflectionRefractionTests {
      * Produce a picture of a two triangles lighted by a spot light with a partially transparent Sphere
      *  producing partial shadow
      */
-    /*
+
     @Test
     public void trianglesTransparentSphere() {
         Scene scene = new Scene("Test scene");
@@ -109,6 +109,4 @@ public class ReflectionRefractionTests {
         render.renderImage();
         render.writeToImage();
     }
-
-
-} */
+}
