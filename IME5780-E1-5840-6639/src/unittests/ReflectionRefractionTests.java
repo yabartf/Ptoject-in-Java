@@ -135,11 +135,8 @@ public class ReflectionRefractionTests {
 
         scene.addLights(new SpotLight(new Color(700, 400, 400), //
                 new Point3D(60, -50, 0), new Vector(0, 0, 1), 1, 4E-5, 2E-7),
-               /* new PointLight(new Color(java.awt.Color.YELLOW),new Point3D(-0, 0, 115),1,4E-5,2E-7),*/
                 new SpotLight(new Color(700, 400, 400), //
-                        new Point3D(0, -30, 100), new Vector(-10, -65, 55), 1, 4E-5, 2E-7),
-                new SpotLight(new Color(700, 400, 400), //
-                        new Point3D(100, 30, 55), new Vector(-0.3, 0.4, -1), 1, 4E-5, 2E-7));
+                        new Point3D(0, -30, 100), new Vector(-10, -65, 55), 1, 4E-5, 2E-7));
 
         ImageWriter imageWriter = new ImageWriter("ourGeometries", 200, 200, 600, 600);
         Render render = new Render(imageWriter, scene);
