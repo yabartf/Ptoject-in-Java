@@ -113,8 +113,8 @@ public class ReflectionRefractionTests {
     public void ourGeometries() {
 
         Scene scene = new Scene("Test scene");
-        scene.setCamera(new Camera(new Point3D(-150, 150, 115), new Vector(225, -225, 35).normalize(), new Triangle(Color.BLACK, new Material(0.5, 0.5, 60,0,0.6), //
-                new Point3D(-150, 150, 115), new Point3D(150, 150, 135), new Point3D(75, -75, 150)).getNormal(new Point3D(75, -75, 150)).scale(-1) //
+        scene.setCamera(new Camera(new Point3D(-150, 150, 115).add(new Vector(225, -225, 35).scale(-3)), new Vector(225, -225, 35).normalize(), new Triangle(Color.BLACK, new Material(0.5, 0.5, 60,0,0.6), //
+                new Point3D(-150, 150, 115), new Point3D(150, 150, 135), new Point3D(75, -75, 150)).getNormal(new Point3D(75, -75, 150))//
         ));
         scene.setDistance(1000);
         scene.setBackground(Color.BLACK);
