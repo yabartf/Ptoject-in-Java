@@ -82,6 +82,8 @@ public class Vector {
      * @return
      */
     public double dotProduct(Vector other){
+        double p=this.point._x._coord * other.point._x._coord + this.point._y._coord * other.point._y._coord +
+                this.point._z._coord * other.point._z._coord;
         return this.point._x._coord * other.point._x._coord + this.point._y._coord * other.point._y._coord +
                 this.point._z._coord * other.point._z._coord;
     }

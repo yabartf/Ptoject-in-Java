@@ -15,7 +15,7 @@ public class Camera {
      * @param up
      */
     public Camera(Point3D location, Vector to, Vector up) {
-        if (up.dotProduct(to)!=0)
+        if (Util.alignZero(up.dotProduct(to))!=0)
             throw new IllegalArgumentException("vectors are not vartical");
         Vup=up.normalized();
         Vto=to.normalized();
