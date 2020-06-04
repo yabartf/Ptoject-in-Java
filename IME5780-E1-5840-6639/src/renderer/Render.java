@@ -1,12 +1,10 @@
 package renderer;
 import elements.*;
-import geometries.Intersectable;
 import geometries.Intersectable.GeoPoint;
 import primitives.*;
 import scene.*;
 
 import java.util.List;
-import java.util.logging.Level;
 
 import static primitives.Util.alignZero;
 
@@ -90,10 +88,10 @@ public class Render {
         }
         double kt=intersection.geometry.get_matirial().getKt(), kkt=k*kt;
         if(kkt>MIN_CALC_COLOR_K) {
-            Ray refrectedRay = constractRefrectedRay(intersection.point, inRay);
-            GeoPoint refrectedPoint = findClosestIntersection(refrectedRay);
-            if(refrectedPoint!=null)
-                color=color.add(calcColor(refrectedPoint,refrectedRay,level-1,kkt).scale(kt));
+            Ray refractedRay = constractRefractedRay(intersection.point, inRay);
+            GeoPoint refractedPoint = findClosestIntersection(refractedRay);
+            if(refractedPoint!=null)
+                color=color.add(calcColor(refractedPoint,refractedRay,level-1,kkt).scale(kt));
         }
 
         return color;
@@ -150,7 +148,7 @@ public class Render {
     private Ray constractReflectedRay(Vector n,Point3D point,Ray inRay){
         return new Ray(inRay.getDirection().substract(n.scale(2*inRay.getDirection().dotProduct(n))),n,point);
     }
-    private Ray constractRefrectedRay(Point3D point,Ray inRay) {
+    private Ray constractRefractedRay(Point3D point, Ray inRay) {
         return new Ray(inRay.getDirection(),inRay.getDirection(),point);
     }
     private GeoPoint findClosestIntersection(Ray ray){
