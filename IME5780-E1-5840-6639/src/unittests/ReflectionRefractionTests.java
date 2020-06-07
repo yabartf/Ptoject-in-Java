@@ -113,16 +113,17 @@ public class ReflectionRefractionTests {
     public void ourGeometries() {
 
         Scene scene = new Scene("Test scene");
-        scene.setCamera(new Camera(new Point3D(-150, 150, 115).add(new Vector(16, -18.5, -7).scale(-30)), new Vector(16, -18.5, -7),new Vector(16,(305/18.5),-7))//
-        );
+        scene.setCamera(new Camera(new Point3D(-150, 150, 115).add(new Vector(225, -225, 35).scale(-3)), new Vector(225, -225, 35).normalize(), new Triangle(Color.BLACK, new Material(0.5, 0.5, 60,0,0.6), //
+                new Point3D(-150, 150, 115), new Point3D(150, 150, 135), new Point3D(75, -75, 150)).getNormal(new Point3D(75, -75, 150))//
+        ));
         scene.setDistance(1000);
         scene.setBackground(Color.BLACK);
         scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
 
         scene.addGeometries( //
-                new Triangle(Color.BLACK, new Material(0.5, 0.5, 60,1,0), //
+                new Triangle(Color.BLACK, new Material(0.5, 0.5, 60,0,0.6), //
                         new Point3D(-150, 150, 115), new Point3D(150, 150, 135), new Point3D(75, -75, 150)), //
-                new Triangle(Color.BLACK, new Material(0.5, 0.5, 60,1,0), //
+                new Triangle(Color.BLACK, new Material(0.5, 0.5, 60,0,0.6), //
                         new Point3D(-150, 150, 115), new Point3D(-70, -70, 140), new Point3D(75, -75, 150)), //
                 new Triangle(Color.BLACK, new Material(0.5, 0.5, 60,0,0.6), //
                         new Point3D(-70, -70, 140), new Point3D(0, -200, 200), new Point3D(75, -75, 150)), //
@@ -147,19 +148,19 @@ public class ReflectionRefractionTests {
         render.writeToImage();
     }
     @Test
-    public void ourGeometries1() {
+    public void ourGeometries2() {
 
         Scene scene = new Scene("Test scene");
-        scene.setCamera(new Camera(new Point3D(0, 0, -1000), new Vector(0, 0, 1),new Vector(0,-1,0))//
-        );
+        scene.setCamera(new Camera(new Point3D(50, -60, -1000), new Vector(0, 0, 1),new Vector(0,-1,0)
+        ));
         scene.setDistance(1000);
         scene.setBackground(Color.BLACK);
         scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
 
         scene.addGeometries( //
-                new Triangle(Color.BLACK, new Material(0.5, 0.5, 60,1,0), //
+                new Triangle(Color.BLACK, new Material(0.5, 0.5, 60,0,0.6), //
                         new Point3D(-150, 150, 115), new Point3D(150, 150, 135), new Point3D(75, -75, 150)), //
-                new Triangle(Color.BLACK, new Material(0.5, 0.5, 60,1,0), //
+                new Triangle(Color.BLACK, new Material(0.5, 0.5, 60,0,0.6), //
                         new Point3D(-150, 150, 115), new Point3D(-70, -70, 140), new Point3D(75, -75, 150)), //
                 new Triangle(Color.BLACK, new Material(0.5, 0.5, 60,0,0.6), //
                         new Point3D(-70, -70, 140), new Point3D(0, -200, 200), new Point3D(75, -75, 150)), //
@@ -177,7 +178,7 @@ public class ReflectionRefractionTests {
                 new SpotLight(new Color(700, 400, 400), //
                         new Point3D(0, -30, 100), new Vector(-10, -65, 55), 1, 4E-5, 2E-7));
 
-        ImageWriter imageWriter = new ImageWriter("ourGeometries1", 200, 200, 600, 600);
+        ImageWriter imageWriter = new ImageWriter("ourGeometries2", 200, 200, 600, 600);
         Render render = new Render(imageWriter, scene);
 
         render.renderImage();
