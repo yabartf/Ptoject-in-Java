@@ -24,7 +24,7 @@ public class RenderTests {
     public void basicRenderTwoColorTest() {
         Scene scene = new Scene("Test scene");
         scene.setCamera(new Camera(Point3D.ZERO, new Vector(0, 0, 1), new Vector(0, -1, 0)));
-        scene.setDistance(100);
+        scene.setViewPlaneDistance(100);
         scene.setBackground(new Color(75, 127, 90));
         scene.setAmbientLight(new AmbientLight(new Color(255, 191, 191), 1));
 
@@ -48,7 +48,7 @@ public class RenderTests {
     public void basicRenderMultiColorTest() {
         Scene scene = new Scene("Test scene");
         scene.setCamera(new Camera(Point3D.ZERO, new Vector(0, 0, 1), new Vector(0, -1, 0)));
-        scene.setDistance(100);
+        scene.setViewPlaneDistance(100);
         scene.setBackground(Color.BLACK);
         scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.2));
 
