@@ -2,11 +2,14 @@ package elements;
 
 import primitives.*;
 
+import java.util.Random;
+
 public class Camera {
     Point3D location;
     Vector Vto;
     Vector Vup;
     Vector Vright;
+    
 
     /**
      * constructor
