@@ -33,6 +33,10 @@ public class Geometries implements Intersectable {
     public void add(Intersectable... _geometries){
             this.intersectables.addAll(Arrays.asList(_geometries));
     }
+    public void addArrey(Intersectable[] _geometries){
+        this.intersectables.addAll(Arrays.asList(_geometries));
+    }
+
 
     /***
      * 
