@@ -14,7 +14,8 @@ public class Scene {
     AmbientLight _ambientLight;
     Geometries _geometries;
     Camera _camera;
-    double _distance;
+    double viewPlaneDistance;
+    double focalPlaneDistance;  //distance from view plane
     List <LightSource> _lights = new LinkedList<LightSource>();
 
 
@@ -63,9 +64,11 @@ public class Scene {
         return _camera;
     }
 
-    public double getDistance() {
-        return _distance;
+    public double getViewPlaneDistance() {
+        return viewPlaneDistance;
     }
+    public double getFocalPlaneDistance() { return focalPlaneDistance; }
+
 
         /************************setters******************/
 
@@ -81,9 +84,11 @@ public class Scene {
         this._camera = _camera;
     }
 
-    public void setDistance(double _distance) {
-        this._distance = _distance;
+    public void setViewPlaneDistance(double _distance) {
+        this.viewPlaneDistance = _distance;
     }
+
+    public void setFocalPlaneDistance(double focalPlaneDistance) { this.focalPlaneDistance = focalPlaneDistance; }
 
     /**
      * add geometries

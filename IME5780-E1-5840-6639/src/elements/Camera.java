@@ -1,12 +1,16 @@
 package elements;
 
 import primitives.*;
+import java.util.Random;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Camera {
-    Point3D location;
-    Vector Vto;
-    Vector Vup;
-    Vector Vright;
+    Point3D _location;
+    Vector _Vto;
+    Vector _Vup;
+    Vector _Vright;
+    double _irisSize;
 
     /**
      * constructor
@@ -17,12 +21,16 @@ public class Camera {
     public Camera(Point3D location, Vector to, Vector up) {
         if (Util.alignZero(up.dotProduct(to))!=0)
             throw new IllegalArgumentException("vectors are not vartical");
-        Vup=up.normalized();
-        Vto=to.normalized();
-        Vright=(to.crossProduct(up)).normalized();
-        this.location = location;
+        _Vup =up.normalized();
+        _Vto =to.normalized();
+        _Vright =(to.crossProduct(up)).normalized();
+        this._location = location;
     }
 
+    public Camera(Point3D location, Vector to, Vector up,double irisSize){
+        this(location,to,up);
+        this._irisSize=irisSize;
+    }
     /***
      *
      * @param nX number of width pixels
@@ -36,29 +44,40 @@ public class Camera {
      */
     public Ray constructRayThroughPixel (int nX, int nY, int j, int i, double screenDistance,
                                          double screenWidth, double screenHeight){
-        Point3D center=location.add(this.Vto.scale(screenDistance));//the center is the point that towads the camera
+        Point3D center= _location.add(this._Vto.scale(screenDistance));//the center is the point that towads the camera
         double ratioY=screenHeight/nY;//size of each pixel
         double ratioX=screenWidth/nX;//size of each pixel
         double yi=(i-nY/2d)*ratioY+ratioY/2;//the distance of the center of the pixle from the center of the screen
         double xj=(j-nX/2d)*ratioX+ratioX/2;
         Point3D p_i_j=center;
-        if(xj!=0)p_i_j=p_i_j.add(Vright.scale(xj));//set yhe point in the center of the wanted pixel
-        if(yi!=0)p_i_j=p_i_j.add(Vup.scale(-yi));
-        return new Ray(p_i_j.subtract(location),location);
+        if(xj!=0)p_i_j=p_i_j.add(_Vright.scale(xj));//set yhe point in the center of the wanted pixel
+        if(yi!=0)p_i_j=p_i_j.add(_Vup.scale(-yi));
+        return new Ray(p_i_j.subtract(_location), _location);
+    }
+
+
+    public List<Ray> constractImageFocusRay(Point3D pointInViewPlane, Point3D pointInFocalPlane, int numOfBeamRays){
+        List<Ray> beamRays=new LinkedList<>();
+        for(int i = 0;i < numOfBeamRays-1;i++){
+            Point3D point=pointInViewPlane.add(_Vright.scale(Math.random()*(_irisSize/2)*Math.pow(-1,i)));
+            point=point.add(_Vright.scale(Math.random()*(_irisSize/2)*Math.pow(-1,i)));
+            beamRays.add(new Ray(pointInFocalPlane.subtract(point),point));
+        }
+        return beamRays;
     }
 
             /**************getters******************/
-    public Vector getVright() {
-        return Vright;
+    public Vector get_Vright() {
+        return _Vright;
     }
 
-    public Vector getVup() {
-        return Vup;
+    public Vector get_Vup() {
+        return _Vup;
     }
 
-    public Vector getVto() {
-        return Vto;
+    public Vector get_Vto() {
+        return _Vto;
     }
 
-    public Point3D getLocation() { return location; }
+    public Point3D get_location() { return _location; }
 }
