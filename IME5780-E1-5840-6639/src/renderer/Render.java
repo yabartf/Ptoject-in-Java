@@ -347,13 +347,11 @@ public class Render {
     }
 
     private List<Ray> focusRays(Camera camera,Ray ray,int numOfBeamRays){
-        Point3D pointInViewPlaneCenter=camera.get_location().add(camera.get_Vto().scale(_scene.getViewPlaneDistance()));
         Plane viewPlane=new Plane(camera.get_Vto(),camera.get_location().add(camera.get_Vto().scale(_scene.getViewPlaneDistance())));
         Point3D pointInViewPlane = viewPlane.findIntersections(ray).get(0).point;
         Plane focalPlane = new Plane(camera.get_Vto(),camera.get_location().add(camera.get_Vto().scale(_scene.getFocalPlaneDistance()+_scene.getViewPlaneDistance())));
         Point3D pointInFocalPlane = focalPlane.findIntersections(ray).get(0).point;
         List<Ray> focusRays= camera.constractImageFocusRay(pointInViewPlane,pointInFocalPlane, numOfBeamRays);
-        focusRays.add(ray);
         return focusRays;
     }
 }
