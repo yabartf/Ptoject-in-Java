@@ -47,8 +47,10 @@ public class Geometries implements Intersectable {
     public List<GeoPoint> findIntersections(Ray ray, double max) {
         List<GeoPoint> answer = new LinkedList<>();
         for (var shape: intersectables) {
-            if(shape.findIntersections(ray,max)!=null)
-                  answer.addAll(shape.findIntersections(ray,max));
+            if(shape != null) {
+                if (shape.findIntersections(ray, max) != null)
+                    answer.addAll(shape.findIntersections(ray, max));
+            }
         }
         //return the list only if there are intersections
         if(answer.size() > 0)

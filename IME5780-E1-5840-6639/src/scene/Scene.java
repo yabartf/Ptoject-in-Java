@@ -48,8 +48,8 @@ public class Scene {
         return _name;
     }
 
-    public java.awt.Color getBackground() {
-        return _background.getColor();
+    public Color getBackground() {
+        return _background;
     }
 
     public AmbientLight getAmbientLight() {
