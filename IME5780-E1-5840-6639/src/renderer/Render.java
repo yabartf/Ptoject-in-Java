@@ -146,7 +146,7 @@ public class Render {
                     focusBeam.add(camera.constructRayThroughPixel(nX, nY, pixel.col, pixel.row, //
                             dist, width, height));
                     focusBeam.addAll(focusRays(camera,focusBeam.get(0),numOfBeam));
-                    Color color=calcColor(camera,focusBeam,_scene.getBackground(),numOfBeam);
+                    Color color=calcColor(focusBeam,_scene.getBackground());
                     List<GeoPoint> closestPoints = findClosestIntersection(focusBeam);
                     if (closestPoints != null) {
                         _imageWriter.writePixel(pixel.col, pixel.row, color.getColor());
@@ -250,7 +250,7 @@ public class Render {
                 _scene.getAmbientLight().getIntensity());
     }
 
-    private Color calcColor(Camera camera, List<Ray> rays,Color background, int numOfBeam){
+    private Color calcColor(List<Ray> rays,Color background){
         Color color = new Color(0,0,0);
         for(var ray:rays){
             GeoPoint geoPoint=findClosestIntersection(ray);

@@ -30,11 +30,11 @@ public class Depth_of_field {
         Scene scene = new Scene("Depth of field");
         scene.setCamera(new Camera(new Point3D(0, 230, -80), new Vector(0, -1, 1), new Vector(0, -1, -1),3));
         scene.setViewPlaneDistance(50);
-        scene.setFocalPlaneDistance(450);
+        scene.setFocalPlaneDistance(50);
         scene.setBackground(Color.BLACK);
         scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
 
-        Color triangleColor = new Color(0,112,112);
+        Color triangleColor = new Color(122,112,112);
         Triangle[] borders = new Triangle[8];
         Material triangleMaterial = new Material(0.5, 0.5, 60,0,0.8);
 
@@ -56,9 +56,9 @@ public class Depth_of_field {
         addBalls(upRightCorner,downRightCorner,upLeftCorner,downLeftCorner,radiusOfBalls,scene);
 
         scene.addGeometries( //
-                new Triangle(new Color(0,112,0), new Material(0.5, 0.5, 60), //
+                new Triangle(new Color(0,70,0), new Material(0.5, 0.5, 60), //
                         upRightCorner, downRightCorner, downLeftCorner), //
-                new Triangle(new Color(0,112,0), new Material(0.5, 0.5, 60), //
+                new Triangle(new Color(0,70,0), new Material(0.5, 0.5, 60), //
                         upRightCorner, upLeftCorner, downLeftCorner));
 
         scene.addLights(new PointLight(new Color(java.awt.Color.WHITE),new Point3D(-0,0,-880) ,1,4E-5, 2E-7));
@@ -66,7 +66,7 @@ public class Depth_of_field {
         ImageWriter imageWriter = new ImageWriter("snooker table", 200, 200, 600, 600);
         Render render = new Render(imageWriter, scene).setMultithreading(3).setDebugPrint();
 
-        render.renderImage(true,100);
+        render.renderImage(60);
         render.writeToImage();
     }
 public void addBalls(Point3D upRight, Point3D downRight, Point3D upLeft, Point3D downLeft, double radiusOfBalls, Scene scene){
@@ -74,19 +74,19 @@ public void addBalls(Point3D upRight, Point3D downRight, Point3D upLeft, Point3D
         Sphere[] balls = new Sphere[11];
 
         for (int i = 0; i < 4; i++){
-            balls[i] = new Sphere(new Color(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255)),new Material(0.5, 0.5, 60,0,0.6),radiusOfBalls,//
+            balls[i] = new Sphere(new Color(java.awt.Color.BLUE),new Material(0.5, 0.5, 60,0,0.6),radiusOfBalls,//
                     new Point3D(upRight.get_x()/2 - (i*radiusOfBalls*2+radiusOfBalls),upRight.get_y()/2,-radiusOfBalls));
         }
         for (int i = 4 , j =0; i < 7; i++, j++){
-            balls[i] = new Sphere(new Color(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255)),new Material(0.5, 0.5, 60,0,0.6),radiusOfBalls,//
+            balls[i] = new Sphere(new Color(java.awt.Color.GREEN),new Material(0.5, 0.5, 60,0,0.6),radiusOfBalls,//
                     new Point3D(upRight.get_x()/2 - radiusOfBalls - (j*radiusOfBalls*2+radiusOfBalls),upRight.get_y()/2+radiusOfBalls*2,-radiusOfBalls));
         }
         for (int i = 7, j = 0; i < 9; i++, j++){
-            balls[i] = new Sphere(new Color(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255)),new Material(0.5, 0.5, 60,0,0.6),radiusOfBalls,//
+            balls[i] = new Sphere(new Color(java.awt.Color.RED),new Material(0.5, 0.5, 60,0,0.6),radiusOfBalls,//
                     new Point3D(upRight.get_x()/2 - radiusOfBalls*2 - (j*radiusOfBalls*2+radiusOfBalls),upRight.get_y()/2+radiusOfBalls*4,-radiusOfBalls));
         }
         for (int i = 9, j = 0; i < 10; i++, j++){
-            balls[i] = new Sphere(new Color(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255)),new Material(0.5, 0.5, 600,0,0.6),radiusOfBalls,//
+            balls[i] = new Sphere(new Color(java.awt.Color.MAGENTA),new Material(0.5, 0.5, 600,0,0.6),radiusOfBalls,//
                     new Point3D(upRight.get_x()/2 - radiusOfBalls*3 - (j*radiusOfBalls*2+radiusOfBalls),upRight.get_y()/2+radiusOfBalls*6,-radiusOfBalls));
         }
         balls[10] = new Sphere(new Color(java.awt.Color.WHITE),new Material(0.5, 0.5, 60,0,0.6),radiusOfBalls,//
