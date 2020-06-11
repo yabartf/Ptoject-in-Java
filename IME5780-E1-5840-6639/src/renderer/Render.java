@@ -127,7 +127,7 @@ public class Render {
      * This function renders image's pixel color map from the scene included with
      * the Renderer object
      */
-    public void renderImage(boolean focus, int numOfBean) {
+    public void renderImage(int numOfBeam) {
         final int nX = _imageWriter.getNx();
         final int nY = _imageWriter.getNy();
         final double dist = _scene.getViewPlaneDistance();
@@ -143,19 +143,15 @@ public class Render {
                 Pixel pixel = new Pixel();
                 while (thePixel.nextPixel(pixel)) {
                     List<Ray> focusBeam=new LinkedList<>();
+                    focusBeam.add(camera.constructRayThroughPixel(nX, nY, pixel.col, pixel.row, //
+                            dist, width, height));
+                    focusBeam.addAll(focusRays(camera,focusBeam.get(0),numOfBeam));
+                    Color color=calcColor(camera,focusBeam,_scene.getBackground(),numOfBeam);
+                    List<GeoPoint> closestPoints = findClosestIntersection(focusBeam);
+                    if (closestPoints != null) {
+                        _imageWriter.writePixel(pixel.col, pixel.row, color.getColor());
+                    } else _imageWriter.writePixel(pixel.col, pixel.row, _scene.getBackground().getColor());
 
-                        focusBeam.add(camera.constructRayThroughPixel(nX, nY, pixel.col, pixel.row, //
-                                dist, width, height));
-                    if(focus) {
-                        Color color=calcColor(camera,focusBeam,numOfBean);
-                        _imageWriter.writePixel(pixel.col, pixel.row,color.getColor());
-                    }
-                    else {
-                        GeoPoint closestPoint = findClosestIntersection(focusBeam.get(0));
-                        if (closestPoint != null) {
-                            _imageWriter.writePixel(pixel.col, pixel.row, calcColor(findClosestIntersection(focusBeam.get(0)), focusBeam.get(0)).getColor());
-                        } else _imageWriter.writePixel(pixel.col, pixel.row, _scene.getBackground());
-                    }
                 }
             });
         }
@@ -168,7 +164,7 @@ public class Render {
         if (_print) System.out.printf("\r100%%\n");
     }
      public void renderImage(){
-     renderImage(false,0);
+     renderImage(0);
      }
 
     /**
@@ -254,14 +250,15 @@ public class Render {
                 _scene.getAmbientLight().getIntensity());
     }
 
-    private Color calcColor(Camera camera, List<Ray> rays,int numOfBeam){
-        rays.addAll(focusRays(camera,rays.get(0),numOfBeam));
-        Color color = new Color(1,1,1);
+    private Color calcColor(Camera camera, List<Ray> rays,Color background, int numOfBeam){
+        Color color = new Color(0,0,0);
         for(var ray:rays){
             GeoPoint geoPoint=findClosestIntersection(ray);
             if(geoPoint!=null) {
                 color= color.add((calcColor(geoPoint, ray)));
             }
+            else
+                color = color.add(background);
         }
         return (color.reduce(rays.size()));
     }
@@ -304,7 +301,7 @@ public class Render {
         List<GeoPoint> intersections = _scene.getGeometries().findIntersections(lightRay,light.getDistance(geoPoint.point));
         double shdow=1;
         if(intersections==null)
-           return 1;
+           return shdow;
         for(var intersection : intersections){
             shdow*=intersection.geometry.get_matirial().getKt();
         }
@@ -339,7 +336,9 @@ public class Render {
     private List<GeoPoint> findClosestIntersection(List<Ray> rays){
         List<GeoPoint> geoPoints = new LinkedList<>();
         for(var ray:rays){
-            geoPoints.add(findClosestIntersection(ray));
+            GeoPoint geoPoint = (findClosestIntersection(ray));
+            if(geoPoint != null)
+                geoPoints.add(geoPoint);
         }
         if(geoPoints.size()==0)
             return null;
@@ -354,5 +353,25 @@ public class Render {
         List<Ray> focusRays= camera.constractImageFocusRay(pointInViewPlane,pointInFocalPlane, numOfBeamRays);
         return focusRays;
     }
+/*
+    private List<Ray> shadowRys(LightSource lightSource, Ray ray, int numOfBeamRays){
+        PointLight light=(PointLight)lightSource;
+        if(lightSource.getClass()!=SpotLight.class || lightSource.getClass()!=PointLight.class)
+              return List.of(ray);
+        double cosTeta = Math.random();
+        double sinTeta = Math.sqrt(1 - cosTeta*cosTeta);
+        double d = Math.random ()*light.getRadius();
+// Convert polar coordinates to Cartesian ones
+        double x = d*cosTeta;
+        double y = d*sinTeta;
+// pC - center of the circle
+// p0 - start of central ray, v - its direction, distance - from p0 to pC
+        Point3D point = light.get_pL();
+        if (!Util.isZero(x)) point = point.add(vx.scale(x));
+        if (!Util.isZero(y)) point = point.add(vy,scale(y));
+        beam.add(new Ray(p0, point.subtract(p0))); // normalized inside Ray ctor
+    }*/
+
+
 }
 

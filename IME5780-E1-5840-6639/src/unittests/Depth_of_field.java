@@ -89,7 +89,7 @@ public class Depth_of_field {
         ImageWriter imageWriter = new ImageWriter("snooker table", 200, 200, 600, 600);
         Render render = new Render(imageWriter, scene).setMultithreading(3).setDebugPrint();
 
-        render.renderImage(true,0);
+        render.renderImage(15);
         render.writeToImage();
     }
 

@@ -36,7 +36,6 @@ public class SpotLight extends PointLight {
         double cos=Util.alignZero(l.dotProduct(_direction));
         return super.getIntensity(p).scale(Math.max(0,cos));
 
-
     }
 
 }
