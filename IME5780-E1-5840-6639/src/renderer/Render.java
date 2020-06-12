@@ -2,11 +2,13 @@ package renderer;
 import elements.*;
 import geometries.Intersectable.GeoPoint;
 import geometries.Plane;
+import javafx.scene.effect.Light;
 import primitives.*;
 import scene.*;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import static primitives.Util.alignZero;
 
@@ -353,25 +355,26 @@ public class Render {
         List<Ray> focusRays= camera.constractImageFocusRay(pointInViewPlane,pointInFocalPlane, numOfBeamRays);
         return focusRays;
     }
-/*
-    private List<Ray> shadowRys(LightSource lightSource, Ray ray, int numOfBeamRays){
-        PointLight light=(PointLight)lightSource;
-        if(lightSource.getClass()!=SpotLight.class || lightSource.getClass()!=PointLight.class)
-              return List.of(ray);
-        double cosTeta = Math.random();
-        double sinTeta = Math.sqrt(1 - cosTeta*cosTeta);
-        double d = Math.random ()*light.getRadius();
-// Convert polar coordinates to Cartesian ones
-        double x = d*cosTeta;
-        double y = d*sinTeta;
-// pC - center of the circle
-// p0 - start of central ray, v - its direction, distance - from p0 to pC
-        Point3D point = light.get_pL();
-        if (!Util.isZero(x)) point = point.add(vx.scale(x));
-        if (!Util.isZero(y)) point = point.add(vy,scale(y));
-        beam.add(new Ray(p0, point.subtract(p0))); // normalized inside Ray ctor
-    }*/
+    private Vector normalToRay(Ray r, PointLight light){
+        double x = light.get_pL().get_x(), y = light.get_pL().get_y(), z = light.get_pL().get_z();
+        if(x < y && x < z)
+            return new Vector( new Point3D(0, -z, y)).normalize();
+        if(y < x && y < z)
+            return new Vector( new Point3D(-z, 0, x)).normalize();
+        return new Vector( new Point3D(-y, x, 0)).normalize();
+    }
+    private Ray getRandomRay(Ray sourceRay, Vector vecX, int r, PointLight light ) {
 
+        Random rand = new Random();
+        Vector vecY = vecX.crossProduct(sourceRay.getDirection()).normalize();
+        double cos = Math.pow(Math.random(),rand.nextInt(10));
+        double sin = Math.sqrt(1 - Math.pow(cos,2));
+        double d = Math.pow(Math.random()*r,rand.nextInt(10));
+        Point3D pc = light.get_pL().add(light.get_pL().subtract(sourceRay.getPoint()));
+        Point3D point = new Point3D(pc.add(vecX.scale(cos*d).add(vecY.scale(sin*d))));
+        return new Ray(point.subtract(light.get_pL()).normalize() ,sourceRay.getPoint());
+    }
+    }
 
 }
 
