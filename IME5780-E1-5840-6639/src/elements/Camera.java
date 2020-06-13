@@ -59,6 +59,14 @@ public class Camera {
     public List<Ray> constractImageFocusRay(Point3D pointInViewPlane, Point3D pointInFocalPlane, int numOfBeamRays){
         List<Ray> beamRays=new LinkedList<>();
         for(int i = 0; i < numOfBeamRays-1; i++){
+//            Point3D point = pointInViewPlane;
+//            double cosTeta = Math.random() * Math.pow(-1,i);
+//            double sinTeta = Math.sqrt(1 - cosTeta * cosTeta);
+//            double d = Math.random() * _irisSize * Math.pow(-1,i);
+//            double x = d * cosTeta;
+//            double y = d * sinTeta;
+//            if (!Util.isZero(x)) point = point.add(_Vright.scale(x));
+//            if (!Util.isZero(y)) point = point.add(_Vup.scale(y));
             Point3D point=pointInViewPlane.add(_Vright.scale(Math.random()*(_irisSize/2)*Math.pow(-1,i)));
             point = point.add(_Vright.scale(Math.random()*(_irisSize/2)*Math.pow(-1,i)));
             beamRays.add(new Ray(pointInFocalPlane.subtract(point),point));
@@ -80,4 +88,8 @@ public class Camera {
     }
 
     public Point3D get_location() { return _location; }
+
+    public double get_irisSize() {
+        return _irisSize;
+    }
 }

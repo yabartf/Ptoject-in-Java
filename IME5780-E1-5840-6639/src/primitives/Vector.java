@@ -127,4 +127,8 @@ public class Vector {
     public Vector normalized(){
         return new Vector(this).normalize();
     }
+
+    public Point3D getPoint() {
+        return point;
+    }
 }

@@ -60,4 +60,16 @@ public class PointLight extends Light implements LightSource {
     public Point3D get_pL() {
         return _pL;
     }
+
+    public double get_kc() {
+        return _kc;
+    }
+
+    public double get_kl() {
+        return _kl;
+    }
+
+    public double get_kq() {
+        return _kq;
+    }
 }

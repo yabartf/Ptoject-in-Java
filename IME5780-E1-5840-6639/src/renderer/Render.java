@@ -129,7 +129,7 @@ public class Render {
      * This function renders image's pixel color map from the scene included with
      * the Renderer object
      */
-    public void renderImage(int numOfBeam) {
+    public void renderImage(int numOfFocusRays, int numOfShadowRays) {
         final int nX = _imageWriter.getNx();
         final int nY = _imageWriter.getNy();
         final double dist = _scene.getViewPlaneDistance();
@@ -147,8 +147,8 @@ public class Render {
                     List<Ray> focusBeam=new LinkedList<>();
                     focusBeam.add(camera.constructRayThroughPixel(nX, nY, pixel.col, pixel.row, //
                             dist, width, height));
-                    focusBeam.addAll(focusRays(camera,focusBeam.get(0),numOfBeam));
-                    Color color=calcColor(focusBeam,_scene.getBackground());
+                    focusBeam.addAll(focusRays(camera,focusBeam.get(0),numOfFocusRays));
+                    Color color=calcColor(focusBeam,_scene.getBackground(),numOfShadowRays);
                     List<GeoPoint> closestPoints = findClosestIntersection(focusBeam);
                     if (closestPoints != null) {
                         _imageWriter.writePixel(pixel.col, pixel.row, color.getColor());
@@ -166,7 +166,7 @@ public class Render {
         if (_print) System.out.printf("\r100%%\n");
     }
      public void renderImage(){
-     renderImage(0);
+     renderImage(0,0);
      }
 
     /**
@@ -207,7 +207,7 @@ public class Render {
      * @param intersection
      * @return
      */
-    private Color calcColor(GeoPoint intersection,Ray inRay,int level,double k) {
+    private Color calcColor(GeoPoint intersection,Ray inRay,int level,double k, int numOfShadowRays) {
         if(level==0)
             return Color.BLACK;
 
@@ -222,7 +222,7 @@ public class Render {
             double n1 = n.dotProduct(l);
             double n2 = n.dotProduct(v);
             if ((n1 > 0 && n2 > 0) || (n1 < 0 && n2 < 0)) {
-                double ktr=transparency(lightSource,l, n,intersection);
+                double ktr=transparency(lightSource,l, n,intersection,numOfShadowRays);
                 if(ktr*k>MIN_CALC_COLOR_K) {
                     Color lightIntensity = lightSource.getIntensity(intersection.point).scale(ktr);
                     color = color.add(calcDiffusive(kd, alignZero(n.dotProduct(l)), lightIntensity),
@@ -235,29 +235,29 @@ public class Render {
             Ray reflectedRay = constractReflectedRay(n, intersection.point, inRay);
             GeoPoint reflectedPoint = findClosestIntersection(reflectedRay);
             if(reflectedPoint!=null)
-                color=color.add(calcColor(reflectedPoint,reflectedRay,level-1,kkr).scale(kr));
+                color=color.add(calcColor(reflectedPoint,reflectedRay,level-1,kkr, numOfShadowRays).scale(kr));
         }
         double kt=intersection.geometry.get_matirial().getKt(), kkt=k*kt;
         if(kkt>MIN_CALC_COLOR_K) {
             Ray refractedRay = constractRefractedRay(intersection.point, inRay);
             GeoPoint refractedPoint = findClosestIntersection(refractedRay);
             if(refractedPoint!=null)
-                color=color.add(calcColor(refractedPoint,refractedRay,level-1,kkt).scale(kt));
+                color=color.add(calcColor(refractedPoint,refractedRay,level-1,kkt, numOfShadowRays).scale(kt));
         }
 
         return color;
     }
-    private Color calcColor(GeoPoint intersection,Ray ray){
-        return calcColor(intersection,ray,MAX_CALC_COLOR_LEVEL,1.0).add(
+    private Color calcColor(GeoPoint intersection,Ray ray, int numOfShadowRays){
+        return calcColor(intersection,ray,MAX_CALC_COLOR_LEVEL,1.0, numOfShadowRays).add(
                 _scene.getAmbientLight().getIntensity());
     }
 
-    private Color calcColor(List<Ray> rays,Color background){
+    private Color calcColor(List<Ray> rays,Color background, int numOfShadowRays){
         Color color = new Color(0,0,0);
         for(var ray:rays){
             GeoPoint geoPoint=findClosestIntersection(ray);
             if(geoPoint!=null) {
-                color= color.add((calcColor(geoPoint, ray)));
+                color= color.add((calcColor(geoPoint, ray,numOfShadowRays)));
             }
             else
                 color = color.add(background);
@@ -347,34 +347,67 @@ public class Render {
         return geoPoints;
     }
 
-    private List<Ray> focusRays(Camera camera,Ray ray,int numOfBeamRays){
+    private List<Ray> focusRays(Camera camera,Ray ray, int numOfBeamRays){
         Plane viewPlane = new Plane(camera.get_Vto(),camera.get_location().add(camera.get_Vto().scale(_scene.getViewPlaneDistance())));
         Point3D pointInViewPlane = viewPlane.findIntersections(ray).get(0).point;
         Plane focalPlane = new Plane(camera.get_Vto(),camera.get_location().add(camera.get_Vto().scale(_scene.getFocalPlaneDistance()+_scene.getViewPlaneDistance())));
         Point3D pointInFocalPlane = focalPlane.findIntersections(ray).get(0).point;
-        List<Ray> focusRays= camera.constractImageFocusRay(pointInViewPlane,pointInFocalPlane, numOfBeamRays);
+        List<Ray> focusRays= getRandomRays(pointInViewPlane,pointInFocalPlane,camera.get_irisSize(),numOfBeamRays,camera.get_Vright(),camera.get_Vup());//getRandomRays(pointInViewPlane, pointInFocalPlane, r, numOfBeamRays);
         return focusRays;
     }
-    private Vector normalToRay(Ray r, PointLight light){
-        double x = light.get_pL().get_x(), y = light.get_pL().get_y(), z = light.get_pL().get_z();
+    private Vector normalToRay(Vector vec){
+        double x = vec.getPoint().get_x(), y = vec.getPoint().get_y(), z = vec.getPoint().get_z();
         if(x < y && x < z)
-            return new Vector( new Point3D(0, -z, y)).normalize();
+            return new Vector( new Point3D(0, vec.getPoint().get_z()* -1 , vec.getPoint().get_y())).normalize();
         if(y < x && y < z)
-            return new Vector( new Point3D(-z, 0, x)).normalize();
-        return new Vector( new Point3D(-y, x, 0)).normalize();
+            return new Vector( new Point3D(vec.getPoint().get_z()* -1, 0, vec.getPoint().get_x())).normalize();
+        return new Vector( new Point3D(vec.getPoint().get_y()* -1, vec.getPoint().get_x(), 0)).normalize();
     }
-    private Ray getRandomRay(Ray sourceRay, Vector vecX, int r, PointLight light ) {
+//    private Ray getRandomRay(Vector sourceRay, Vector vecX, int r, PointLight light ) {
+//
+//        Random rand = new Random();
+//        Vector vecY = vecX.crossProduct(sourceRay.getDirection()).normalize();
+//        double cos = Math.pow(Math.random(),rand.nextInt(10));
+//        double sin = Math.sqrt(1 - Math.pow(cos,2));
+//        double d = Math.pow(Math.random()*r,rand.nextInt(10));
+//        Point3D pc = light.get_pL().add(light.get_pL().subtract(sourceRay.getPoint()));
+//        Point3D point = new Point3D(pc.add(vecX.scale(cos*d).add(vecY.scale(sin*d))));
+//        return new Ray(point.subtract(light.get_pL()).normalize() ,sourceRay.getPoint());
+//    }getPoint
 
-        Random rand = new Random();
-        Vector vecY = vecX.crossProduct(sourceRay.getDirection()).normalize();
-        double cos = Math.pow(Math.random(),rand.nextInt(10));
-        double sin = Math.sqrt(1 - Math.pow(cos,2));
-        double d = Math.pow(Math.random()*r,rand.nextInt(10));
-        Point3D pc = light.get_pL().add(light.get_pL().subtract(sourceRay.getPoint()));
-        Point3D point = new Point3D(pc.add(vecX.scale(cos*d).add(vecY.scale(sin*d))));
-        return new Ray(point.subtract(light.get_pL()).normalize() ,sourceRay.getPoint());
-    }
+    private List<Ray> getRandomRays(Point3D sourcePoint, Point3D point, double r, int numOfRays,Vector vx, Vector vy) {
+        List <Ray> rayBeam = new LinkedList<>();
+        for(int i = 0;i < numOfRays - 1;i++) {
+            Point3D p = sourcePoint;
+            double cosTeta = Math.random() * Math.pow(-1,i);
+            double sinTeta = Math.sqrt(1 - cosTeta * cosTeta);
+            double d = Math.random() * r * Math.pow(-1,i);
+            double x = d * cosTeta;
+            double y = d * sinTeta;
+            if (!Util.isZero(x)) p = p.add(vx.scale(x));
+            if (!Util.isZero(y)) p = p.add(vy.scale(y));
+            rayBeam.add(new Ray(point.subtract(p), p));
+        }
+        return rayBeam;
     }
 
+    private List<Ray> getRandomSadowRays(Point3D sourcePoint, Point3D point, double r, int numOfRays){
+        Vector v = point.subtract(sourcePoint).normalize();
+        Vector vx = normalToRay(v);
+        Vector vy = v.crossProduct(vx);
+        return getRandomRays(sourcePoint, point, r, numOfRays, vx, vy);
+    }
+
+    private double transparency(LightSource light,Vector l,Vector n, GeoPoint intersectionPoint, int numOfRays) {
+        double shadow = transparency(light, l, n, intersectionPoint);
+        Point3D p;
+        if (light.getClass() == PointLight.class || light.getClass() == SpotLight.class) {
+            p = ((PointLight) light).get_pL();
+            List<Ray> sadowRays = getRandomSadowRays(intersectionPoint.point, p, light.getRadius(), numOfRays);
+            for (var ray : sadowRays) {
+                shadow += transparency(light, ray.getDirection().scale(-1), n, intersectionPoint);
+            }
+        }
+        return shadow / numOfRays;
+    }
 }
-

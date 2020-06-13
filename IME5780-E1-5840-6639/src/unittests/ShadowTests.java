@@ -32,12 +32,12 @@ public class ShadowTests {
                         new Point3D(-70, 40, 0), new Point3D(-40, 70, 0), new Point3D(-68, 68, 4)));
 
         scene.addLights(new SpotLight(new Color(400, 240, 0), //
-                new Point3D(-100, 100, -200), new Vector(1, -1, 3), 1, 1E-5, 1.5E-7));
+                new Point3D(-100, 100, -200), new Vector(1, -1, 3), 1, 1E-5, 1.5E-7,5));
 
         ImageWriter imageWriter = new ImageWriter("sphereTriangleInitial", 200, 200, 400, 400);
         Render render = new Render(imageWriter, scene);
 
-        render.renderImage();
+        render.renderImage(1,100);
         render.writeToImage();
     }
 
@@ -136,12 +136,12 @@ public class ShadowTests {
                         new Point3D(-70, 40, 0), new Point3D(-40, 70, 0), new Point3D(-68, 68, 4)));
 
         scene.addLights(new SpotLight(new Color(400, 240, 0), //
-                new Point3D(-75, 75, -65), new Vector(1, -1, 3), 1, 1E-5, 1.5E-7));
+                new Point3D(-75, 75, -65), new Vector(1, -1, 3), 1, 1E-5, 1.5E-7,5));
 
         ImageWriter imageWriter = new ImageWriter("sphereTriangleSpot2", 200, 200, 400, 400);
         Render render = new Render(imageWriter, scene);
 
-        render.renderImage();
+        render.renderImage(1,1000);
         render.writeToImage();
     }
 

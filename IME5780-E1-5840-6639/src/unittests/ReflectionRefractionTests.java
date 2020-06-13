@@ -209,7 +209,7 @@ public class ReflectionRefractionTests {
         ImageWriter imageWriter = new ImageWriter("shadow with transparency1", 200, 200, 600, 600);
         Render render = new Render(imageWriter, scene).setMultithreading(3).setDebugPrint();
 
-        render.renderImage(60);
+        render.renderImage(30,30);
         render.writeToImage();
     }
 

@@ -17,10 +17,14 @@ public class SpotLight extends PointLight {
      * @param Kl
      * @param Kq
      */
-    public SpotLight(Color emmision, Point3D position, Vector direction, double Kc, double Kl, double Kq){
-        super(emmision,position,Kc,Kl,Kq);
+    public SpotLight(Color emmision, Point3D position, Vector direction, double Kc, double Kl, double Kq, double radius){
+        super(emmision,position,Kc,Kl,Kq,radius);
         this._direction = direction.normalized();
     }
+    public SpotLight(Color emmision, Point3D position, Vector direction, double Kc, double Kl, double Kq) {
+        this(emmision, position, direction, Kc, Kl, Kq, 0);
+    }
+
 
     @Override
     public double getDistance(Point3D point) {
