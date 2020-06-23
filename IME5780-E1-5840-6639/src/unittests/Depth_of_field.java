@@ -66,7 +66,7 @@ public class Depth_of_field {
         ImageWriter imageWriter = new ImageWriter("snooker table", 200, 200, 600, 600);
         Render render = new Render(imageWriter, scene).setMultithreading(3).setDebugPrint();
 
-        render.renderImage(0,40);
+        render.renderImage(0,1);
         render.writeToImage();
     }
 public void addBalls(Point3D upRight, Point3D downRight, Point3D upLeft, Point3D downLeft, double radiusOfBalls, Scene scene){
@@ -103,9 +103,9 @@ public void addBalls(Point3D upRight, Point3D downRight, Point3D upLeft, Point3D
                     temp);
         SpotLight spot = new SpotLight(lightColor,new Point3D(0,downLeft.get_y()*4/5+radiusOfBalls/2,-radiusOfBalls+1),moveLight.scale(-1),1, 4E-5, 2E-7);
         SpotLight spot1 = new SpotLight(lightColor,new Point3D(0,195,-15),new Vector(0,-1,0.31),1, 4E-5, 2E-7);
-        SpotLight spot2 = new SpotLight(lightColor,new Point3D(0,130,-15),new Vector(0,1,0.31),1, 4E-5, 2E-7);
+        //SpotLight spot2 = new SpotLight(lightColor,new Point3D(0,130,-15),new Vector(0,1,0.31),1, 4E-5, 2E-7);
         PointLight point = new PointLight(lightColor,new Point3D(0,0,100),1, 4E-5, 2E-7);
-        scene.addLights(spot,spot1,spot2,point);
+        scene.addLights(spot,spot1,point);
         for (int i = 0; i < 11; i++){
             scene.addGeometries(balls[i]);
 

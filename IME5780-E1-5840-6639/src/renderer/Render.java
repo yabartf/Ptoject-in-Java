@@ -2,13 +2,11 @@ package renderer;
 import elements.*;
 import geometries.Intersectable.GeoPoint;
 import geometries.Plane;
-import javafx.scene.effect.Light;
 import primitives.*;
 import scene.*;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 
 import static primitives.Util.alignZero;
 
@@ -391,7 +389,7 @@ public class Render {
         return rayBeam;
     }
 
-    private List<Ray> getRandomSadowRays(Point3D sourcePoint, Point3D point, double r, int numOfRays){
+    private List<Ray> getRandomShadowRays(Point3D sourcePoint, Point3D point, double r, int numOfRays){
         Vector v = point.subtract(sourcePoint).normalize();
         Vector vx = normalToRay(v);
         Vector vy = v.crossProduct(vx);
@@ -403,8 +401,8 @@ public class Render {
         Point3D p;
         if (light.getClass() == PointLight.class || light.getClass() == SpotLight.class) {
             p = ((PointLight) light).get_pL();
-            List<Ray> sadowRays = getRandomSadowRays(intersectionPoint.point, p, light.getRadius(), numOfRays);
-            for (var ray : sadowRays) {
+            List<Ray> shadowRays = getRandomShadowRays(intersectionPoint.point, p, light.getRadius(), numOfRays);
+            for (var ray : shadowRays) {
                 shadow += transparency(light, ray.getDirection().scale(-1), n, intersectionPoint);
             }
         }
