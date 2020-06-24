@@ -20,7 +20,23 @@ public abstract class Util {
         // 4. "De-normalize" the exponent by subtracting 1023
         return (int)((Double.doubleToRawLongBits(num) >> 52) & 0x7FFL) - 1023;
     }
+    public static double usubtract(double lhs, double rhs) {
+        int lhsExp = getExp(lhs);
+        int rhsExp = getExp(rhs);
 
+        // if other is too small relatively to our coordinate
+        // return the original coordinate
+        if (rhsExp - lhsExp < ACCURACY) return lhs;
+
+        // if our coordinate is too small relatively to other
+        // return negative of other coordinate
+        if (lhsExp - rhsExp < ACCURACY) return -rhs;
+
+        double result = lhs - rhs;
+        int resultExp = getExp(result);
+        // if the result is relatively small - tell that it is zero
+        return resultExp - lhsExp < ACCURACY ? 0.0 : result;
+    }
     /**
      * Checks whether the number is [almost] zero
      * 
