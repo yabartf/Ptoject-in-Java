@@ -61,12 +61,12 @@ public class Depth_of_field {
                 new Triangle(new Color(0,70,0), new Material(0.5, 0.5, 60,0.1,0), //
                         upRightCorner, upLeftCorner, downLeftCorner));
 
-        scene.addLights(new PointLight(new Color(java.awt.Color.WHITE),new Point3D(-0,0,10) ,1,4E-5, 2E-7));
+        scene.addLights(new PointLight(new Color(java.awt.Color.WHITE),new Point3D(-0,0,10) ,1,4E-5, 2E-7,7));
 
         ImageWriter imageWriter = new ImageWriter("snooker table", 200, 200, 600, 600);
         Render render = new Render(imageWriter, scene).setMultithreading(3).setDebugPrint();
 
-        render.renderImage(20,20);
+        render.renderImage(1,100);
         render.writeToImage();
     }
 public void addBalls(Point3D upRight, Point3D downRight, Point3D upLeft, Point3D downLeft, double radiusOfBalls, Scene scene){
@@ -101,8 +101,8 @@ public void addBalls(Point3D upRight, Point3D downRight, Point3D upLeft, Point3D
         Point3D temp = new Point3D(0,downLeft.get_y()*4/5,-radiusOfBalls);
         balls[10] = new Sphere(new Color(java.awt.Color.WHITE),sphereMaterial,radiusOfBalls,//
                     temp);
-        SpotLight spot = new SpotLight(lightColor,new Point3D(0,downLeft.get_y()*4/5+radiusOfBalls/2,-radiusOfBalls+1),moveLight.scale(-1),1, 4E-5, 2E-7);
-        SpotLight spot1 = new SpotLight(lightColor,new Point3D(0,195,-15),new Vector(0,-1,0.31),1, 4E-5, 2E-7);
+        SpotLight spot = new SpotLight(lightColor,new Point3D(0,downLeft.get_y()*4/5+radiusOfBalls/2,-radiusOfBalls+1),moveLight.scale(-1),1, 4E-5, 2E-7,7);
+        SpotLight spot1 = new SpotLight(lightColor,new Point3D(0,195,-15),new Vector(0,-1,0.31),1, 4E-5, 2E-7,7);
         scene.addLights(spot,spot1);
         for (int i = 0; i < 11; i++){
             scene.addGeometries(balls[i]);

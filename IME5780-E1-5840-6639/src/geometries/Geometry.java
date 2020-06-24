@@ -7,12 +7,14 @@ public abstract class Geometry implements Intersectable {
 
     protected Color _emmission;
     protected Material _matirial;
+    protected Box _box;
 
     /**
      * constarctor
      * @param _emmission
      * @param _matirial
      */
+
     public Geometry(Color _emmission, Material _matirial) {
         this._emmission = _emmission;
         this._matirial = _matirial;
@@ -22,7 +24,7 @@ public abstract class Geometry implements Intersectable {
      * constarctor
      */
     public Geometry() {
-        this(Color.BLACK, new Material(0,0,0));
+        this(Color.BLACK);
     }
 
     /**

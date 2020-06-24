@@ -37,7 +37,7 @@ public class ShadowTests {
         ImageWriter imageWriter = new ImageWriter("sphereTriangleInitial", 200, 200, 400, 400);
         Render render = new Render(imageWriter, scene);
 
-        render.renderImage(1,100);
+        render.renderImage(1,1);
         render.writeToImage();
     }
 
@@ -63,7 +63,7 @@ public class ShadowTests {
         ImageWriter imageWriter = new ImageWriter("sphereTriangleMove1", 200, 200, 400, 400);
         Render render = new Render(imageWriter, scene);
 
-        render.renderImage();
+        render.renderImage(1,100);
         render.writeToImage();
     }
 
@@ -141,7 +141,7 @@ public class ShadowTests {
         ImageWriter imageWriter = new ImageWriter("sphereTriangleSpot2", 200, 200, 400, 400);
         Render render = new Render(imageWriter, scene);
 
-        render.renderImage(1,1000);
+        render.renderImage(1,1);
         render.writeToImage();
     }
 

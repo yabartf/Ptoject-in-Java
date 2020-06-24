@@ -1,14 +1,15 @@
 package renderer;
-import elements.*;
+import elements.Camera;
+import elements.LightSource;
+import elements.PointLight;
+import elements.SpotLight;
 import geometries.Intersectable.GeoPoint;
 import geometries.Plane;
-import javafx.scene.effect.Light;
 import primitives.*;
-import scene.*;
+import scene.Scene;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 
 import static primitives.Util.alignZero;
 
@@ -117,7 +118,8 @@ public class Render {
         public boolean nextPixel(Pixel target) {
             int percents = nextP(target);
             if (percents > 0)
-                if (Render.this._print) System.out.printf("\r %02d%%", percents);
+                if (Render.this._print)
+                    System.out.printf("\r %02d%%", percents);
             if (percents >= 0)
                 return true;
             if (Render.this._print) System.out.printf("\r %02d%%", 100);
@@ -166,7 +168,7 @@ public class Render {
         if (_print) System.out.printf("\r100%%\n");
     }
      public void renderImage(){
-     renderImage(0,0);
+     renderImage(1,1);
      }
 
     /**
