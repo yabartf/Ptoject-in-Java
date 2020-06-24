@@ -2,6 +2,7 @@ package unittests;
 
 import elements.AmbientLight;
 import elements.Camera;
+import elements.SpotLight;
 import geometries.Cylinder;
 import geometries.Square;
 import geometries.Triangle;
@@ -27,7 +28,7 @@ public class miniProject2 {
         Point3D leftDown = new Point3D(-width/2,length/2,0);
         Material wallsMaterial = new Material(0.5, 0.5, 60,0,0.3);
         Scene scene = new Scene("mini project2");
-        scene.setCamera(new Camera(new Point3D(0, length/2, -height*1.3), new Vector(0, -1, 1), new Vector(0, -1, -1),2));
+        scene.setCamera(new Camera(new Point3D(0, 0, -height*1.7), new Vector(0, -1, 1), new Vector(0, -1, -1),2));
         scene.setViewPlaneDistance(50);
         scene.setFocalPlaneDistance(180);
         scene.setBackground(Color.BLACK);
@@ -37,21 +38,54 @@ public class miniProject2 {
         Square leftWall = new Square(new Color(java.awt.Color.RED),wallsMaterial,leftDown,leftUp,new Point3D(leftDown.get_x(),leftDown.get_y(),-height));
         Square floor = new Square(new Color(java.awt.Color.YELLOW),wallsMaterial,leftDown,leftUp,rightDown);
         Square[] borders = new Square[4];
-        borders[0] = new Square(Color.BLACK,wallsMaterial,new Point3D(rightUp.get_x()-tribunsSize-80,rightUp.get_y()-50,-1),
-                new Point3D(rightDown.get_x()-tribunsSize-80,rightDown.get_y()+50,-1),
-                new Point3D(rightUp.get_x()-tribunsSize-150,rightUp.get_y()-50,-1));
-        borders[1] = new Square(Color.BLACK,wallsMaterial,new Point3D(leftUp.get_x()+tribunsSize+80,leftUp.get_y()-50,-1),
-                new Point3D(leftDown.get_x()+tribunsSize+80,leftDown.get_y()+50,-1),
-                new Point3D(leftUp.get_x()+tribunsSize+150,leftUp.get_y()-50,-1));
-
+        Point3D bordUpRight = new Point3D(rightUp.get_x()-tribunsSize-80,rightUp.get_y()+250,-0.1);
+        Point3D bordDownRight = new Point3D(rightDown.get_x()-tribunsSize-80,rightDown.get_y()-180,-0.1);
+        Point3D bordUpLeft = new Point3D(leftUp.get_x()+tribunsSize+80,leftUp.get_y()+250,-0.1);
+        Point3D bordDownLeft = new Point3D(leftDown.get_x()+tribunsSize+80,leftDown.get_y()-180,-0.1);
+        borders[0] = new Square(Color.BLACK,wallsMaterial,bordUpRight,
+                bordDownRight, new Point3D(bordUpRight.get_x()-50,bordUpRight.get_y(),-0.1));
+        borders[1] = new Square(Color.BLACK,wallsMaterial,bordUpLeft,
+                bordDownLeft, new Point3D(bordUpLeft.get_x()+50,bordUpLeft.get_y(),-0.1));
+        borders[2] = new Square(Color.BLACK,wallsMaterial,bordUpLeft,bordUpRight,
+                new Point3D(bordUpLeft.get_x(),bordUpLeft.get_y()-50,-0.1));
+        borders[3] = new Square(Color.BLACK,wallsMaterial,bordDownLeft,bordDownRight,
+                new Point3D(bordDownLeft.get_x(),bordDownLeft.get_y()+50,-0.1));
+        gate(bordUpLeft.get_y(),width,scene);
         rightTribune(rightDown,rightUp,tribunsSize,height, scene);
         leftTribune(leftDown,leftUp,tribunsSize,height, scene);
-        scene.addGeometries(forwardWall,rightWall,leftWall,floor,borders[0],borders[1]);
+        scene.addGeometries(forwardWall,rightWall,leftWall,floor,borders[0],borders[1],borders[2],borders[3]);
+        /*scene.addLights(new SpotLight(new Color(java.awt.Color.WHITE),new Point3D(0,-length/2+20,-600),
+                new Vector(0,1,0.5),1, 4E-5, 2E-7));*/
         ImageWriter imageWriter = new ImageWriter("room", 200, 200, 600, 600);
         Render render = new Render(imageWriter, scene).setMultithreading(3).setDebugPrint();
 
         render.renderImage(0,1);
         render.writeToImage();
+    }
+
+    private void gate(double y, double w, Scene scene) {
+        int density = 10;
+        int height = 550;
+        double XRight = w/8;
+        double XLeft = -w/8;
+        Material tMaterial = new Material(0.5, 0.5, 60,0,0.3);
+        Square[] sheet = new Square[density*2];
+        for (int i = 0; i < density; i++)
+        {
+            double x = XRight - w*i*2/80;
+            sheet[i] = new Square(Color.BLACK,tMaterial,new Point3D(x,y,-0.1),
+                    new Point3D(x - 30,y,-0.1),new Point3D(x,y,-height));
+            scene.addGeometries(sheet[i]);
+        }
+        for (int i = 0; i < density; i++)
+        {
+            sheet[i+10] = new Square(Color.BLACK,tMaterial,
+                    new Point3D(XRight,y,-i*height/(density)),
+                    new Point3D(XLeft,y,-i*height/(density)),
+                    new Point3D(XRight,y,-(i*height/(density))-30));
+            scene.addGeometries(sheet[i+10]);
+        }
+
     }
 
     private void rightTribune(Point3D rightDown, Point3D rightUp, int size, double height, Scene scene) {
