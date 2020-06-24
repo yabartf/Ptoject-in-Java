@@ -3,9 +3,7 @@ package unittests;
 import elements.AmbientLight;
 import elements.Camera;
 import elements.SpotLight;
-import geometries.Cylinder;
-import geometries.Square;
-import geometries.Triangle;
+import geometries.*;
 import org.junit.jupiter.api.Test;
 import primitives.Color;
 import primitives.Material;
@@ -50,13 +48,16 @@ public class miniProject2 {
                 new Point3D(bordUpLeft.get_x(),bordUpLeft.get_y()-50,-0.1));
         borders[3] = new Square(Color.BLACK,wallsMaterial,bordDownLeft,bordDownRight,
                 new Point3D(bordDownLeft.get_x(),bordDownLeft.get_y()+50,-0.1));
+        Geometries geoBorders = new Geometries(borders);
         gate(bordUpLeft.get_y(),width,scene);
         rightTribune(rightDown,rightUp,tribunsSize,height, scene);
         leftTribune(leftDown,leftUp,tribunsSize,height, scene);
-        scene.addGeometries(forwardWall,rightWall,leftWall,floor,borders[0],borders[1],borders[2],borders[3]);
-        /*scene.addLights(new SpotLight(new Color(java.awt.Color.WHITE),new Point3D(0,-length/2+20,-600),
-                new Vector(0,1,0.5),1, 4E-5, 2E-7));*/
-        ImageWriter imageWriter = new ImageWriter("room", 200, 200, 600, 600);
+        Sphere ball = new Sphere(new Color(255,255,255),wallsMaterial,100,new Point3D(0,0,-50));
+        scene.addGeometries(forwardWall,rightWall,leftWall,floor,ball);
+        scene.addGeometries(borders);
+        scene.addLights(new SpotLight(new Color(java.awt.Color.BLUE),new Point3D(0,-length/2+20,-800),
+                new Vector(0,1,1),1, 4E-5, 2E-7));
+        ImageWriter imageWriter = new ImageWriter("room", 200, 200, 2000, 2000);
         Render render = new Render(imageWriter, scene).setMultithreading(3).setDebugPrint();
 
         render.renderImage(0,1);
@@ -70,21 +71,42 @@ public class miniProject2 {
         double XLeft = -w/8;
         Material tMaterial = new Material(0.5, 0.5, 60,0,0.3);
         Square[] sheet = new Square[density*2];
+        Square[] gate = new Square[7];
         for (int i = 0; i < density; i++)
         {
             double x = XRight - w*i*2/80;
-            sheet[i] = new Square(Color.BLACK,tMaterial,new Point3D(x,y,-0.1),
-                    new Point3D(x - 30,y,-0.1),new Point3D(x,y,-height));
-            scene.addGeometries(sheet[i]);
+            sheet[i] = new Square(Color.BLACK,tMaterial,new Point3D(x,y-100,-0.1),
+                    new Point3D(x - 30,y-100,-0.1),new Point3D(x,y-100,-height));
         }
         for (int i = 0; i < density; i++)
         {
             sheet[i+10] = new Square(Color.BLACK,tMaterial,
-                    new Point3D(XRight,y,-i*height/(density)),
-                    new Point3D(XLeft,y,-i*height/(density)),
-                    new Point3D(XRight,y,-(i*height/(density))-30));
-            scene.addGeometries(sheet[i+10]);
+                    new Point3D(XRight,y-100,-i*height/(density)),
+                    new Point3D(XLeft,y-100,-i*height/(density)),
+                    new Point3D(XRight,y-100,-(i*height/(density))-30));
         }
+        gate[0] = new Square(Color.BLACK,tMaterial,new Point3D(XRight,y,0),
+        new Point3D(XRight-30,y,0),new Point3D(XRight,y,-height));
+        gate[1] = new Square(Color.BLACK,tMaterial,new Point3D(XRight,y,-height),
+                new Point3D(XRight,y,-height-30),
+                new Point3D(XLeft,y,-height));
+        gate[2] = new Square(Color.BLACK,tMaterial,new Point3D(XLeft,y,0),
+                new Point3D(XLeft+30,y,0),
+                new Point3D(XLeft,y,-height));
+        gate[3] = new Square(Color.BLACK,tMaterial,new Point3D(XRight,y,-height),
+                new Point3D(XRight,y,-height+30),
+                new Point3D(XRight,y-100,-height));
+        gate[4] = new Square(Color.BLACK,tMaterial,new Point3D(XLeft,y,-height),
+                new Point3D(XLeft,y,-height+30),
+                new Point3D(XLeft,y-100,-height));
+        gate[5] = new Square(Color.BLACK,tMaterial,new Point3D(XRight,y-100,-height),
+                new Point3D(XRight,y-100,0),
+                new Point3D(XRight-30,y-100,-height));
+        gate[6] = new Square(Color.BLACK,tMaterial,new Point3D(XLeft,y-100,-height),
+                new Point3D(XLeft,y-100,0),
+                new Point3D(XLeft+30,y-100,-height));
+        scene.addGeometries(gate);
+        scene.addGeometries(sheet);
 
     }
 
@@ -105,13 +127,15 @@ public class miniProject2 {
                 benchs[i] = new Square(Color.BLACK,tMaterial,temp,
                         tribuns[i].fourthPoint,
                         new Point3D(rightUp.get_x()- i * size/someTribuns,rightUp.get_y(),- height + ((1+i) * height/someTribuns)));
-                scene.addGeometries(tribuns[i],benchs[i]);
+              //  scene.addGeometries(tribuns[i],benchs[i]);
             }
             catch (IllegalArgumentException e){
                 if(e.getMessage() != "zero vector")
                     throw new IllegalArgumentException();
             }
         }
+        scene.addGeometries(benchs);
+        scene.addGeometries(tribuns);
     }
     private void leftTribune(Point3D leftDown, Point3D leftUp, int size, double height, Scene scene) {
 
@@ -131,12 +155,14 @@ public class miniProject2 {
                 benchs[i] = new Square(Color.BLACK, tMaterial, new Point3D(leftDown.get_x() + i * size/someTribuns, leftDown.get_y(), - height + (i * height/someTribuns)),//
                         new Point3D(leftDown.get_x() + i * size/someTribuns, leftDown.get_y(), - height + ((1+i) * height/( someTribuns))),//
                         temp);
-                scene.addGeometries(tribuns[i],benchs[i]);
+             //   scene.addGeometries(tribuns[i],benchs[i]);
             }
             catch (IllegalArgumentException e){
                 if(e.getMessage() != "zero vector")
                     throw new IllegalArgumentException();
             }
         }
+        scene.addGeometries(benchs);
+        scene.addGeometries(tribuns);
     }
 }
