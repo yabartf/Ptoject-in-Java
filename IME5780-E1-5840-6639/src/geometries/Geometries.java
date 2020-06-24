@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Geometries implements Intersectable {  
    /**the list of all the shapes**/ 
-   List<Intersectable> intersectables = new ArrayList<>();
+    List<Intersectable> intersectables = new LinkedList<>();
     /***************constructors***************/
     /**copy C-tor**/
     public Geometries(List<Intersectable> intersectables) {

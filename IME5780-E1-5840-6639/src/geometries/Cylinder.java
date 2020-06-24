@@ -1,15 +1,15 @@
 package geometries;
 
 
-import primitives.Point3D;
-import primitives.Ray;
-import primitives.Vector;
+import primitives.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Cylinder extends RadialGeometry{
     // the height of the clynder
     double height;
+    Point3D begin;
 
     /***
      * \
@@ -22,6 +22,11 @@ public class Cylinder extends RadialGeometry{
     if (hei<0)
         throw new IllegalArgumentException("height must be bigger then 0");
     this.height=hei;
+    }
+    public Cylinder(Point3D beg, double radius, double hei, Material mat, Color col){
+        super(col,mat,radius);
+        height = hei;
+        begin = beg;
     }
 /******************getters***************/
     @Override
@@ -40,9 +45,39 @@ public class Cylinder extends RadialGeometry{
 
     @Override
     public List<GeoPoint> findIntersections(Ray ray) {
-        return null;
-    }
 
+        List<GeoPoint> list = new ArrayList<>();
+        Point3D rayP = ray.getPoint();
+        Vector rayV = ray.getDirection();
+
+        for (GeoPoint p : super.findIntersections(ray)) {
+            double d = Math.abs(rayV.dotProduct(p.point.subtract(rayP)));
+            //if point is in the range
+            if (Util.usubtract(height / 2, d) >= 0.0)
+                list.add(new GeoPoint(this, p.point));
+        }
+
+        //get upper plane intersections
+        Point3D upperPoint = rayP.add(rayV.scale(height / 2));
+        Plane upperPlane = new Plane(rayV,upperPoint);
+        for (GeoPoint p : upperPlane.findIntersections(ray)) {
+            //if point is in the range
+            if (Util.usubtract(_radius, upperPoint.distance(p.point)) >= 0)
+                list.add(new GeoPoint(this, p.point));
+        }
+
+        //get under plane intersections
+        Point3D underPoint = rayP.subtract(rayV.scale(height / 2).getPoint()).getPoint();
+        Plane underPlane = new Plane(rayV,underPoint);
+        for (GeoPoint p : underPlane.findIntersections(ray)) {
+            //if point is in the range
+            if (Util.usubtract(_radius, underPoint.distance(p.point)) >= 0)
+                list.add(new GeoPoint(this, p.point));
+        }
+
+        return list;
+
+    }
     @Override
     public List<GeoPoint> findIntersections(Ray ray, double max) {
         return null;
