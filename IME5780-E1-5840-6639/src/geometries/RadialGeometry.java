@@ -16,7 +16,7 @@ public abstract class RadialGeometry extends Geometry {
     }
 
     /**
-     * constructor
+     *
      * @param _emmission
      * @param _matirial
      * @param _radius
@@ -25,7 +25,6 @@ public abstract class RadialGeometry extends Geometry {
         super(_emmission, _matirial);
         if(_radius<0)
             throw new IllegalArgumentException("radius cant be less then 0");
-
         this._radius = _radius;
     }
 
@@ -34,9 +33,7 @@ public abstract class RadialGeometry extends Geometry {
      * @param _radius
      */
     public RadialGeometry(double _radius) {
-        if(_radius<0)
-            throw new IllegalArgumentException("radius cant be less then 0");
-        this._radius = _radius;
+       this(Color.BLACK, new Material(0,0,0),_radius);
     }
 
     /**
