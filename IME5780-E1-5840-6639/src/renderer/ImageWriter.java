@@ -12,7 +12,7 @@ import javax.imageio.stream.*;
  * Image writer class combines accumulation of pixel color matrix and
  * finally producing a non-optimized jpeg image from this matrix.
  * The class although is responsible of holding image related parameters
- * of View Plane - pixel matrix size and resolution 
+ * of View Plane - pixel matrix size and resolution
  * @author Dan
  */
 public class ImageWriter {
@@ -31,7 +31,7 @@ public class ImageWriter {
 	 * @param imageName the name of jpeg file
 	 * @param width View Plane width in size units
 	 * @param height View Plane height in size units
-	 * @param nX amount of pixels by Width 
+	 * @param nX amount of pixels by Width
 	 * @param nY amount of pixels by height
 	 */
 	public ImageWriter(String imageName, double width, double height, int nX, int nY) {
