@@ -14,9 +14,9 @@ import scene.Scene;
 public class miniProject2 {
     @Test
     public void room(){
-        double height = 550;
-        double width = 2000;
-        double length = 1300;
+        double height = 850;
+        double width = 1500;
+        double length = 1200;
         int tribunsSize = (int)width/10;
         Point3D rightUp = new Point3D(width/2,-length/2,0);
         Point3D rightDown = new Point3D(width/2,length/2,0);
@@ -24,7 +24,7 @@ public class miniProject2 {
         Point3D leftDown = new Point3D(-width/2,length/2,0);
         Material wallsMaterial = new Material(0.5, 0.5, 60,0,0.3);
         Scene scene = new Scene("mini project2");
-        scene.setCamera(new Camera(new Point3D(0,2* length/7, -height*0.7), new Vector(0, -1, 0.2), new Vector(0, -1, -5),2));
+        scene.setCamera(new Camera(new Point3D(0, length/2, -height*0.8), new Vector(0, -1, 0.4), new Vector(0, -1, -2.5),2));
         scene.setViewPlaneDistance(50);
         scene.setFocalPlaneDistance(180);
         scene.setBackground(Color.BLACK);
@@ -36,7 +36,7 @@ public class miniProject2 {
                 new Point3D(leftDown.get_x(),leftDown.get_y(),-height),
                 new Point3D(leftUp.get_x(),leftUp.get_y(),-height),
                 new Point3D( rightDown.get_x(), rightDown.get_y(),-height));
-        Square floor = new Square(new Color(java.awt.Color.DARK_GRAY),wallsMaterial,
+        Square floor = new Square(new Color(java.awt.Color.DARK_GRAY),new Material(0.5, 0.5, 60,0,0.0),
                 leftDown,leftUp,rightDown);
         Square[] borders = new Square[4];
         Point3D bordUpRight = new Point3D(rightUp.get_x()-tribunsSize-80,rightUp.get_y()+250,-0.1);
@@ -60,17 +60,17 @@ public class miniProject2 {
                 100,new Point3D(0,0,-100));
         scene.addGeometries(forwardWall,rightWall,leftWall,floor,ball,roof);
         scene.addGeometries(geoBorders);
-        scene.addLights(new SpotLight(new Color(java.awt.Color.BLUE),new Point3D(0,-length/2+20,-800),
+        scene.addLights(new SpotLight(new Color(java.awt.Color.BLUE),new Point3D(0,-length/2+20,-2*height/3),
                 new Vector(0,1,1),1, 4E-5, 2E-7),
-                new DirectionalLight(new Color(150,150,0),new Vector(0,1,0.3)),
+               // new DirectionalLight(new Color(150,150,0),new Vector(0,1,0.3)),
                 new SpotLight(new Color(1000,1000,1000),new Point3D(0,-230,-230),new Vector(0,1,1)
-                        ,1, 4E-5, 2E-7,5),
-                new PointLight(new Color(500,500,0),new Point3D(0,0,-100),1, 4E-5, 2E-7));
-                ;
+                        ,1, 4E-5, 2E-7,5)//,
+              //  new PointLight(new Color(500,500,0),new Point3D(0,0,-100),1, 4E-5, 2E-7));
+        );
         ImageWriter imageWriter = new ImageWriter("room", 200, 200, 600, 600);
         Render render = new Render(imageWriter, scene).setMultithreading(3).setDebugPrint();
 
-        render.renderImage(200,200);
+        render.renderImage(0,1);
         render.writeToImage();
     }
 
