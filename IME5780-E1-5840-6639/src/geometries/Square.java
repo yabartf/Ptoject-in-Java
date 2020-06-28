@@ -8,8 +8,8 @@ import java.util.List;
 import static primitives.Util.isZero;
 
 public class Square extends Polygon{
-    public Triangle tri1, tri2;
-    public Point3D fourthPoint;
+    private Triangle tri1, tri2;
+    private Point3D fourthPoint;
     public  Square(Color objColor, Material material, Point3D p1, Point3D p2, Point3D p3){
         super(objColor,  material, p1,p2,p3);
         tri1 = new Triangle(objColor,material,p1,p2,p3);

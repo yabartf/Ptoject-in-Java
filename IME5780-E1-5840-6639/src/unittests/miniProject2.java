@@ -24,9 +24,9 @@ public class miniProject2 {
         Point3D leftDown = new Point3D(-width/2,length/2,0);
         Material wallsMaterial = new Material(0.5, 0.5, 60,0,0.3);
         Scene scene = new Scene("mini project2");
-        scene.setCamera(new Camera(new Point3D(0, length/2, -height*0.8), new Vector(0, -1, 0.4), new Vector(0, -1, -2.5),2));
+        scene.setCamera(new Camera(new Point3D(0, length/2, -height*0.8), new Vector(0, -1, 0.4), new Vector(0, -1, -2.5),100));
         scene.setViewPlaneDistance(50);
-        scene.setFocalPlaneDistance(180);
+        scene.setFocalPlaneDistance(length/2+100);
         scene.setBackground(Color.BLACK);
         scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
         Point3D p3 = new Point3D(rightUp.get_x(),rightUp.get_y(),-height);
@@ -61,19 +61,19 @@ public class miniProject2 {
         leftTribune(leftDown,leftUp,tribunsSize,height, scene);
         Sphere ball = new Sphere(new Color(76,153,0),new Material(0.2, 0.2, 30, 0.6, 0),
                 100,new Point3D(0,0,-100));
-        //scene.addGeometries(forwardWall,rightWall,leftWall,floor,ball,roof);
+
         scene.addGeometries(forwardWall,leftWall, rightWall, floor, roof, ball);
         scene.addGeometries(geoBorders);
-        scene.addLights(new SpotLight(new Color(java.awt.Color.BLUE),new Point3D(0,-length/2+20,-2*height/3),
-                        new Vector(0,1,1),1, 4E-1, 2E-3),
-                 new DirectionalLight(new Color(150,150,0),new Vector(0,1,0.3)),
-                new SpotLight(new Color(1000,1000,1000),new Point3D(0,-230,-230),new Vector(0,1,1)
-                        ,1, 4E-1, 2E-3,5));
-                  new PointLight(new Color(500,500,0),new Point3D(0,0,-100),1, 4E-3, 2E-5);
+        scene.addLights(new SpotLight(new Color(80000,80000,80000),new Point3D(0,-length/2+1,-2*height/3),
+                        new Vector(0,1,1),1, 4E-1, 2E-3,10),
+                 //new DirectionalLight(new Color(150,150,0),new Vector(0,1,0.3)),
+                new SpotLight(new Color(80000,80000,80000),new Point3D(0,-230,-280),new Vector(0,1,1)
+                        ,1, 4E-1, 2E-3,10));
+
         ImageWriter imageWriter = new ImageWriter("room", 200, 200, 600, 600);
         Render render = new Render(imageWriter, scene).setMultithreading(3).setDebugPrint();
 
-        render.renderImage(1,1);
+        render.renderImage(0,20);
         render.writeToImage();
     }
 
@@ -90,15 +90,15 @@ public class miniProject2 {
             lamps[i] = new Sphere(new Color(32,32,32),lampMaterial,height/20,rightPoint);
             lamps[some/2+i] = new Sphere(new Color(32,32,32),lampMaterial,height/20,leftPoint);
 
-            Point3D lightRight = new Point3D(rightPoint.get_x()-height/20,rightPoint.get_y(),rightPoint.get_z());
-            Point3D lightLeft = new Point3D(leftPoint.get_x()+height/20,leftPoint.get_y(),leftPoint.get_z());
+            Point3D lightRight = new Point3D(rightPoint.get_x()-1,rightPoint.get_y(),rightPoint.get_z());
+            Point3D lightLeft = new Point3D(leftPoint.get_x()+1,leftPoint.get_y(),leftPoint.get_z());
             Vector rightToBall = ballPoint.subtract(lightRight);
             Vector leftToBall = ballPoint.subtract(lightLeft);
 
-            projectors[i] =  new SpotLight(new Color(3000,3000,0),lightRight,
-                    rightToBall,1, 2E-2, 1E-4);
-            projectors[some/2+i] =  new SpotLight(new Color(3000,3000,0),lightLeft,
-                    leftToBall,1, 2E-2, 1E-4);
+            projectors[i] =  new SpotLight(new Color(80000,80000,0),lightRight,
+                    rightToBall,1, 2E-1, 1E-1);
+            projectors[some/2+i] =  new SpotLight(new Color(80000,80000,0),lightLeft,
+                    leftToBall,1, 2E-1, 1E-1);
         }
         scene.addLights(projectors);
         scene.addGeometries(lamps);
@@ -111,7 +111,7 @@ public class miniProject2 {
         double XLeft = -w/8;
         double width = w/100;
         Material tMaterial = new Material(0.9, 0.5, 60,0,0);
-        Square[] sheet = new Square[density*2];
+        Square[] sheet = new Square[density*2+1];
         Square[] gate = new Square[7];
         for (int i = 0; i < density; i++)
         {
@@ -121,13 +121,14 @@ public class miniProject2 {
             Point3D p3 = new Point3D(x,y-100,-height);
             sheet[i] = new Square(Color.BLACK,tMaterial,p1,p2,getForthPoint(p1,p2,p3),p3);
         }
-        for (int i = 0; i < density; i++)
+        for (int i = 0; i < density+1; i++)
         {
             Point3D p1 = new Point3D(XRight,y-100,-i*height/(density));
             Point3D p2 = new Point3D(XLeft,y-100,-i*height/(density));
             Point3D p3 = new Point3D(XRight,y-100,-(i*height/(density))-width);
-            sheet[i+10] = new Square(Color.BLACK,tMaterial,p1, p2, getForthPoint(p1,p2,p3),p3);
+            sheet[i+density] = new Square(Color.BLACK,tMaterial,p1, p2, getForthPoint(p1,p2,p3),p3);
         }
+
         Point3D p1 =new Point3D(XRight,y,0);
         Point3D p2 = new Point3D(XRight-width,y,0);
         Point3D p3 = new Point3D(XRight,y,-height);
