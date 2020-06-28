@@ -39,8 +39,6 @@ public class miniProject2 {
         Square roof = new Square(new Color(java.awt.Color.DARK_GRAY),wallsMaterial,p1,p2,getForthPoint(p1,p2,p3),p3);
         p3 = new Point3D(leftDown.get_x(),leftDown.get_y(),-height);
         Square leftWall = new Square(new Color(java.awt.Color.RED),wallsMaterial,leftDown,leftUp, getForthPoint(leftDown, leftUp, p3), p3);
-
-
         Square floor = new Square(new Color(java.awt.Color.DARK_GRAY),new Material(0.5, 0.5, 60,0,0.0),
                 leftDown,leftUp, getForthPoint(leftDown, leftUp, rightDown),rightDown);
         Square[] borders = new Square[4];
@@ -49,11 +47,9 @@ public class miniProject2 {
         Point3D bordUpLeft = new Point3D(leftUp.get_x()+tribunsSize+80,leftUp.get_y()+250,-0.1);
         Point3D bordDownLeft = new Point3D(leftDown.get_x()+tribunsSize+80,leftDown.get_y()-180,-0.1);
         p3 = new Point3D(bordUpRight.get_x()-50,bordUpRight.get_y(),-0.1);
-        borders[0] = new Square(Color.BLACK,wallsMaterial,bordUpRight,
-                bordDownRight,getForthPoint(bordUpRight, bordDownRight ,p3), p3);
+        borders[0] = new Square(Color.BLACK,wallsMaterial,bordUpRight, bordDownRight,getForthPoint(bordUpRight, bordDownRight ,p3), p3);
         p3 = new Point3D(bordUpLeft.get_x()+50,bordUpLeft.get_y(),-0.1);
-        borders[1] = new Square(Color.BLACK,wallsMaterial,bordUpLeft,
-                bordDownLeft,getForthPoint(bordUpLeft, bordDownLeft, p3), p3);
+        borders[1] = new Square(Color.BLACK,wallsMaterial,bordUpLeft, bordDownLeft,getForthPoint(bordUpLeft, bordDownLeft, p3), p3);
         p3 = new Point3D(bordUpLeft.get_x(),bordUpLeft.get_y()-50,-0.1);
         borders[2] = new Square(Color.BLACK,wallsMaterial,bordUpLeft,bordUpRight,getForthPoint(bordUpLeft, bordUpRight, p3),p3);
         p3 =   new Point3D(bordDownLeft.get_x(),bordDownLeft.get_y()+50,-0.1);
@@ -68,12 +64,6 @@ public class miniProject2 {
         //scene.addGeometries(forwardWall,rightWall,leftWall,floor,ball,roof);
         scene.addGeometries(forwardWall,leftWall, rightWall, floor, roof, ball);
         scene.addGeometries(geoBorders);
-//        scene.addLights(new SpotLight(new Color(java.awt.Color.BLUE),new Point3D(0,-length/2+20,-800),
-//                        new Vector(0,1,1),1, 4E-5, 2E-7),
-//                new DirectionalLight(new Color(150,150,0),new Vector(0,1,0.3)),
-//                new SpotLight(new Color(255,255,255),new Point3D(0,-230,-230),new Vector(0,1,1)
-//                        ,1, 4E-5, 2E-7,5),
-//                new PointLight(new Color(255,255,0),new Point3D(0,0,-100),1, 4E-5, 2E-7));
         scene.addLights(new SpotLight(new Color(java.awt.Color.BLUE),new Point3D(0,-length/2+20,-2*height/3),
                         new Vector(0,1,1),1, 4E-1, 2E-3),
                  new DirectionalLight(new Color(150,150,0),new Vector(0,1,0.3)),
