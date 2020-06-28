@@ -44,7 +44,11 @@ public class Polygon extends Geometry {
         // polygon with this plane.
         // The plane holds the invariant normal (orthogonal unit) vector to the polygon
         _plane = new Plane(vertices[0], vertices[1], vertices[2]);
-        if (vertices.length == 3) return; // no need for more tests for a Triangle
+        if (vertices.length == 3)
+        {
+            createBox();
+            return; // no need for more tests for a Triangle
+        }
 
         Vector n = _plane.getNormal();
 
@@ -76,6 +80,7 @@ public class Polygon extends Geometry {
             if (positive != (edge1.crossProduct(edge2).dotProduct(n) > 0))
                 throw new IllegalArgumentException("All vertices must be ordered and the polygon must be convex");
         }
+        createBox();
     }
     public Polygon(Color objColor,Point3D... vertices){
         this(vertices);
@@ -101,5 +106,18 @@ public class Polygon extends Geometry {
     @Override
     public List<GeoPoint> findIntersections(Ray ray, double max) {
         return null;
+    }
+    private void createBox(){
+        double xmin =Double.POSITIVE_INFINITY, ymin = Double.POSITIVE_INFINITY, zmin = Double.POSITIVE_INFINITY,
+                xmax = Double.NEGATIVE_INFINITY, ymax = Double.NEGATIVE_INFINITY, zmax = Double.NEGATIVE_INFINITY;
+        for(var vertic :_vertices){
+            xmin = Math.min(xmin,vertic.get_x());
+            ymin = Math.min(ymin,vertic.get_y());
+            zmin = Math.min(zmin,vertic.get_z());
+            xmax = Math.max(xmax, vertic.get_x());
+            ymax = Math.max(ymax, vertic.get_y());
+            zmax = Math.max(zmax, vertic.get_z());
+        }
+        _box = new Box(new Point3D(xmin, ymin, zmin), new Point3D(xmax, ymax, zmax));
     }
 }

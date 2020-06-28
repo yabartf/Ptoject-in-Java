@@ -1,10 +1,9 @@
 package unittests;
 
+import geometries.Square;
 import geometries.Triangle;
 import org.junit.Test;
-import primitives.Point3D;
-import primitives.Ray;
-import primitives.Vector;
+import primitives.*;
 import geometries.Intersectable.GeoPoint;
 
 import java.util.List;

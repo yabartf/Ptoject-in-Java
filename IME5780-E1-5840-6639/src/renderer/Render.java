@@ -410,6 +410,7 @@ public class Render {
                 shadow += transparency(light, ray.getDirection().scale(-1), n, intersectionPoint);
             }
         }
+
         return shadow / numOfRays;
     }
 }

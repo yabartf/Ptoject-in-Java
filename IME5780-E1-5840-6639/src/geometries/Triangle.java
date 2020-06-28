@@ -34,14 +34,7 @@ public class Triangle extends Polygon{
         super(objColor,p1,p2,p3);
     }
 
-    /**
-     * getter
-     * @param p
-     * @return
-     */
-    public Vector getNormal(Point3D p) {
-        return super.getNormal(p);
-    }
+
     /**
      * find Intsersections
      * @param ray
