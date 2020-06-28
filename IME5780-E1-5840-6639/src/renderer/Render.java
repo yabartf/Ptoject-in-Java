@@ -132,6 +132,8 @@ public class Render {
      * the Renderer object
      */
     public void renderImage(int numOfFocusRays, int numOfShadowRays) {
+        if(numOfFocusRays < 1||numOfShadowRays < 1 )
+            throw new IllegalArgumentException("num of rays must be more then 1");
         final int nX = _imageWriter.getNx();
         final int nY = _imageWriter.getNy();
         final double dist = _scene.getViewPlaneDistance();

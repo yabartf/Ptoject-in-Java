@@ -8,25 +8,25 @@ import java.util.List;
 import static primitives.Util.isZero;
 
 public class Square extends Polygon{
-    private Triangle tri1, tri2;
-    private Point3D fourthPoint;
-    public  Square(Color objColor, Material material, Point3D p1, Point3D p2, Point3D p3){
-        super(objColor,  material, p1,p2,p3);
-        tri1 = new Triangle(objColor,material,p1,p2,p3);
-        Point3D mid = new Point3D((p2.get_x()+p3.get_x())/2,(p2.get_y()+p3.get_y())/2,(p2.get_z()+p3.get_z())/2);
-        Vector toP4 = mid.subtract(p1);
-        fourthPoint = p1.add(toP4.scale(2));
-        tri2 = new Triangle(objColor,material,p2,p3,fourthPoint);
-       // createBox();
-    }
+    //public Triangle tri1, tri2;
+    //public Point3D fourthPoint;
+//    public  Square(Color objColor, Material material, Point3D p1, Point3D p2, Point3D p3){
+//        super(objColor,  material, p1,p2,p3);
+//        tri1 = new Triangle(objColor,material,p1,p2,p3);
+//        Point3D mid = new Point3D((p2.get_x()+p3.get_x())/2,(p2.get_y()+p3.get_y())/2,(p2.get_z()+p3.get_z())/2);
+//        Vector toP4 = mid.subtract(p1);
+//        fourthPoint = p1.add(toP4.scale(2));
+//        tri2 = new Triangle(objColor,material,p2,p3,fourthPoint);
+//       // createBox();
+//    }
     public  Square(Color objColor, Material material, Point3D p1, Point3D p2, Point3D p3, Point3D p4){
         super(objColor,  material, p1, p2, p3, p4);
     }
 
 
-    public Point3D getFourthPoint(){
-        return fourthPoint;
-    }
+//    public Point3D getFourthPoint(){
+//        return fourthPoint;
+//    }
 
 //    @Override
 //    public List<GeoPoint> findIntersections(Ray ray, double max) {
@@ -39,21 +39,21 @@ public class Square extends Polygon{
 //    public List<GeoPoint> findIntersections(Ray ray) {
 //        return this.findIntersections(ray,Double.POSITIVE_INFINITY);
 //    }
-    private void createBox(){
-        double xmin =Double.POSITIVE_INFINITY, ymin = Double.POSITIVE_INFINITY, zmin = Double.POSITIVE_INFINITY,
-                xmax = Double.NEGATIVE_INFINITY, ymax = Double.NEGATIVE_INFINITY, zmax = Double.NEGATIVE_INFINITY;
-        List<Point3D> squereVertices = tri1._vertices;
-        squereVertices.add(fourthPoint);
-        for(var vertic :squereVertices){
-            xmin = Math.min(xmin,vertic.get_x());
-            ymin = Math.min(ymin,vertic.get_y());
-            zmin = Math.min(zmin,vertic.get_z());
-            xmax = Math.max(xmax, vertic.get_x());
-            ymax = Math.max(ymax, vertic.get_y());
-            zmax = Math.max(zmax, vertic.get_z());
-        }
-        _box = new Box(new Point3D(xmin, ymin, zmin), new Point3D(xmax, ymax, zmax));
-    }
+//    private void createBox(){
+//        double xmin =Double.POSITIVE_INFINITY, ymin = Double.POSITIVE_INFINITY, zmin = Double.POSITIVE_INFINITY,
+//                xmax = Double.NEGATIVE_INFINITY, ymax = Double.NEGATIVE_INFINITY, zmax = Double.NEGATIVE_INFINITY;
+//        List<Point3D> squereVertices = tri1._vertices;
+//        squereVertices.add(fourthPoint);
+//        for(var vertic :squereVertices){
+//            xmin = Math.min(xmin,vertic.get_x());
+//            ymin = Math.min(ymin,vertic.get_y());
+//            zmin = Math.min(zmin,vertic.get_z());
+//            xmax = Math.max(xmax, vertic.get_x());
+//            ymax = Math.max(ymax, vertic.get_y());
+//            zmax = Math.max(zmax, vertic.get_z());
+//        }
+//        _box = new Box(new Point3D(xmin, ymin, zmin), new Point3D(xmax, ymax, zmax));
+//    }
     public List<GeoPoint> findIntersections(Ray ray){
         return this.findIntersections(ray,Double.POSITIVE_INFINITY);
     }

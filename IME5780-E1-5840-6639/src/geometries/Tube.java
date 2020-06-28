@@ -8,7 +8,11 @@ import java.util.List;
 public class Tube extends RadialGeometry{
     Ray legate;
 
-    /***************constructor***************/
+    @Override
+    public Box getBox() {
+        return null;
+    }
+/***************constructor***************/
     /**
      * constructor
      * @param leg

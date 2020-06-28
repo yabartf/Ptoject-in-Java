@@ -9,7 +9,8 @@ public interface Intersectable {
         return findIntersections(ray, Double.POSITIVE_INFINITY);
     }
     List<GeoPoint> findIntersections(Ray ray, double max);
-
+    public Box box=new Box(new Point3D(0,0,0),new Point3D(0,0,0));
+    Box getBox();
     public class Box {
         Point3D _min;
         Point3D _max;

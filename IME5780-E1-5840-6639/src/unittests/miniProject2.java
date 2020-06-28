@@ -73,7 +73,7 @@ public class miniProject2 {
         ImageWriter imageWriter = new ImageWriter("room", 200, 200, 600, 600);
         Render render = new Render(imageWriter, scene).setMultithreading(3).setDebugPrint();
 
-        render.renderImage(0,20);
+        render.renderImage(0,1);
         render.writeToImage();
     }
 
@@ -167,18 +167,18 @@ public class miniProject2 {
 
         Color tColor = new Color(java.awt.Color.GREEN);
         Material tMaterial = new Material(0, 0.5, 60,0,0);
-        int someTribuns = size/20;
+        int someTribuns = (size/20) - 1;
         Square[] tribuns = new Square[someTribuns];
         Square[] benchs = new Square[someTribuns];
-        for(int i = 0; i < someTribuns; i++) {
+        for(int i = 1; i <= someTribuns; i++) {
             try {
                 Point3D p1 = new Point3D(rightUp.get_x(), rightUp.get_y(), - height + (i * height/someTribuns));
                 Point3D p2 = new Point3D(rightDown.get_x(), rightDown.get_y(), - height + (i * height/someTribuns));
                 Point3D p3 = new Point3D(rightUp.get_x() - i * size/someTribuns, rightUp.get_y(), - height + (i * height/someTribuns));
                 Point3D p4 = getForthPoint(p1,p2,p3);
                 Point3D p = new Point3D(rightUp.get_x()- i * size/someTribuns,rightUp.get_y(),- height + ((1+i) * height/someTribuns));
-                tribuns[i] = new Square(tColor, tMaterial, p1, p2, p4, p3);
-                benchs[i] = new Square(new Color(0,51,25),tMaterial,p3, p4,getForthPoint(p3, p4, p),p);
+                tribuns[i - 1] = new Square(tColor, tMaterial, p1, p2, p4, p3);
+                benchs[i - 1] = new Square(new Color(0,51,25),tMaterial,p3, p4,getForthPoint(p3, p4, p),p);
             }
             catch (IllegalArgumentException e){
                 if(e.getMessage() != "zero vector")
@@ -193,21 +193,21 @@ public class miniProject2 {
 
         Color tColor = new Color(java.awt.Color.GREEN);
         Material tMaterial = new Material(0, 0.5, 60,0,0);
-        int someTribuns = size/20;
+        int someTribuns = (size/20) - 1;
         Square[] tribuns = new Square[someTribuns];
         Square[] benchs = new Square[someTribuns];
 
-        for(int i = 0; i < someTribuns; i++) {
+        for(int i = 1; i <= someTribuns; i++) {
             try {
                 Point3D p1 = new Point3D(leftUp.get_x(), leftUp.get_y(), - height + (i * height/someTribuns));
                 Point3D p2 =new Point3D(leftDown.get_x(), leftDown.get_y(), - height + (i * height/someTribuns));
                 Point3D p3 = new Point3D(leftUp.get_x() + i * size/someTribuns, leftUp.get_y(), - height + (i * height/someTribuns));
                 Point3D p4 = getForthPoint(p1,p2,p3);
 
-                tribuns[i] = new Square(tColor, tMaterial,p1 ,p2, p4, p3);
+                tribuns[i - 1] = new Square(tColor, tMaterial,p1 ,p2, p4, p3);
                 p1 = new Point3D(leftDown.get_x() + i * size/someTribuns, leftDown.get_y(), - height + (i * height/someTribuns));
                 p2 = new Point3D(leftDown.get_x() + i * size/someTribuns, leftDown.get_y(), - height + ((1+i) * height/( someTribuns)));
-                benchs[i] = new Square(new Color(0,51,25), tMaterial, p1, p2, getForthPoint(p1,p2,p3),p3);
+                benchs[i - 1] = new Square(new Color(0,51,25), tMaterial, p1, p2, getForthPoint(p1,p2,p3),p3);
             }
             catch (IllegalArgumentException e){
                 if(e.getMessage() != "zero vector")

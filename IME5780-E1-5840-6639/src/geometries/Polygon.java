@@ -120,4 +120,6 @@ public class Polygon extends Geometry {
         }
         _box = new Box(new Point3D(xmin, ymin, zmin), new Point3D(xmax, ymax, zmax));
     }
+
+
 }

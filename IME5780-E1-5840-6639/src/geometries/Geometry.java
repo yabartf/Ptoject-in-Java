@@ -60,4 +60,8 @@ public abstract class Geometry implements Intersectable {
         return _emmission;
     }
 
+    @Override
+    public Box getBox() {
+        return _box;
+    }
 }

@@ -108,4 +108,9 @@ public class Plane extends Geometry {
         }
         return null;
     }
+
+    @Override
+    public Box getBox() {
+        return _box;
+    }
 }
