@@ -11,6 +11,9 @@ import renderer.ImageWriter;
 import renderer.Render;
 import scene.Scene;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class miniProject2 {
     @Test
     public void room(){
@@ -73,13 +76,15 @@ public class miniProject2 {
         ImageWriter imageWriter = new ImageWriter("room", 200, 200, 600, 600);
         Render render = new Render(imageWriter, scene).setMultithreading(3).setDebugPrint();
 
-        render.renderImage(0,1);
+        render.renderImage(100,100);
         render.writeToImage();
     }
 
     private void projectors(double height, double length, double width, Scene scene,Point3D ballPoint) {
         int some = 16;
         SpotLight[] projectors = new SpotLight[some];
+        Geometries rightLamps = new Geometries();
+        Geometries leftLamps = new Geometries();
         Sphere[] lamps = new Sphere[some];
         Material lampMaterial = new Material(0.02, 0.2, 30, 0.9, 0);
         for (int i = 0, j = 1; i < some/2; i++, j *= -1)
@@ -87,8 +92,8 @@ public class miniProject2 {
             Point3D rightPoint = new Point3D(width/2,j*i*length/some,height/20-height);
             Point3D leftPoint = new Point3D(-width/2,j*i*length/some,height/20-height);
 
-            lamps[i] = new Sphere(new Color(32,32,32),lampMaterial,height/20,rightPoint);
-            lamps[some/2+i] = new Sphere(new Color(32,32,32),lampMaterial,height/20,leftPoint);
+            rightLamps.add(new Sphere(new Color(32,32,32),lampMaterial,height/20,rightPoint));
+            leftLamps.add(new Sphere(new Color(32,32,32),lampMaterial,height/20,leftPoint));
 
             Point3D lightRight = new Point3D(rightPoint.get_x()-1,rightPoint.get_y(),rightPoint.get_z());
             Point3D lightLeft = new Point3D(leftPoint.get_x()+1,leftPoint.get_y(),leftPoint.get_z());
@@ -101,7 +106,7 @@ public class miniProject2 {
                     leftToBall,1, 2E-1, 1E-1);
         }
         scene.addLights(projectors);
-        scene.addGeometries(lamps);
+        scene.addGeometries(rightLamps, leftLamps);
     }
 
     private void gate(double y, double w, Scene scene, double hei) {
