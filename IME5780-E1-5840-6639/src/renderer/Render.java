@@ -29,8 +29,8 @@ public class Render {
     public Render(ImageWriter _imageWriter, Scene _scene){
         this._imageWriter=_imageWriter;
         this._scene=_scene;
+        _scene.getGeometries().BVH(3);
     }
-
     /**
      * renderImage
      */
@@ -305,13 +305,13 @@ public class Render {
         Vector lightDirection = l.scale(-1); // from point to light source
         Ray lightRay = new Ray(lightDirection,n,geoPoint.point);
         List<GeoPoint> intersections = _scene.getGeometries().findIntersections(lightRay,light.getDistance(geoPoint.point));
-        double shdow=1;
+        double shadow=1;
         if(intersections==null)
-           return shdow;
+           return shadow;
         for(var intersection : intersections){
-            shdow*=intersection.geometry.get_matirial().getKt();
+            shadow*=intersection.geometry.get_matirial().getKt();
         }
-        return shdow;
+        return shadow;
     }
     private Ray constractReflectedRay(Vector n,Point3D point,Ray inRay){
         return new Ray(inRay.getDirection().substract(n.scale(2*inRay.getDirection().dotProduct(n))),n,point);

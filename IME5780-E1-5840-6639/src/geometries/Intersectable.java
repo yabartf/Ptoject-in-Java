@@ -9,14 +9,16 @@ public interface Intersectable {
         return findIntersections(ray, Double.POSITIVE_INFINITY);
     }
     List<GeoPoint> findIntersections(Ray ray, double max);
+    void BVH(int deep);
     Box getBox();
     public class Box {
         Point3D _min;
         Point3D _max;
-
+        Point3D mid;
         public Box(Point3D min, Point3D max) {
             _max = max;
             _min = min;
+            mid = new Point3D(max.get_x()+min.get_x()/2,max.get_y()+min.get_y()/2,max.get_z()+min.get_z()/2);
         }
 
         public Point3D get_min() {

@@ -11,15 +11,19 @@ public class Geometries implements Intersectable {
    /**the list of all the shapes**/ 
     List<Intersectable> intersectables = new LinkedList<>();
     Box box;
+
     /***************constructors***************/
-    /**copy C-tor**/
+    /**
+     * constructor
+     * @param intersectables
+     */
     public Geometries(List<Intersectable> intersectables) {
         this.intersectables = intersectables;
         createBox();
     }
 
     /***
-     * C-tor
+     * constructor
      * 
      * @param _geometries list of geometries shapes
      */
@@ -86,5 +90,46 @@ public class Geometries implements Intersectable {
         box = new Box(new Point3D(xmin, ymin, zmin), new Point3D(xmax, ymax, zmax));
     }
 
-
+    @Override
+    public void BVH(int deep) {
+        if(intersectables.size() < 5 || deep <= 0)
+            return;
+        double distance = box.get_max().distance(box.get_min());
+        Geometries[] geometriesArr = new Geometries[4];
+        for (int i = 0; i < 4; i++) {
+            geometriesArr[i] = new Geometries();
+        }
+        for (var geo : this.intersectables){
+            if(geo.getBox().mid.distance(box.get_max()) < distance / 4){
+                geometriesArr[0].add(geo);
+            }
+            if(geo.getBox().mid.distance(box.get_max()) < 2 * distance / 4){
+                geometriesArr[1].add(geo);
+            }
+            if(geo.getBox().mid.distance(box.get_max()) < 3 * distance / 4){
+                geometriesArr[2].add(geo);
+            }
+            if(geo.getBox().mid.distance(box.get_max()) < 4 * distance / 4){
+                geometriesArr[3].add(geo);
+            }
+        /*    if(geo.getBox().mid.distance(box.get_max()) < 5 * distance / 8){
+                geometriesArr[4].add(geo);
+            }
+            if(geo.getBox().mid.distance(box.get_max()) < 6 * distance / 8){
+                geometriesArr[5].add(geo);
+            }
+            if(geo.getBox().mid.distance(box.get_max()) < 7 * distance / 8){
+                geometriesArr[6].add(geo);
+            }
+            if(geo.getBox().mid.distance(box.get_max()) < 8 * distance / 8){
+                geometriesArr[7].add(geo);
+            }*/
+        }
+        intersectables.clear();
+        intersectables.addAll(List.of(geometriesArr));
+        deep--;
+            for (var geo : geometriesArr){
+                geo.BVH(deep);
+            }
+    }
 }

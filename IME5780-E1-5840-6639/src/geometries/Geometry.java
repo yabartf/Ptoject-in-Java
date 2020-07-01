@@ -64,4 +64,9 @@ public abstract class Geometry implements Intersectable {
     public Box getBox() {
         return _box;
     }
+
+    @Override
+    public void BVH(int deep) {
+        return;
+    }
 }

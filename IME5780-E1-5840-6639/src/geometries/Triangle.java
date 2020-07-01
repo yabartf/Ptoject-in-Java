@@ -8,11 +8,17 @@ import static primitives.Util.isZero;
 
 public class Triangle extends Polygon{
 
+    /***************constructor***************/
+    /**
+     * constructor
+     * @param objColor
+     * @param material
+     * @param vertices
+     */
     public Triangle(Color objColor, Material material, Point3D... vertices) {
         super(objColor,  material, vertices);
     }
 
-    /***************constructor***************/
     /**
      * constructor
      * @param p1

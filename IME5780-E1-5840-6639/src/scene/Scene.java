@@ -100,4 +100,5 @@ public class Scene {
     public void addArreyGeometries(Intersectable[] geometries){
         _geometries.addArrey(geometries);
     }
+
 }
