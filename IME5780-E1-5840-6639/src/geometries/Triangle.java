@@ -50,7 +50,6 @@ public class Triangle extends Polygon{
         return this.findIntersections(ray,Double.POSITIVE_INFINITY);
     }
     public List<GeoPoint> findIntersections(Ray ray,double max) {
-
         List<GeoPoint> intersections = _plane.findIntersections(ray, max);
         if (intersections == null)
             return null;

@@ -43,7 +43,7 @@ public class Geometries implements Intersectable {
     public void addArrey(Intersectable[] _geometries){
 
         this.intersectables.addAll(Arrays.asList(_geometries));
-        createBox();
+        //createBox();
     }
 
 
@@ -54,8 +54,11 @@ public class Geometries implements Intersectable {
      */
     @Override
     public List<GeoPoint> findIntersections(Ray ray, double max) {
+        createBox();
+        if(!box.inBox(ray))
+            return null;
         List<GeoPoint> answer = new LinkedList<>();
-        for (var shape: intersectables) {
+        for (var shape : intersectables) {
             if(shape != null) {
                 if(shape.getBox().inBox(ray)) {
                     List<GeoPoint> intersection = shape.findIntersections(ray, max);
@@ -92,44 +95,87 @@ public class Geometries implements Intersectable {
 
     @Override
     public void BVH(int deep) {
-        if(intersectables.size() < 5 || deep <= 0)
+        //createBox();
+        if(intersectables.size() < 2 || deep--  <= 0)
             return;
+        int range = 2;
         double distance = box.get_max().distance(box.get_min());
-        Geometries[] geometriesArr = new Geometries[4];
-        for (int i = 0; i < 4; i++) {
+        Geometries[] geometriesArr = new Geometries[range];
+        for (int i = 0; i < range; i++) {
             geometriesArr[i] = new Geometries();
         }
         for (var geo : this.intersectables){
-            if(geo.getBox().mid.distance(box.get_max()) < distance / 4){
+            double toMax = geo.getBox()._max.distance(box._max);
+            double toMin = geo.getBox()._min.distance(box._min);
+            if (Math.min(toMax,toMin) == toMax)
                 geometriesArr[0].add(geo);
-            }
-            if(geo.getBox().mid.distance(box.get_max()) < 2 * distance / 4){
+            else
                 geometriesArr[1].add(geo);
-            }
-            if(geo.getBox().mid.distance(box.get_max()) < 3 * distance / 4){
-                geometriesArr[2].add(geo);
-            }
-            if(geo.getBox().mid.distance(box.get_max()) < 4 * distance / 4){
-                geometriesArr[3].add(geo);
-            }
-        /*    if(geo.getBox().mid.distance(box.get_max()) < 5 * distance / 8){
-                geometriesArr[4].add(geo);
-            }
-            if(geo.getBox().mid.distance(box.get_max()) < 6 * distance / 8){
-                geometriesArr[5].add(geo);
-            }
-            if(geo.getBox().mid.distance(box.get_max()) < 7 * distance / 8){
-                geometriesArr[6].add(geo);
-            }
-            if(geo.getBox().mid.distance(box.get_max()) < 8 * distance / 8){
-                geometriesArr[7].add(geo);
-            }*/
         }
+        if (deep > 0)
+        for (int i = 0; i < range; i++) {
+            geometriesArr[i].BVH(deep);
+        }
+
+       /* for (var geo : this.intersectables){
+            double curDistance = geo.getBox().mid.distance(box.get_max());
+            for (int i = 0; i < range; i++){
+                if(curDistance < (i+1) * distance / range){
+                    geometriesArr[i].add(geo);
+                }
+            }
+        }*/
+       /* for (var geo : this.intersectables){
+
+
+            double bigX = Math.abs(box._max.get_x() - geo.getBox()._max.get_x());
+            double smallX = Math.abs(box._min.get_x() - geo.getBox()._min.get_x());
+            double bigY = Math.abs(box._max.get_y() - geo.getBox().mid.get_y());
+            double smallY = Math.abs(box._min.get_y() - geo.getBox().mid.get_y());
+            double bigZ = Math.abs(box._max.get_y() - geo.getBox().mid.get_z());
+            double smallZ = Math.abs(box._min.get_z() - geo.getBox().mid.get_z());
+
+            double min = minimum(bigX,bigY,bigZ,smallX,smallY,smallZ);
+            if (bigX == min){
+                geometriesArr[0].add(geo);
+                if (deep > 0)
+                    geometriesArr[0].BVH(deep);
+            }
+            else if (smallX == min){
+                geometriesArr[1].add(geo);
+                if (deep > 0)
+                    geometriesArr[1].BVH(deep);
+            }
+            else if (bigY == min){
+                geometriesArr[2].add(geo);
+                if (deep > 0)
+                    geometriesArr[2].BVH(deep);
+            }
+            else if (smallY == min){
+                geometriesArr[3].add(geo);
+                if (deep > 0)
+                    geometriesArr[3].BVH(deep);
+            }
+            else if (bigZ == min){
+                geometriesArr[4].add(geo);
+                if (deep > 0)
+                    geometriesArr[4].BVH(deep);
+            }
+            else if (smallZ == min){
+                geometriesArr[5].add(geo);
+                if (deep > 0)
+                    geometriesArr[5].BVH(deep);
+            }
+        }*/
         intersectables.clear();
         intersectables.addAll(List.of(geometriesArr));
-        deep--;
-            for (var geo : geometriesArr){
-                geo.BVH(deep);
-            }
+
+    }
+    double minimum(double... numbers){
+        double min = numbers[0];
+        for (var mm : numbers){
+            min = Math.min(min, mm);
+        }
+        return min;
     }
 }
