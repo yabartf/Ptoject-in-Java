@@ -29,7 +29,9 @@ public class Render {
     public Render(ImageWriter _imageWriter, Scene _scene){
         this._imageWriter=_imageWriter;
         this._scene=_scene;
-        _scene.getGeometries().BVH(1);
+        //_scene.getGeometries().createBox();
+        //_scene.getGeometries().BVH(2);
+        //_scene.getGeometries().createTreeRec(3);
     }
     /**
      * renderImage

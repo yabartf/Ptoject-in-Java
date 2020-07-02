@@ -37,16 +37,18 @@ public class Polygon extends Geometry {
      *                                  </ul>
      */
     public Polygon(Point3D... vertices) {
+
         if (vertices.length < 3)
             throw new IllegalArgumentException("A polygon can't have less than 3 vertices");
         _vertices = List.of(vertices);
+        createBox();
         // Generate the plane according to the first three vertices and associate the
         // polygon with this plane.
         // The plane holds the invariant normal (orthogonal unit) vector to the polygon
         _plane = new Plane(vertices[0], vertices[1], vertices[2]);
         if (vertices.length == 3)
         {
-            createBox();
+            //createBox();
             return; // no need for more tests for a Triangle
         }
 
@@ -80,7 +82,7 @@ public class Polygon extends Geometry {
             if (positive != (edge1.crossProduct(edge2).dotProduct(n) > 0))
                 throw new IllegalArgumentException("All vertices must be ordered and the polygon must be convex");
         }
-        createBox();
+        //createBox();
     }
     public Polygon(Color objColor,Point3D... vertices){
         this(vertices);
