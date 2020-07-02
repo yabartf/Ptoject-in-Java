@@ -18,6 +18,7 @@ public class Render {
     Scene _scene;
     private static final int MAX_CALC_COLOR_LEVEL = 10;
     private static final double MIN_CALC_COLOR_K = 0.001;
+    double lastPrec = 0;
 
 
 
@@ -29,7 +30,7 @@ public class Render {
     public Render(ImageWriter _imageWriter, Scene _scene){
         this._imageWriter=_imageWriter;
         this._scene=_scene;
-        //_scene.getGeometries().createBox();
+        _scene.getGeometries().createBox();
         //_scene.getGeometries().BVH(2);
         //_scene.getGeometries().createTreeRec(3);
     }
@@ -153,6 +154,7 @@ public class Render {
                     List<Ray> focusBeam=new LinkedList<>();
                     focusBeam.add(camera.constructRayThroughPixel(nX, nY, pixel.col, pixel.row, //
                             dist, width, height));
+                    printStatus(pixel.row,pixel.col);
                     focusBeam.addAll(focusRays(camera,focusBeam.get(0),numOfFocusRays));
                     Color color=calcColor(focusBeam,_scene.getBackground(),numOfShadowRays);
                     List<GeoPoint> closestPoints = findClosestIntersection(focusBeam);
@@ -171,7 +173,20 @@ public class Render {
         for (Thread thread : threads) try { thread.join(); } catch (Exception e) {}
         if (_print) System.out.printf("\r100%%\n");
     }
-     public void renderImage(){
+
+    private void printStatus(int i, int j) {
+        double prec = _imageWriter.getNx() * _imageWriter.getNy();
+        prec = (i * j + j)/ prec * 100;
+        if (prec - lastPrec < 0.5)
+            return;
+        String str = String.format("%.02f" , prec);
+        System.out.flush();
+
+        System.out.println(str + "%");
+        lastPrec = prec;
+    }
+
+    public void renderImage(){
      renderImage(1,1);
      }
 
