@@ -177,7 +177,7 @@ public class Render {
     private void printStatus(int i, int j) {
         double prec = _imageWriter.getNx() * _imageWriter.getNy();
         prec = (i * j + j)/ prec * 100;
-        if (prec - lastPrec < 0.5)
+        if (prec - lastPrec < 1)
             return;
         String str = String.format("%.02f" , prec);
         System.out.flush();
@@ -187,7 +187,7 @@ public class Render {
     }
 
     public void renderImage(){
-     renderImage(1,1);
+     renderImage(100,100);
      }
 
     /**
