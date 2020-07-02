@@ -82,4 +82,9 @@ public class Cylinder extends RadialGeometry{
     public List<GeoPoint> findIntersections(Ray ray, double max) {
         return null;
     }
+
+    @Override
+    public Box getBox() {
+        return null;
+    }
 }

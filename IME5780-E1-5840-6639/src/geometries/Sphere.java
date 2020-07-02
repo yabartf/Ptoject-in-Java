@@ -59,6 +59,11 @@ public class Sphere extends RadialGeometry{
         return _center;
     }
 
+    @Override
+    public Box getBox() {
+        return _box;
+    }
+
     /**
      * find Intsersections
      * @param ray
@@ -86,6 +91,8 @@ public class Sphere extends RadialGeometry{
             return List.of(new GeoPoint(this,ray.getTargetPoint(t1)),new GeoPoint(this,ray.getTargetPoint(t2)));
         return null;
     }
+
+
     private void createBox(){
         double xmin, xmax, ymin, ymax, zmin, zmax;
         xmin = this._center.get_x() - this._radius;

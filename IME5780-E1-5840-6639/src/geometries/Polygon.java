@@ -101,6 +101,11 @@ public class Polygon extends Geometry {
     }
 
     @Override
+    public Box getBox() {
+        return _box;
+    }
+
+    @Override
     public List<GeoPoint> findIntersections(Ray ray) {
         return null;
     }
@@ -109,6 +114,9 @@ public class Polygon extends Geometry {
     public List<GeoPoint> findIntersections(Ray ray, double max) {
         return null;
     }
+
+
+
     private void createBox(){
         double xmin =Double.POSITIVE_INFINITY, ymin = Double.POSITIVE_INFINITY, zmin = Double.POSITIVE_INFINITY,
                 xmax = Double.NEGATIVE_INFINITY, ymax = Double.NEGATIVE_INFINITY, zmax = Double.NEGATIVE_INFINITY;
