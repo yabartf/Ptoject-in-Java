@@ -19,7 +19,7 @@ public class Geometries implements Intersectable {
      */
     public Geometries(List<Intersectable> intersectables) {
         this.intersectables = intersectables;
-       // createBox();
+        createBox();
     }
 
     /***
@@ -28,7 +28,8 @@ public class Geometries implements Intersectable {
      * @param _geometries list of geometries shapes
      */
     public Geometries(Intersectable... _geometries){
-            add(_geometries); createBox();
+            add(_geometries);
+            createBox();
     }
 
     /***
@@ -36,14 +37,26 @@ public class Geometries implements Intersectable {
      * @param _geometries add to the list all shapes that are given as a list
      */
     public void add(Intersectable... _geometries){
+        if (box == null)
+            createBox();
+        double Xmax = box._max.get_x();
+        double Xmin = box._min.get_x();
+        double Ymax = box._max.get_y();
+        double Ymin = box._min.get_y();
+        double Zmax = box._max.get_z();
+        double Zmin = box._min.get_z();
+        for (var inter : _geometries){
+            Xmax = Math.max(Xmax,inter.getBox()._max.get_x());
+            Xmin = Math.min(Xmin,inter.getBox()._min.get_x());
+            Ymax = Math.max(Ymax,inter.getBox()._max.get_y());
+            Ymin = Math.min(Ymin,inter.getBox()._min.get_y());
+            Zmax = Math.max(Zmax,inter.getBox()._max.get_z());
+            Zmin = Math.min(Zmin,inter.getBox()._min.get_z());
 
+        }
+        box._max = new Point3D(Xmax,Ymax,Zmax);
+        box._min = new Point3D(Xmin,Ymin,Zmin);
         this.intersectables.addAll(Arrays.asList(_geometries));
-        //createBox();
-    }
-    public void addArrey(Intersectable[] _geometries){
-
-        this.intersectables.addAll(Arrays.asList(_geometries));
-        //createBox();
     }
 
 
@@ -94,84 +107,29 @@ public class Geometries implements Intersectable {
 
     @Override
     public void BVH(int deep) {
-        //createBox();
         if(intersectables.size() < 2 || deep--  <= 0)
             return;
         int range = 2;
-        double distance = box.get_max().distance(box.get_min());
+
         Geometries[] geometriesArr = new Geometries[range];
         for (int i = 0; i < range; i++) {
             geometriesArr[i] = new Geometries();
         }
         for (var geo : this.intersectables){
-            double toMax = geo.getBox()._max.distance(box._max);
-            double toMin = geo.getBox()._min.distance(box._min);
+            double toMax = geo.getBox().mid.distance(box._max);
+            double toMin = geo.getBox().mid.distance(box._min);
             if (Math.min(toMax,toMin) == toMax)
                 geometriesArr[0].add(geo);
             else
                 geometriesArr[1].add(geo);
         }
-        if (deep > 0)
+        intersectables.clear();
+
         for (int i = 0; i < range; i++) {
-           // geometriesArr[i].createBox();
+            this.add(geometriesArr[i]);
+            if (deep > 0)
             geometriesArr[i].BVH(deep);
         }
-
-       /* for (var geo : this.intersectables){
-            double curDistance = geo.getBox().mid.distance(box.get_max());
-            for (int i = 0; i < range; i++){
-                if(curDistance < (i+1) * distance / range){
-                    geometriesArr[i].add(geo);
-                }
-            }
-        }
-       /* for (var geo : this.intersectables){
-
-
-            double bigX = Math.abs(box._max.get_x() - geo.getBox()._max.get_x());
-            double smallX = Math.abs(box._min.get_x() - geo.getBox()._min.get_x());
-            double bigY = Math.abs(box._max.get_y() - geo.getBox().mid.get_y());
-            double smallY = Math.abs(box._min.get_y() - geo.getBox().mid.get_y());
-            double bigZ = Math.abs(box._max.get_y() - geo.getBox().mid.get_z());
-            double smallZ = Math.abs(box._min.get_z() - geo.getBox().mid.get_z());
-
-            double min = minimum(bigX,bigY,bigZ,smallX,smallY,smallZ);
-            if (bigX == min){
-                geometriesArr[0].add(geo);
-                if (deep > 0)
-                    geometriesArr[0].BVH(deep);
-            }
-            else if (smallX == min){
-                geometriesArr[1].add(geo);
-                if (deep > 0)
-                    geometriesArr[1].BVH(deep);
-            }
-            else if (bigY == min){
-                geometriesArr[2].add(geo);
-                if (deep > 0)
-                    geometriesArr[2].BVH(deep);
-            }
-            else if (smallY == min){
-                geometriesArr[3].add(geo);
-                if (deep > 0)
-                    geometriesArr[3].BVH(deep);
-            }
-            else if (bigZ == min){
-                geometriesArr[4].add(geo);
-                if (deep > 0)
-                    geometriesArr[4].BVH(deep);
-            }
-            else if (smallZ == min){
-                geometriesArr[5].add(geo);
-                if (deep > 0)
-                    geometriesArr[5].BVH(deep);
-            }
-        }*/
-        intersectables.clear();
-        intersectables.add(geometriesArr[0]);
-        intersectables.add(geometriesArr[1]);
-        createBox();
-
     }
     double minimum(double... numbers){
         double min = numbers[0];
@@ -180,7 +138,7 @@ public class Geometries implements Intersectable {
         }
         return min;
     }
-    public void createTreeRec(int depthOfTree) {
+  /*  public void createTreeRec(int depthOfTree) {
 
         Intersectable topRightCloseVoxel = null;
         Intersectable topLeftCloseVoxel = null;
@@ -329,5 +287,5 @@ public class Geometries implements Intersectable {
                 intersectables.add(downLeftFarVoxel);
             }
         }
-    }
+    }*/
 }

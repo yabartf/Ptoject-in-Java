@@ -97,8 +97,5 @@ public class Scene {
     public void addGeometries(Intersectable ...geometries){
         _geometries.add(geometries);
     }
-    public void addArreyGeometries(Intersectable[] geometries){
-        _geometries.addArrey(geometries);
-    }
 
 }
