@@ -180,7 +180,7 @@ public class Render {
         if (prec - lastPrec < 1)
             return;
         String str = String.format("%.02f" , prec);
-        System.out.flush();
+
 
         System.out.println(str + "%");
         lastPrec = prec;
