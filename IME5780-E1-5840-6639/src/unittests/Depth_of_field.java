@@ -66,7 +66,7 @@ public class Depth_of_field {
         ImageWriter imageWriter = new ImageWriter("snooker table", 200, 200, 600, 600);
         Render render = new Render(imageWriter, scene).setMultithreading(3).setDebugPrint();
 
-        render.renderImage(0,1);
+        render.renderImage(1,1);
         render.writeToImage();
     }
 public void addBalls(Point3D upRight, Point3D downRight, Point3D upLeft, Point3D downLeft, double radiusOfBalls, Scene scene){

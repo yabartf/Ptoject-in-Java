@@ -32,8 +32,7 @@ public class Plane extends Geometry {
      * @param point
      */
     public Plane(Vector normal, Point3D point) {
-        this.normal = normal;
-        this.pointInPlane = point;
+        this(Color.BLACK,normal,point);
     }
 
     /**
@@ -47,6 +46,7 @@ public class Plane extends Geometry {
         super(_emmission, _matirial);
         this.normal = normal;
         this.pointInPlane = pointInPlane;
+        createBox();
     }
 
     /**
@@ -56,7 +56,7 @@ public class Plane extends Geometry {
      * @param point
      */
     public Plane(Color objectColor, Vector normal, Point3D point) {
-        this(normal,point);
+        this(objectColor,new Material(0,0,0),normal,point);
         _emmission=objectColor;
 
     }
@@ -72,6 +72,7 @@ public class Plane extends Geometry {
         Vector two = x.subtract(z);
         normal = one.crossProduct(two);
         pointInPlane = x;
+        createBox();
     }
 
     /**
@@ -109,6 +110,10 @@ public class Plane extends Geometry {
         return null;
     }
 
+    void createBox(){
+        _box=new Box(new Point3D(Double.NEGATIVE_INFINITY,Double.NEGATIVE_INFINITY,Double.NEGATIVE_INFINITY),
+                new Point3D(Double.POSITIVE_INFINITY,Double.POSITIVE_INFINITY,Double.POSITIVE_INFINITY));
+    }
     @Override
     public Box getBox() {
         return _box;

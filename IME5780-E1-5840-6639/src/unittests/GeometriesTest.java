@@ -31,7 +31,7 @@ class GeometriesTest {
         assertNull(geometries.findIntersections(ray),"not null");
 
         // TC:02 all...
-        geometries.add(triangle,sphere,plane);
+        geometries=new Geometries(triangle,sphere,plane);
         assertEquals(4,geometries.findIntersections(ray).size(),"2 intersetions(2 in sphere)");
 
         // TC:03 list size = 1

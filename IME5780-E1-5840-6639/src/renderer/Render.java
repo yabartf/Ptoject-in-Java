@@ -187,7 +187,7 @@ public class Render {
     }
 
     public void renderImage(){
-     renderImage(100,100);
+     renderImage(1,1);
      }
 
     /**
