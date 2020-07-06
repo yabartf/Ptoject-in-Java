@@ -137,8 +137,8 @@ public class Render {
     public void renderImage(int numOfFocusRays, int numOfShadowRays) {
         if(numOfFocusRays < 1||numOfShadowRays < 1 )
             throw new IllegalArgumentException("num of rays must be more then 1");
-        final int nX = _imageWriter.getNx();
-        final int nY = _imageWriter.getNy();
+        final int nX = _imageWriter.getNx();// number of x's pixels
+        final int nY = _imageWriter.getNy();// number of y's pixels
         final double dist = _scene.getViewPlaneDistance();
         final double width = _imageWriter.getWidth();
         final double height = _imageWriter.getHeight();
@@ -150,14 +150,15 @@ public class Render {
         for (int i = _threads - 1; i >= 0; --i) {
             threads[i] = new Thread(() -> {
                 Pixel pixel = new Pixel();
+                //go throgh all the pixels
                 while (thePixel.nextPixel(pixel)) {
-                    List<Ray> focusBeam=new LinkedList<>();
+                    List<Ray> focusBeam=new LinkedList<>();// the focus rays
                     focusBeam.add(camera.constructRayThroughPixel(nX, nY, pixel.col, pixel.row, //
-                            dist, width, height));
+                            dist, width, height));//add the main ray from the camera to the geometry
                     printStatus(pixel.row,pixel.col);
-                    focusBeam.addAll(focusRays(camera,focusBeam.get(0),numOfFocusRays));
+                    focusBeam.addAll(focusRays(camera,focusBeam.get(0),numOfFocusRays));//add all the focus rays
                     Color color=calcColor(focusBeam,_scene.getBackground(),numOfShadowRays);
-                    List<GeoPoint> closestPoints = findClosestIntersection(focusBeam);
+                    List<GeoPoint> closestPoints = findClosestIntersection(focusBeam);// get all the intrsection points of the focus rays
                     if (closestPoints != null) {
                         _imageWriter.writePixel(pixel.col, pixel.row, color.getColor());
                     } else _imageWriter.writePixel(pixel.col, pixel.row, _scene.getBackground().getColor());
@@ -309,11 +310,27 @@ public class Render {
         return (color.reduce(rays.size()));
     }
 
+    /**
+     *
+     * @param kd of the material
+     * @param nl dot prodact between the light direction to the normal of the geometry in the intersection point
+     * @param ip the color of the light
+     * @return the diffusive affect of the light
+     */
     private Color calcDiffusive(double kd, double nl, Color ip) {
         return ip.scale(Math.abs(nl) * kd);
     }
 
-
+    /**
+     *
+     * @param ks of the material
+     * @param l the vector from the light source to the gemetry
+     * @param n the normal to the geometry in the intersection point
+     * @param v the vector from the camera to the camera to the intersection point
+     * @param nShininess of the matirial
+     * @param lightIntensity the color of the light
+     * @return @return the specular affect of the light
+     */
     private Color calcSpecular(double ks,Vector l,Vector n,Vector v,int nShininess,Color lightIntensity){
         Vector r=l.substract(n.scale(2).scale(l.dotProduct(n)));
         return lightIntensity.scale(ks*Math.pow(Math.max(0,-1*v.dotProduct(r)),nShininess));
