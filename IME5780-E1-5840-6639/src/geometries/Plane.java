@@ -28,18 +28,18 @@ public class Plane extends Geometry {
     /***************constructors***************/
     /**
      * constructor
-     * @param normal
-     * @param point
+     * @param normal to the plane
+     * @param point in plane
      */
     public Plane(Vector normal, Point3D point) {
         this(Color.BLACK,normal,point);
     }
 
     /**
-     * constructor
-     * @param _emmission
-     * @param _matirial
-     * @param normal
+     * constructor thar generate a plane with color and material
+     * @param _emmission the color of the plane
+     * @param _matirial of the plane
+     * @param normal to the plane
      * @param pointInPlane
      */
     public Plane(Color _emmission, Material _matirial, Vector normal, Point3D pointInPlane) {
@@ -50,10 +50,10 @@ public class Plane extends Geometry {
     }
 
     /**
-     * constructor
-     * @param objectColor
-     * @param normal
-     * @param point
+     * constructor that generate plane with color
+     * @param objectColor color of the plane
+     * @param normal to the plane
+     * @param point in the plane
      */
     public Plane(Color objectColor, Vector normal, Point3D point) {
         this(objectColor,new Material(0,0,0),normal,point);
@@ -62,10 +62,10 @@ public class Plane extends Geometry {
     }
 
     /**
-     * constructor
-     * @param x
-     * @param y
-     * @param z
+     * constructor that generate plane withe 3 points inside the plane
+     * @param x point 1
+     * @param y point 2
+     * @param z point 3
      */
     public Plane(Point3D x,Point3D y,Point3D z) {
         Vector one = x.subtract(y);
@@ -76,11 +76,11 @@ public class Plane extends Geometry {
     }
 
     /**
-     * constructor
-     * @param objColor
-     * @param x
-     * @param y
-     * @param z
+     * constructor thar generate plane with color using 3 points inside the plane
+     * @param objColor color of the plane
+     * @param x point 1
+     * @param y point 2
+     * @param z point 3
      */
     public Plane(Color objColor,Point3D x,Point3D y,Point3D z){
         this(x,y,z);

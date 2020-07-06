@@ -13,9 +13,9 @@ public abstract class Geometry implements Intersectable {
     protected Box _box;
 
     /**
-     * constarctor
-     * @param _emmission
-     * @param _matirial
+     * constarctor that generate geometry with color and material
+     * @param _emmission the color of the geonetry
+     * @param _matirial of the geometry
      */
 
     public Geometry(Color _emmission, Material _matirial) {
@@ -42,7 +42,7 @@ public abstract class Geometry implements Intersectable {
     /**
      * getter
      * @param point
-     * @return
+     * @return normal to the geometry
      */
     public abstract Vector getNormal(Point3D point);
 

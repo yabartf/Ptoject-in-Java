@@ -290,6 +290,7 @@ public class Render {
         return ip.scale(Math.abs(nl) * kd);
     }
 
+
     private Color calcSpecular(double ks,Vector l,Vector n,Vector v,int nShininess,Color lightIntensity){
         Vector r=l.substract(n.scale(2).scale(l.dotProduct(n)));
         return lightIntensity.scale(ks*Math.pow(Math.max(0,-1*v.dotProduct(r)),nShininess));
@@ -317,7 +318,16 @@ public class Render {
      */
     public void writeToImage(){_imageWriter.writeToImage();}
 
-
+    /**
+     * check the transparency of all objects from the intersection point to the light source
+     * if there is and colcalate the shadow on the geomtry
+     *
+     * @param light that we check if geomtry is blocking the light from him
+     * @param l the vector from the light to the geometry
+     * @param n normal to the geometry
+     * @param geoPoint intersection
+     * @return the shadow on the geometry
+     */
     private double transparency(LightSource light,Vector l, Vector n, GeoPoint geoPoint){
         Vector lightDirection = l.scale(-1); // from point to light source
         Ray lightRay = new Ray(lightDirection,n,geoPoint.point);
@@ -330,12 +340,33 @@ public class Render {
         }
         return shadow;
     }
+
+    /**
+     *
+     * @param n normal to the geometry
+     * @param point of intercetion
+     * @param inRay the ray that intersect with the geometry
+     * @return the reflected ray
+     */
     private Ray constractReflectedRay(Vector n,Point3D point,Ray inRay){
         return new Ray(inRay.getDirection().substract(n.scale(2*inRay.getDirection().dotProduct(n))),n,point);
     }
+
+    /**
+     *
+     * @param point of intercetion
+     * @param inRay the ray that intersect with the geometry
+     * @return the refracted ray
+     */
     private Ray constractRefractedRay(Point3D point, Ray inRay) {
         return new Ray(inRay.getDirection(),inRay.getDirection(),point);
     }
+
+    /**
+     *
+     * @param ray
+     * @return the closest point of intersection of the ray
+     */
     private GeoPoint findClosestIntersection(Ray ray){
         if(ray == null)
             return null;
@@ -356,8 +387,15 @@ public class Render {
         }
         return closesPoint;
     }
+
+    /**
+     *
+     * @param rays the rays from the source to the intesections
+     * @return list of closest intersection points from each ray
+     */
     private List<GeoPoint> findClosestIntersection(List<Ray> rays){
         List<GeoPoint> geoPoints = new LinkedList<>();
+        //find closest intersection of each ray
         for(var ray:rays){
             GeoPoint geoPoint = (findClosestIntersection(ray));
             if(geoPoint != null)
@@ -368,14 +406,29 @@ public class Render {
         return geoPoints;
     }
 
+    /**
+     *
+     * @param camera
+     * @param ray the ray that around har we creat the iris
+     * @param numOfBeamRays the num of rays for the focus
+     * @return list of rays for the focus
+     */
     private List<Ray> focusRays(Camera camera,Ray ray, int numOfBeamRays){
+        // creating the view plane to find the intesection point
         Plane viewPlane = new Plane(camera.get_Vto(),camera.get_location().add(camera.get_Vto().scale(_scene.getViewPlaneDistance())));
         Point3D pointInViewPlane = viewPlane.findIntersections(ray).get(0).point;
+        // creating the focal plane to find the intesection point
         Plane focalPlane = new Plane(camera.get_Vto(),camera.get_location().add(camera.get_Vto().scale(_scene.getFocalPlaneDistance()+_scene.getViewPlaneDistance())));
         Point3D pointInFocalPlane = focalPlane.findIntersections(ray).get(0).point;
         List<Ray> focusRays= getRandomRays(pointInViewPlane,pointInFocalPlane,camera.get_irisSize(),numOfBeamRays,camera.get_Vright(),camera.get_Vup());//getRandomRays(pointInViewPlane, pointInFocalPlane, r, numOfBeamRays);
         return focusRays;
     }
+
+    /**
+     *
+     * @param vec
+     * @return a normal to the vector
+     */
     private Vector normalToRay(Vector vec){
         double x = vec.getPoint().get_x(), y = vec.getPoint().get_y(), z = vec.getPoint().get_z();
         if(x < y && x < z)
@@ -384,38 +437,46 @@ public class Render {
             return new Vector( new Point3D(vec.getPoint().get_z()* -1, 0, vec.getPoint().get_x())).normalize();
         return new Vector( new Point3D(vec.getPoint().get_y()* -1, vec.getPoint().get_x(), 0)).normalize();
     }
-//    private Ray getRandomRay(Vector sourceRay, Vector vecX, int r, PointLight light ) {
-//
-//        Random rand = new Random();
-//        Vector vecY = vecX.crossProduct(sourceRay.getDirection()).normalize();
-//        double cos = Math.pow(Math.random(),rand.nextInt(10));
-//        double sin = Math.sqrt(1 - Math.pow(cos,2));
-//        double d = Math.pow(Math.random()*r,rand.nextInt(10));
-//        Point3D pc = light.get_pL().add(light.get_pL().subtract(sourceRay.getPoint()));
-//        Point3D point = new Point3D(pc.add(vecX.scale(cos*d).add(vecY.scale(sin*d))));
-//        return new Ray(point.subtract(light.get_pL()).normalize() ,sourceRay.getPoint());
-//    }getPoint
 
+    /**
+     * create random rays from a circle to point
+     * @param sourcePoint the point from har we constract the random rays
+     * @param point that the rays are direct ti
+     * @param r the radius of the circle from him the random rays starts
+     * @param numOfRays the num of random rays
+     * @param vx vector for the random ray
+     * @param vy vector for the random ray
+     * @return list of random rays
+     */
     private List<Ray> getRandomRays(Point3D sourcePoint, Point3D point, double r, int numOfRays,Vector vx, Vector vy) {
         List <Ray> rayBeam = new LinkedList<>();
+        //create num of rays random rays
         for(int i = 0;i < numOfRays - 1;i++) {
-            Point3D p = sourcePoint;
-            double cosTeta = Math.random() * Math.pow(-1,i);
+            Point3D p = sourcePoint;// the middle of the circle
+            double cosTeta = Math.random() * Math.pow(-1,i);//for the colcalation of the starts of the ray inside the radius of the circle
             double sinTeta = Math.sqrt(1 - cosTeta * cosTeta);
             double d = Math.random() * r * Math.pow(-1,i);
             double x = d * cosTeta;
             double y = d * sinTeta;
-            if (!Util.isZero(x)) p = p.add(vx.scale(x));
-            if (!Util.isZero(y)) p = p.add(vy.scale(y));
-            rayBeam.add(new Ray(point.subtract(p), p));
+            if (!Util.isZero(x)) p = p.add(vx.scale(x));//move to a random point inside the circle
+            if (!Util.isZero(y)) p = p.add(vy.scale(y));//move to a random point inside the circle
+            rayBeam.add(new Ray(point.subtract(p), p));//add random ray to the list
         }
         return rayBeam;
     }
 
+    /**
+     * create random rays from point to to a circle
+     * @param sourcePoint the point from har we constract the random rays
+     * @param point that the rays are direct ti
+     * @param r the radius of the circle from him the random rays starts
+     * @param numOfRays the num of random rays
+     * @return list of random rays
+     */
     private List<Ray> getRandomShadowRays(Point3D sourcePoint, Point3D point, double r, int numOfRays){
         Vector v = point.subtract(sourcePoint).normalize();
-        Vector vx = normalToRay(v);
-        Vector vy = v.crossProduct(vx);
+        Vector vx = normalToRay(v);//create a vector that is ortogonal to the vector from the point to the middle of the circle
+        Vector vy = v.crossProduct(vx);// create another vector that is ortogonal to the other two vectors
         return getRandomRays(sourcePoint, point, r, numOfRays, vx, vy);
     }
 
