@@ -224,16 +224,20 @@ public class Render {
 
 
     /**
-     * calc color
-     * @param intersection
-     * @return
+     *
+     * @param intersection geopoint
+     * @param inRay the ray from the intersection point to the light
+     * @param level of recurs
+     * @param k for bracek recurs condition
+     * @param numOfShadowRays number of rays
+     * @return the color that the point will be painted in
      */
     private Color calcColor(GeoPoint intersection,Ray inRay,int level,double k, int numOfShadowRays) {
         if(level==0)
             return Color.BLACK;
 
         Color color=intersection.geometry.get_emmission();
-        Vector v = intersection.point.subtract(_scene.getCamera().get_location()).normalize();
+        Vector v = intersection.point.subtract(_scene.getCamera().get_location()).normalize();// the vector from the camera to the geometry
         Vector n = intersection.geometry.getNormal(intersection.point);
         int nShininess = intersection.geometry.get_matirial().getnShininess();
         double kd = intersection.geometry.get_matirial().getKd();
@@ -242,8 +246,10 @@ public class Render {
             Vector l = lightSource.getL(intersection.point);
             double n1 = n.dotProduct(l);
             double n2 = n.dotProduct(v);
+            // check if the light and the camera are in the same side of the geometry
             if ((n1 > 0 && n2 > 0) || (n1 < 0 && n2 < 0)) {
                 double ktr=transparency(lightSource,l, n,intersection,numOfShadowRays);
+                //check if there is an affection that create a shadow
                 if(ktr*k>MIN_CALC_COLOR_K) {
                     Color lightIntensity = lightSource.getIntensity(intersection.point).scale(ktr);
                     color = color.add(calcDiffusive(kd, alignZero(n.dotProduct(l)), lightIntensity),
@@ -252,6 +258,7 @@ public class Render {
             }
         }
         double kr=intersection.geometry.get_matirial().getKr(), kkr=k*kr;
+        //check if there is an affection that create a reflection
         if(kkr>MIN_CALC_COLOR_K) {
             Ray reflectedRay = constractReflectedRay(n, intersection.point, inRay);
             GeoPoint reflectedPoint = findClosestIntersection(reflectedRay);
@@ -259,6 +266,7 @@ public class Render {
                 color=color.add(calcColor(reflectedPoint,reflectedRay,level-1,kkr, numOfShadowRays).scale(kr));
         }
         double kt=intersection.geometry.get_matirial().getKt(), kkt=k*kt;
+        //check if there is an affection that create a refraction
         if(kkt>MIN_CALC_COLOR_K) {
             Ray refractedRay = constractRefractedRay(intersection.point, inRay);
             GeoPoint refractedPoint = findClosestIntersection(refractedRay);
@@ -268,11 +276,26 @@ public class Render {
 
         return color;
     }
+
+    /**
+     *
+     * @param intersection geopoint
+     * @param ray the ray from the point to light
+     * @param numOfShadowRays number of rays
+     * @return the color that the point will be painted in
+     */
     private Color calcColor(GeoPoint intersection,Ray ray, int numOfShadowRays){
         return calcColor(intersection,ray,MAX_CALC_COLOR_LEVEL,1.0, numOfShadowRays).add(
                 _scene.getAmbientLight().getIntensity());
     }
 
+    /**
+     *
+     * @param rays list of rays from the point to light
+     * @param background the color of the background
+     * @param numOfShadowRays number of rays
+     * @return the color that the point will be painted in
+     */
     private Color calcColor(List<Ray> rays,Color background, int numOfShadowRays){
         Color color = new Color(0,0,0);
         for(var ray:rays){
