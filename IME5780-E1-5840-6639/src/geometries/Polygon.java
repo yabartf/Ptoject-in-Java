@@ -36,8 +36,8 @@ public class Polygon extends Geometry {
      *                                  <li>The polygon is concave (not convex></li>
      *                                  </ul>
      */
-    public Polygon(Point3D... vertices) {
-
+    public Polygon(Color emmission, Material matirial,Point3D... vertices) {
+        super(emmission, matirial);
         if (vertices.length < 3)
             throw new IllegalArgumentException("A polygon can't have less than 3 vertices");
         _vertices = List.of(vertices);
@@ -84,15 +84,13 @@ public class Polygon extends Geometry {
         }
         //createBox();
     }
-    public Polygon(Color objColor,Point3D... vertices){
-        this(vertices);
-        _emmission=objColor;
+    public Polygon(Point3D... vertices){
+        this(Color.BLACK, vertices);
+
     }
 
-    public Polygon(Color emmission, Material matirial, Point3D... _vertices) {
-        this(_vertices);
-        this._emmission = emmission;
-        this._matirial = matirial;
+    public Polygon(Color emmission,  Point3D... _vertices) {
+        this(emmission,new Material(0,0,0),_vertices);
     }
 
     @Override
