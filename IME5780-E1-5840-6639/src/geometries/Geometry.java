@@ -2,7 +2,10 @@ package geometries;
 import primitives.*;
 
 
-
+/**
+ * a class that define all of the geometries
+ * holds the color the matirial and the box of the geometry
+ */
 public abstract class Geometry implements Intersectable {
 
     protected Color _emmission;

@@ -17,6 +17,14 @@ public class Material {
        this(kd,ks,nShininess,0,0);
     }
 
+    /**
+     *
+     * @param kd
+     * @param ks
+     * @param nShininess
+     * @param kt
+     * @param kr
+     */
     public Material(double kd, double ks, int nShininess, double kt, double kr) {
         Kd = kd;
         Ks = ks;

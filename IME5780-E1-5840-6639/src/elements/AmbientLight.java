@@ -7,8 +7,8 @@ public class AmbientLight extends Light{
 
     /**
      * constructor
-     * @param Ia
-     * @param ka
+     * @param Ia the original color
+     * @param ka the power of the color
      */
     public AmbientLight(Color Ia,double ka) {
         super(Ia.scale(ka));

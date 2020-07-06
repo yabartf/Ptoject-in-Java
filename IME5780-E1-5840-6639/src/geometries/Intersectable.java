@@ -11,10 +11,21 @@ public interface Intersectable {
     List<GeoPoint> findIntersections(Ray ray, double max);
     void BVH(int deep);
     Box getBox();
+
+    /**
+     * an inside class that define a box
+     * box is around avery intersectable
+     */
     public class Box {
         Point3D _min;
         Point3D _max;
         Point3D mid;
+
+        /**
+         * constractor that generate a box with two points
+         * @param min point
+         * @param max point
+         */
         public Box(Point3D min, Point3D max) {
             _max = max;
             _min = min;
@@ -29,6 +40,11 @@ public interface Intersectable {
             return _max;
         }
 
+        /**
+         *
+         * @param ray
+         * @return true if the ray intersect withe the box and false if not
+         */
         public boolean inBox(Ray ray) {
             double tmin = (_min.get_x() - ray.getPoint().get_x()) / ray.getDirection().getPoint().get_x();
             double tmax = (_max.get_x() - ray.getPoint().get_x()) / ray.getDirection().getPoint().get_x();
@@ -52,12 +68,6 @@ public interface Intersectable {
                 tzmax = swap(tzmin, tzmin = tzmax);
             if ((tmin > tzmax) || (tzmin > tmax))
                 return false;
-
-//            if (tzmin > tmin)
-//                tmin = tzmin;
-//
-//            if (tzmax < tmax)
-//                tmax = tzmax;
             return true;
         }
 
@@ -66,10 +76,21 @@ public interface Intersectable {
         }
 
     }
+
+    /**
+     * inside class that define geo point
+     * geo point is for intersection point
+     * its hold the point of intersection and the object that the ray intesect with
+     */
     public static class GeoPoint {
         public Geometry geometry;
         public Point3D point;
 
+        /**
+         * constractor that generate a geopoint with point and geometry
+         * @param g the geometry
+         * @param p the point
+         */
         public GeoPoint(Geometry g, Point3D p) {
             this.geometry = g;
             this.point = p;

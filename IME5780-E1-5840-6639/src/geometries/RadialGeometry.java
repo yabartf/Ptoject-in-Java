@@ -3,6 +3,9 @@ package geometries;
 import primitives.Color;
 import primitives.Material;
 
+/**
+ * abstract class that defined ol geometries that ar dadial
+ */
 public abstract class RadialGeometry extends Geometry {
     double _radius;
 

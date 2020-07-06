@@ -35,6 +35,7 @@ public class Geometries implements Intersectable {
     /***
      * 
      * @param _geometries add to the list all shapes that are given as a list
+     *                    and adapting the box
      */
     public void add(Intersectable... _geometries){
         if (box == null)
@@ -91,6 +92,9 @@ public class Geometries implements Intersectable {
         return box;
     }
 
+    /**
+     * create a box around all the intersectabels
+     */
     public void createBox(){
         double xmin =Double.POSITIVE_INFINITY, ymin = Double.POSITIVE_INFINITY, zmin = Double.POSITIVE_INFINITY,
                 xmax = Double.NEGATIVE_INFINITY, ymax = Double.NEGATIVE_INFINITY, zmax = Double.NEGATIVE_INFINITY;

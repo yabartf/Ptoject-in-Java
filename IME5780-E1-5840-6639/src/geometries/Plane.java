@@ -97,19 +97,24 @@ public class Plane extends Geometry {
 
     @Override
     public List<GeoPoint> findIntersections(Ray ray, double max) {
+        //if the ray starts at the same point tht define the plane there are no intersections
         if (ray.getPoint().equals(this.pointInPlane))
             return null;
+        // if the ray is orthogonal the the normal of the plane the ray is parallel to the plane
         double isParallel=ray.getDirection().dotProduct(normal);
         if(Util.alignZero(isParallel)==0)
             return null;
         double t=(this.normal.dotProduct(this.pointInPlane.subtract(ray.getPoint())))/(this.normal.dotProduct(ray.getDirection()));
-
+        // if the distance if less then max and t>0(the ray starts before the plane)
         if(Util.alignZero(t-max)<=0&&t>0) {
             return List.of(new GeoPoint(this,ray.getTargetPoint(t)));
         }
         return null;
     }
 
+    /**
+     * plane is an infinite object
+     */
     void createBox(){
         _box=new Box(new Point3D(Double.NEGATIVE_INFINITY,Double.NEGATIVE_INFINITY,Double.NEGATIVE_INFINITY),
                 new Point3D(Double.POSITIVE_INFINITY,Double.POSITIVE_INFINITY,Double.POSITIVE_INFINITY));

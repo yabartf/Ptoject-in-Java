@@ -419,17 +419,29 @@ public class Render {
         return getRandomRays(sourcePoint, point, r, numOfRays, vx, vy);
     }
 
+    /**
+     * check the transparency in a point
+     * @param light the light source
+     * @param l the vector from the centor of the light to the object
+     * @param n normal to the object
+     * @param intersectionPoint the point that we check the transparency
+     * @param numOfRays the number of rays to get a soft shadow
+     * @return
+     */
     private double transparency(LightSource light,Vector l,Vector n, GeoPoint intersectionPoint, int numOfRays) {
+        // the shadow of the main ray
         double shadow = transparency(light, l, n, intersectionPoint);
         Point3D p;
+        //point light and spot light have a size
         if (light.getClass() == PointLight.class || light.getClass() == SpotLight.class) {
             p = ((PointLight) light).get_pL();
             List<Ray> shadowRays = getRandomShadowRays(intersectionPoint.point, p, light.getRadius(), numOfRays);
+            // the shadow of all the rays
             for (var ray : shadowRays) {
                 shadow += transparency(light, ray.getDirection().scale(-1), n, intersectionPoint);
             }
         }
-
+        //redusing the shadow
         return shadow / numOfRays;
     }
 }

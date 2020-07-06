@@ -14,19 +14,26 @@ public class Camera {
 
     /**
      * constructor
-     * @param location
-     * @param to
-     * @param up
+     * @param location of the camera
+     * @param to the vector from the camera towords
+     * @param up the vector from the camera to abouve
      */
     public Camera(Point3D location, Vector to, Vector up) {
         if (Util.alignZero(up.dotProduct(to))!=0)
             throw new IllegalArgumentException("vectors are not vartical");
         _Vup =up.normalized();
         _Vto =to.normalized();
-        _Vright =(to.crossProduct(up)).normalized();
+        _Vright =(to.crossProduct(up)).normalized();//creating the vector from the camera and right
         this._location = location;
     }
 
+    /**
+     *
+     * @param location of the camera
+     * @param to the vector from the camera towords
+     * @param up the vector from the camera to abouve
+     * @param irisSize of the camera
+     */
     public Camera(Point3D location, Vector to, Vector up,double irisSize){
         this(location,to,up);
         this._irisSize=irisSize;

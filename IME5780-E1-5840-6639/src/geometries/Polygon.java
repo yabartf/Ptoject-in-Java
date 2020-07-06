@@ -116,7 +116,9 @@ public class Polygon extends Geometry {
     }
 
 
-
+    /**
+     * crating a box around the geometry
+     */
     private void createBox(){
         double xmin =Double.POSITIVE_INFINITY, ymin = Double.POSITIVE_INFINITY, zmin = Double.POSITIVE_INFINITY,
                 xmax = Double.NEGATIVE_INFINITY, ymax = Double.NEGATIVE_INFINITY, zmax = Double.NEGATIVE_INFINITY;
