@@ -83,8 +83,8 @@ public interface Intersectable {
      * its hold the point of intersection and the object that the ray intesect with
      */
     public static class GeoPoint {
-        public Geometry geometry;
-        public Point3D point;
+        public final Geometry geometry;
+        public final Point3D point;
 
         /**
          * constractor that generate a geopoint with point and geometry

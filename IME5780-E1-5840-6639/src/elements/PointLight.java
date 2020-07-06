@@ -12,9 +12,9 @@ public class PointLight extends Light implements LightSource {
      * constructor
      * @param emmision the color of the light
      * @param pos the position of the light
-     * @param kc
-     * @param kl
-     * @param kq
+     * @param kc reduction
+     * @param kl reduction
+     * @param kq reduction
      */
     public PointLight(Color emmision,Point3D pos,double kc,double kl,double kq){
     this(emmision, pos, kc, kl, kq, 0);
@@ -25,9 +25,9 @@ public class PointLight extends Light implements LightSource {
      *
      * @param emmision the color of the light
      * @param pos the position of the light
-     * @param kc
-     * @param kl
-     * @param kq
+     * @param kc reduction
+     * @param kl reduction
+     * @param kq reduction
      * @param radius of the light
      */
     public PointLight(Color emmision, Point3D pos, double kc, double kl, double kq, double radius){

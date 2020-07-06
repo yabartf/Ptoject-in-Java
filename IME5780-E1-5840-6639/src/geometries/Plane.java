@@ -57,8 +57,6 @@ public class Plane extends Geometry {
      */
     public Plane(Color objectColor, Vector normal, Point3D point) {
         this(objectColor,new Material(0,0,0),normal,point);
-        _emmission=objectColor;
-
     }
 
     /**
@@ -68,11 +66,7 @@ public class Plane extends Geometry {
      * @param z point 3
      */
     public Plane(Point3D x,Point3D y,Point3D z) {
-        Vector one = x.subtract(y);
-        Vector two = x.subtract(z);
-        normal = one.crossProduct(two);
-        pointInPlane = x;
-        createBox();
+        this(Color.BLACK,x,y,z);
     }
 
     /**
@@ -83,8 +77,14 @@ public class Plane extends Geometry {
      * @param z point 3
      */
     public Plane(Color objColor,Point3D x,Point3D y,Point3D z){
-        this(x,y,z);
-        _emmission=objColor;
+        super(objColor);
+        Vector one = x.subtract(y);
+        Vector two = x.subtract(z);
+        normal = one.crossProduct(two);
+        pointInPlane = x;
+        createBox();
+
+
     }
 
     /**

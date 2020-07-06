@@ -13,9 +13,9 @@ public class SpotLight extends PointLight {
      * @param emmision the color of the light
      * @param position  of the light
      * @param direction of the light
-     * @param Kc
-     * @param Kl
-     * @param Kq
+     * @param Kc reduction
+     * @param Kl reduction
+     * @param Kq reduction
      * @param radius of the light
      */
     public SpotLight(Color emmision, Point3D position, Vector direction, double Kc, double Kl, double Kq, double radius){
@@ -27,9 +27,9 @@ public class SpotLight extends PointLight {
      * @param emmision the color of the light
      * @param position  of the light
      * @param direction of the light
-     * @param Kc
-     * @param Kl
-     * @param Kq
+     * @param Kc reduction
+     * @param Kl reduction
+     * @param Kq reduction
      */
     public SpotLight(Color emmision, Point3D position, Vector direction, double Kc, double Kl, double Kq) {
         this(emmision, position, direction, Kc, Kl, Kq, 0);

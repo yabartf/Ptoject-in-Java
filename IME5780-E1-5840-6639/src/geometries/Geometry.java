@@ -8,8 +8,8 @@ import primitives.*;
  */
 public abstract class Geometry implements Intersectable {
 
-    protected Color _emmission;
-    protected Material _matirial;
+    protected final Color _emmission;
+    protected final Material _matirial;
     protected Box _box;
 
     /**
@@ -65,7 +65,7 @@ public abstract class Geometry implements Intersectable {
 
     @Override
     public Box getBox() {
-        return _box;
+        return new Box(_box._min, _box._max);
     }
 
     @Override
