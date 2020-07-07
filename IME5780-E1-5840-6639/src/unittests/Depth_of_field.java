@@ -25,10 +25,11 @@ public class Depth_of_field {
         Point3D upLeftCorner = new Point3D(-120, -200, 0);
         Point3D downRightCorner = new Point3D(120, 200, 0);
         Point3D downLeftCorner = new Point3D(-120, 200, 0);
+        double height = 50;
         double radiusOfBalls = 15;
 
         Scene scene = new Scene("Depth of field");
-        scene.setCamera(new Camera(new Point3D(0, 200, -45), new Vector(0, -1, 1), new Vector(0, -1, -1),2));
+        scene.setCamera(new Camera(new Point3D(0, 200, -45), new Vector(0, -1, 1), new Vector(0, -1, -1),8));
         scene.setViewPlaneDistance(50);
         scene.setFocalPlaneDistance(180);
         scene.setBackground(Color.BLACK);
@@ -39,17 +40,17 @@ public class Depth_of_field {
         Material triangleMaterial = new Material(0.5, 0.5, 60,0,0.3);
 
         borders[0] = new Triangle(triangleColor,triangleMaterial , //
-                upRightCorner, downRightCorner, new Point3D(downRightCorner.get_x()+5,downRightCorner.get_y(),-50));
+                upRightCorner, downRightCorner, new Point3D(downRightCorner.get_x()+5,downRightCorner.get_y(),-height));
         borders[1] = new Triangle(triangleColor,triangleMaterial, //
-                upRightCorner,new Point3D(downRightCorner.get_x()+5,downRightCorner.get_y(),-50) , new Point3D(upRightCorner.get_x()+5,upRightCorner.get_y(),-50));
+                upRightCorner,new Point3D(downRightCorner.get_x()+5,downRightCorner.get_y(),-height) , new Point3D(upRightCorner.get_x()+5,upRightCorner.get_y(),-height));
         borders[2] = new Triangle(triangleColor, triangleMaterial, //
-                upRightCorner, upLeftCorner, new Point3D(upRightCorner.get_x()+5,upRightCorner.get_y(),-50));
+                upRightCorner, upLeftCorner, new Point3D(upRightCorner.get_x()+5,upRightCorner.get_y(),-height));
         borders[3] = new Triangle(triangleColor, triangleMaterial, //
-                upLeftCorner,new Point3D(upLeftCorner.get_x()-5,upLeftCorner.get_y(),-50) , new Point3D(upRightCorner.get_x()-5,upRightCorner.get_y(),-50));
+                upLeftCorner,new Point3D(upLeftCorner.get_x()-5,upLeftCorner.get_y(),-height) , new Point3D(upRightCorner.get_x()-5,upRightCorner.get_y(),-height));
         borders[4] = new Triangle(triangleColor, triangleMaterial, //
-                upLeftCorner, downLeftCorner, new Point3D(upLeftCorner.get_x()-5,upLeftCorner.get_y(),-50));
+                upLeftCorner, downLeftCorner, new Point3D(upLeftCorner.get_x()-5,upLeftCorner.get_y(),-height));
         borders[5] = new Triangle(triangleColor, triangleMaterial, //
-                downLeftCorner,new Point3D(upLeftCorner.get_x()-5,upLeftCorner.get_y(),-50) , new Point3D(downLeftCorner.get_x()-5,downLeftCorner.get_y(),-50));
+                downLeftCorner,new Point3D(upLeftCorner.get_x()-5,upLeftCorner.get_y(),-height) , new Point3D(downLeftCorner.get_x()-5,downLeftCorner.get_y(),-height));
 
         scene.addGeometries(borders[0],borders[1],borders[2],borders[3],borders[4],borders[5]);
 
@@ -63,10 +64,10 @@ public class Depth_of_field {
 
         scene.addLights(new PointLight(new Color(java.awt.Color.WHITE),new Point3D(-0,0,10) ,1,4E-5, 2E-7));
 
-        ImageWriter imageWriter = new ImageWriter("snooker table", 200, 200, 600, 600);
+        ImageWriter imageWriter = new ImageWriter("snooker test", 200, 200, 600, 600);
         Render render = new Render(imageWriter, scene).setMultithreading(3).setDebugPrint();
 
-        render.renderImage(1,1);
+        render.renderImage(10,10);
         render.writeToImage();
     }
 public void addBalls(Point3D upRight, Point3D downRight, Point3D upLeft, Point3D downLeft, double radiusOfBalls, Scene scene){
@@ -101,14 +102,13 @@ public void addBalls(Point3D upRight, Point3D downRight, Point3D upLeft, Point3D
         Point3D temp = new Point3D(0,downLeft.get_y()*4/5,-radiusOfBalls);
         balls[10] = new Sphere(new Color(java.awt.Color.WHITE),sphereMaterial,radiusOfBalls,//
                     temp);
-        SpotLight spot = new SpotLight(lightColor,new Point3D(0,downLeft.get_y()*4/5+radiusOfBalls/2,-radiusOfBalls+1),moveLight.scale(-1),1, 4E-5, 2E-7);
-        SpotLight spot1 = new SpotLight(lightColor,new Point3D(0,195,-15),new Vector(0,-1,0.31),1, 4E-5, 2E-7);
+        SpotLight spot = new SpotLight(lightColor,new Point3D(0,downLeft.get_y()*4/5+radiusOfBalls/2,-radiusOfBalls+1),moveLight.scale(-1),1, 4E-5, 2E-7,3);
+        SpotLight spot1 = new SpotLight(lightColor,new Point3D(0,195,-15),new Vector(0,-1,0.31),1, 4E-5, 2E-7,3);
         //SpotLight spot2 = new SpotLight(lightColor,new Point3D(0,130,-15),new Vector(0,1,0.31),1, 4E-5, 2E-7);
         PointLight point = new PointLight(lightColor,new Point3D(0,0,100),1, 4E-5, 2E-7);
         scene.addLights(spot,spot1,point);
         for (int i = 0; i < 11; i++){
             scene.addGeometries(balls[i]);
-
         }
 
 }

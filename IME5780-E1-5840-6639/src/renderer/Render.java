@@ -31,8 +31,17 @@ public class Render {
         this._imageWriter=_imageWriter;
         this._scene=_scene;
         _scene.getGeometries().createBox();
-        //_scene.getGeometries().BVH(2);
-        //_scene.getGeometries().createTreeRec(3);
+    }
+
+    /**
+     * constructor with BVH
+     * @param _imageWriter
+     * @param _scene
+     * @param deep of BVH
+     */
+    public Render(ImageWriter _imageWriter, Scene _scene, int deep){
+        this(_imageWriter,_scene);
+        _scene.getGeometries().BVH(deep);
     }
     /**
      * renderImage

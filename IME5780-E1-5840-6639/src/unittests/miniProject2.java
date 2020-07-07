@@ -85,6 +85,7 @@ public class miniProject2 {
 
         ImageWriter imageWriter = new ImageWriter("football hall", 200, 200, 600, 600);
         Render render = new Render(imageWriter, scene).setMultithreading(3).setDebugPrint();
+        //Render render = new Render(imageWriter, scene,2).setMultithreading(3).setDebugPrint();
         render.renderImage(1, 1);
         render.writeToImage();
     }

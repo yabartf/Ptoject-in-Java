@@ -123,7 +123,7 @@ public class Geometries implements Intersectable {
             geometriesArr[i] = new Geometries();
         }
         for (var geo : this.intersectables){
-            // check to where the geo is closer.
+            // check where the geo is closer.
             double toMax = geo.getBox().mid.distance(box._max);
             double toMin = geo.getBox().mid.distance(box._min);
             if (Math.min(toMax,toMin) == toMax)
